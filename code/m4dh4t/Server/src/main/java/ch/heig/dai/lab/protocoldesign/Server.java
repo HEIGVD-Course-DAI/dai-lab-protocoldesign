@@ -18,7 +18,7 @@ public class Server {
 
     private void send(String message) {
         try {
-            out.write(message + "\n");
+            out.write(message + "\n\n");
             out.flush();
         } catch (IOException e) {
             System.out.println("Server: send ex.: " + e);
@@ -41,11 +41,11 @@ public class Server {
                     this.out = out;
 
                     // Welcome message
-                    send("Server: Welcome to the calculator server! Usage: <operation> <lhs> <rhs>.");
-                    // List available operations
-                    StringBuilder sb = new StringBuilder("Available operations:\n");
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Server: Welcome to the calculator server! Usage: <operation> <lhs> <rhs>.\n");
+                    sb.append("Available operations:");
                     for (Operation op : Operation.values()) {
-                        sb.append(" - ").append(op).append(" (").append(op.getSymbol()).append(")\n");
+                        sb.append("\n - ").append(op).append(" (").append(op.getSymbol()).append(")");
                     }
                     send(sb.toString());
 

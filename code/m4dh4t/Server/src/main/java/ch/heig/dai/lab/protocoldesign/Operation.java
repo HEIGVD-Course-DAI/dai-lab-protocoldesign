@@ -3,10 +3,10 @@ package ch.heig.dai.lab.protocoldesign;
 import java.util.function.DoubleBinaryOperator;
 
 public enum Operation implements DoubleBinaryOperator {
-    PLUS    ("+", Double::sum),
-    MINUS   ("-", (l, r) -> l - r),
-    MULTIPLY("*", (l, r) -> l * r),
-    DIVIDE  ("/", (l, r) -> l / r);
+    ADD      ("+", Double::sum),
+    SUBTRACT ("-", (l, r) -> l - r),
+    MULTIPLY ("*", (l, r) -> l * r),
+    DIVIDE   ("/", (l, r) -> l / r);
 
     private final String symbol;
     private final DoubleBinaryOperator binaryOperator;
