@@ -8,7 +8,6 @@ import static java.nio.charset.StandardCharsets.*;
 
 public class Server {
     final int SERVER_PORT = 1234;
-    private BufferedReader in;
     private BufferedWriter out;
 
     public static void main(String[] args) {
@@ -39,7 +38,6 @@ public class Server {
                 try (Socket socket = serverSocket.accept();
                      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
                      BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8));) {
-                    this.in = in;
                     this.out = out;
 
                     // Welcome message
