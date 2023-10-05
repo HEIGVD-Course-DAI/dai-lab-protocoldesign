@@ -16,7 +16,7 @@ The protocol aims to facilitate communication between a client and a server for 
     - The server responds with a welcome message indicating supported operations.
 
 - **Connection Closure**:
-    - The client or the server can initiate the connection closure once the communication is complete.
+    - The client can initiate the connection closure once the communication is complete.
 
 ## Messages
 
@@ -31,15 +31,22 @@ The protocol aims to facilitate communication between a client and a server for 
     5. Client displays the result.
 
 - **Message Semantics**:
-    - Upon receiving a message:
-        - Server parses the message, performs the specified operation, and sends the result to the client.
-        - Client displays the result or handles errors if any.
+  
+  _Upon receiving a message:_
+  - Server parses the message, performs the specified operation, and sends the result to the client.
+  - Client displays the result or handles errors if any.
+
+  _Multiline messages:_
+  - The server can send multiline messages to the client.
+  - To mark the end of a multiline message, the server message will end with an empty line (`""`).
 
 ## Specific Elements
 
 - **Supported Operations**:
     - Addition (`ADD`)
+    - Subtraction (`SUBTRACT`)
     - Multiplication (`MULTIPLY`)
+    - Division (`DIVIDE`)
 
 - **Error Handling**:
     - If the message format is incorrect, the server will respond with an error message, and the client will display the error.
@@ -57,6 +64,10 @@ The protocol aims to facilitate communication between a client and a server for 
     - Client sends: `MULTIPLY 5 8`
     - Server responds: `RESULT 40`
 
-- **Dialog Example 3 (Error)**:
+- **Dialog Example 3 (Unknown command)**:
     - Client sends: `INVALID_FORMAT`
-    - Server responds: `ERROR Invalid message format`
+    - Server responds: `Unknown command: INVALID_FORMAT`
+
+- **Dialog Example 4 (Missing operands)**:
+  - Client sends: `ADD`
+  - Server responds: `No operand found. Usage: ADD <lhs> <rhs>`
