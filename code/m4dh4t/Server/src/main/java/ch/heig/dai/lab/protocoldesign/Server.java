@@ -21,13 +21,13 @@ public class Server {
             out.write(message + "\n\n");
             out.flush();
         } catch (IOException e) {
-            System.out.println("Server: send ex.: " + e);
+            System.err.println("Output buffer write error: " + e);
         }
     }
 
-    private double getDouble(Scanner s) {
+    private double getOperand(Scanner s) {
         if (!s.hasNextDouble()) {
-            throw new IllegalArgumentException("No double found");
+            throw new IllegalArgumentException("No operand found");
         }
         return s.nextDouble();
     }
@@ -42,7 +42,7 @@ public class Server {
 
                     // Welcome message
                     StringBuilder sb = new StringBuilder();
-                    sb.append("Server: Welcome to the calculator server! Usage: <operation> <lhs> <rhs>.\n");
+                    sb.append("Welcome to the calculator server! Usage: <operation> <lhs> <rhs>.\n");
                     sb.append("Available operations:");
                     for (Operation op : Operation.values()) {
                         sb.append("\n - ").append(op).append(" (").append(op.getSymbol()).append(")");
@@ -62,28 +62,28 @@ public class Server {
                             double lhs;
                             double rhs;
                             try {
-                                lhs = getDouble(s);
-                                rhs = getDouble(s);
+                                lhs = getOperand(s);
+                                rhs = getOperand(s);
                             } catch (IllegalArgumentException e) {
-                                send("Server: " + e.getMessage() + ". Usage: " + command + " <lhs> <rhs>");
+                                send(e.getMessage() + ". Usage: " + command + " <lhs> <rhs>");
                                 continue;
                             }
 
                             // Compute the result
                             double result = op.applyAsDouble(lhs, rhs);
                             // Send the result
-                            send("Server: " + lhs + " " + op.getSymbol() + " " + rhs + " = " + result);
+                            send(lhs + " " + op.getSymbol() + " " + rhs + " = " + result);
                         } catch (IllegalArgumentException e) {
-                            send("Server: Unknown command: " + command);
+                            send("Unknown command: " + command);
                         }
                     }
 
                 } catch (IOException e) {
-                    System.out.println("Server: socket ex.: " + e);
+                    System.err.println("Client socket error: " + e);
                 }
             }
         } catch (IOException e) {
-            System.out.println("Server: server socket ex.: " + e);
+            System.err.println("Server socket error: " + e);
         }
     } 
 }
