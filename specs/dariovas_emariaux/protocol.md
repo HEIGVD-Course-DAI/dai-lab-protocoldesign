@@ -1,0 +1,65 @@
+## Specification – Protocol
+
+### Section 1 : Overview
+
+XXX is a client-server protocol. 
+The client connects to a server and waits until the user entered his calculation containing his operation followed by two numbers, then sends it to the servers.
+
+The operation possible will be “ADD”, “SUB”, “MULT”, “DIV” :
+-	ADD -> Addition
+-	SUB -> Substraction
+-	MULT -> Multiplication
+-	DIV -> Division
+
+The server sends the result back or an error message, if the operation is not covered.
+Then, the clients displays the result.
+
+### Section 2 : Transport layer protocol
+
+XXXX uses TCP. The client established the connection. 
+It has to know the IP address of the server. 
+The server listens on TCP port 69420.
+
+The server closes the connection when the result has been sent.
+
+### Section 3 : Messages
+
+There are these types of messages :
+-	WELCOME
+     The clients opens the communication and the server sends a welcome message with the possible operations.
+-	CALCULATION <operation, nb1, nb2>
+     The clients sends the operation. The operation must be in uppercase.
+-	RESULT 
+     The servers sends back the result of the calculation, then the clients displays it.
+-	OPERATION_NOT_VALID <operation>
+     Error response message after a CALCULATION message, if the operation is not covered.
+-   NUMBER_NOT_VALID <nb1, XXXX>
+     Error response message after a CALCULATION message, if one of the values is not a number.
+
+If the operation exists, the server sends the result back.
+
+### Section 4 : example dialogs
+
+**Successful CALCULATION :**
+1. Client opens TCP connection.
+2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, PLEASE ENTER YOUR CALCULATION FOLLOWING THESE FORMAT : <OP> <NB1> <NB2> (ADD 21 12). 
+3. Client provides an operation followed by two numbers -> ADD 21 2
+4. Server responds the result --> RESULT 23
+5. Server closes the TCP connection
+
+**OPERATION_NOT_VALID :**
+1. Client opens TCP connection.
+2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, PLEASE ENTER YOUR CALCULATION FOLLOWING THESE FORMAT : <OP> <NB1> <NB2> (ADD 21 12).
+3. Client provides an operation followed by two numbers -> MOD 21 2
+4. Server responds that the operation doesn’t exist. --> MOD OPERATION DOES'T EXISTS, PLEASE ENTER ANOTHER CALCULATION.
+5. Server waits a new calculation.
+
+**NUMBER_NOT_VALID :**
+1. Client opens TCP connection.
+2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, PLEASE ENTER YOUR CALCULATION FOLLOWING THESE FORMAT : <OP> <NB1> <NB2> (ADD 21 12).
+3. Client provides an operation followed by two numbers -> ADD c 2
+4. Server responds that the operation doesn’t exist. --> c ARE NOT A CORRECT VALUE, PLEASE ENTER A CORRECT VALUE.
+5. Server waits a new calculation.
+
+
+
