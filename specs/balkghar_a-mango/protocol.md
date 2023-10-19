@@ -77,3 +77,24 @@ An easter egg will be available when sending the "🟢🐱" (greencat) sequence 
 message.
 
 ## Diagram
+
+```mermaid
+sequenceDiagram
+	box Succesful communication
+    participant Client A
+    participant Serveur A
+    end
+    Box Erroneus communication
+    participant Client B
+    participant Serveur B
+    end
+    Client A-->>Serveur A: Open TCP connection
+    Client A->>Serveur A: CALC 2 3 +
+	Serveur A->>Client A: CALC 5
+	Serveur A-->>Client A: Close TCP connection
+	Client B-->>Serveur B: Open TCP connection
+    Client B->>Serveur B: CALC 2 3 + + - *
+	Serveur B->>Client B: CALC ERR 1
+	Serveur B-->>Client B: Close TCP connection
+```
+
