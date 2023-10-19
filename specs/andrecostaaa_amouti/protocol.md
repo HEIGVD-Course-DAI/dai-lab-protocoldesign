@@ -1,8 +1,11 @@
-# Connection
+# Overview
 
-- Server address will depend on the machine since we won't deploy it to a static ip address server
+- calcp - Calculator Protocol is a client-server protocol. The client connects to a server and sends a math command.
+  The server sends the response or an error message, if the calculation couldn't be made.
 
-- Client connects to server on port 64000
+# Transport Layer Protocol
+
+- calcp uses TCP. The client establishes the connection. It has to know the server IP address of the server. The server listes on port 6900.
 
 # Message protocol
 
@@ -34,3 +37,10 @@ The following commands are allowed:
 After connecting, the server sends a list of commands
 
 When disconnecting, the client sends a message informing the server that he would like to close the connection. The server will then close the connection.
+
+# Error Messages
+
+|           message           |                meaning                 |
+| :-------------------------: | :------------------------------------: |
+|  `NOK - INVALID COMMAND\n`  |   The command provided doesn't exist   |
+| `NOK - INVALID ARGUMENTS\n` | Arguments for this command are invalid |
