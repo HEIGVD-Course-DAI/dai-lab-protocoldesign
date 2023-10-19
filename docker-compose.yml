@@ -4,6 +4,10 @@ services:
 
   server:
     image: server-1.0.jar
+    build:
+      context: ./code/Andrea-Graf_ JustinFerrara14/Server
   
   client:
     image: client-1.0.jar
+    build:
+      context: ./code/Andrea-Graf_ JustinFerrara14/Client
