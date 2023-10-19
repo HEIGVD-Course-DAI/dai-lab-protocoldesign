@@ -20,17 +20,18 @@ Summary protocol specification
 
 4. Example dialogs examples of one or several  dialogs to clarify the scenarios
 
-   ```sequence
-   Client -> Server: Open TCP connection
-   Server -> Client: CONNECTED add,mult,sub,div,mod
-   Client -> Server: OPERATION add 5 5
-   Server -> Client: 10
-   
-   Client -> Server: OPERATION div 5 0
-   Server -> Client: ERROR COMPUTATION FAILED
-   
-   Client -> Server: OPERATION dodo 5 5 5
-   Server -> Client: ERROR UNKNOWN OPERATION
-   
-   Client -> Server: EXIT
-   ```
+```mermaid
+sequenceDiagram
+Client ->> Server: Open TCP connection
+Server ->> Client: CONNECTED add,mult,sub,div,mod
+Client ->> Server: OPERATION add 5 5
+Server ->> Client: 10
+
+Client ->> Server: OPERATION div 5 0
+Server ->> Client: ERROR COMPUTATION FAILED
+    
+Client ->> Server: OPERATION dodo 5 5 5
+Server ->> Client: ERROR UNKNOWN OPERATION
+
+Client ->> Server: EXIT
+```
