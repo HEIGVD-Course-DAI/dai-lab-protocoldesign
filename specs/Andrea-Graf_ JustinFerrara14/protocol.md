@@ -7,7 +7,7 @@ result of the operation. The client can send multiple operations with one connec
 and the server keeps the connection open until the client sends a command to quit the connection. The server then closes the connection.
 
 ## Transport layer protocol
-We will use tcp as transport layer protocol on port 8888. The client create and close the connection. The server waits for
+We will use tcp as transport layer protocol on port 8888 with utf8. The client create and close the connection. The server waits for
 a connection until a client connects. The server then waits for a command from the client. The server then sends the result
 to the client. The server then waits for the next command from the client and so on. The server closes the connection when
 he receives the command to quit the connection. If the server receives a command that is not supported, he sends an
@@ -23,6 +23,7 @@ The messages are sent as text. The messages are separated by a new line. The mes
 ### calculation
 - "add a b" : the client sends this message to the server to add a and b. The server sends the result
 - "mul a b" : the client sends this message to the server to multiply a and b. The server sends the result
+- "div a b" : the client sends this message to the server to divide a by b. The server sends the result
 - "result a" : the server sends this message to the client to send the result of the operation. a can be a number or an error message
   - "a" : the result of the operation
   - "error" : the operation is not supported
