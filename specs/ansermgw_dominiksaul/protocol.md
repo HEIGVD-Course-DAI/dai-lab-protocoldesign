@@ -29,7 +29,6 @@ Message format will be specified at the end of this chapter.
   * COMPUTATION_REQUEST
   * COMPUTATION_RESPONSE
   * COMPUTATION_ERROR
-  * EXIT  
 * After the type, there will be the payload
   * for WELCOME: the list of supported operation separated by ' '
   * for COMPUTATION_REQUEST: the mathematical operation like `2*(4+5)`. In this payload, space will be ignored.
