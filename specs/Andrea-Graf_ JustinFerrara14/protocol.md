@@ -17,17 +17,27 @@ error message. If the connection is open since to long without any command, the 
 The messages are sent as text. The messages are separated by a new line. The messages are not encrypted.
 
 ### Initiation of the connection
-- "init" : the client sends this message to the server to start the connection. The server sends the supported operations
-- "info" : the server sends this message after the beginning of a connection.
+- "init" : the client sends this message to the server to start the connection. The server sends the supported operations.
+            If the server does not respond, the client closes the connection.
+- "info" : the server sends this message after the beginning of a connection to validate the connection and send the supported operations.
 
-### calculation
+### Calculation
 - "add a b" : the client sends this message to the server to add a and b. The server sends the result
 - "mul a b" : the client sends this message to the server to multiply a and b. The server sends the result
 - "result a" : the server sends this message to the client to send the result of the operation. a can be a number or an error message
-  - "a" : the result of the operation
+  - "a" : the result of the operation is a number
   - "error" : the operation is not supported
 
 ### End of the connection
-- "quit" : the client or the server sends this message to the other to close the connection
+- "quit" : the client or the server sends this message to the other to close the connection, no confirmation is needed
 
 ## Example dialogs
+Client: "init"
+Server: "info add mul"
+Client: "add 1 2"
+Server: "result 3"
+Client: "mul 2 3"
+Server: "result 6"
+Client: "div 2 3"
+Server: "result error"
+Client: "quit"
