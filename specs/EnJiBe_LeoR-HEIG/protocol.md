@@ -73,7 +73,7 @@ HELLO\n
 The server should respond with a confirmation message and open the connection.
 
 ```
-AVAILABLE OPERATIONS ADD MUL\n
+AVAILABLE OPERATIONS ADD (ex. ADD 10 20) MUL (ex. MUL 30 4 66)\n
 ```
 
 ## 7. Closing the Connection
