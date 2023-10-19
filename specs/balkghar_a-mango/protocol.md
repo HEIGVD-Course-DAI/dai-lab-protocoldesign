@@ -1,17 +1,36 @@
 # DAI - Lab 03 - Protocol Design
 
+## Table of contents
+
+- [1. Overview](#1-overview)
+- [2. Transport layer](#2-transport-layer)
+- [3. Messages format](#3-messages-format)
+- [4. Specificities](#4-specificities)
+    - [4.1 Authentication](#41-authentication)
+    - [4.2 Security](#42-security)
+    - [4.3 Mathematical objects](#43-mathematical-objects)
+        - [4.3.1 Operations](#431-operations)
+        - [4.3.2 Operands](#432-operands)
+        - [4.3.3 Constants](#433-constants)
+        - [4.3.4 Functions](#434-functions)
+    - [4.4 Errors](#44-errors)
+    - [4.5 Concurrency](#45-concurrency)
+    - [4.6 Additional capabilities](#46-additional-capabilities)
+- [5. Diagram](#5-diagram)
+    - [5.1 Successful communication](#51-successful-communication)
+    - [5.2 Erroneous communication](#52-erroneous-communication)
+
 ## 1. Overview
 
 The **Green Cat Calculation Protocol** (GCCP) protocol is a text-based protocol that allows users to do mathematical
-calculations on a server. The protocol
-is based on a client-server architecture where the client communicates with the server to get a computation done.
-The client initiates the connection with a special message, to which the server answers with a list of its capabilities.
-The client can then send the request to the server and the server will respond with the result of the computation. The
-server will then close the connection with a special message.
-The messages are sent in raw text format, with classical mathematical symbols denoting operations and expressions
-formulated in [Reverse Polish Notation (RPN)](https://en.wikipedia.org/wiki/Reverse_Polish_notation). The symbols of the
-expression must be separated by a whitespace character. It is possible to do more than one operation in a single
-expression.
+calculations on a server. The protocol is based on a client-server architecture where the client communicates with the
+server to get a computation done. The client initiates the connection with a special message, to which the server
+answers with a list of its capabilities. The client can then send the request to the server and the server will respond
+with the result of the computation. The server will then close the connection with a special message. The client can
+alternatively ask the server to close the connection prematurely. The messages are sent in raw text format, with
+classical mathematical symbols denoting operations and expressions formulated
+in [Reverse Polish Notation (RPN)](https://en.wikipedia.org/wiki/Reverse_Polish_notation). The symbols of the expression
+must be separated by a whitespace character. It is possible to do more than one operation in a single expression.
 
 ## 2. Transport layer
 
@@ -37,6 +56,12 @@ The server will respond with a message in the following form :
 ```
 GCCP HELLO <OPERATIONS>
 Example : GCCP HELLO + * / sin ln
+```
+
+The client may then close the connection prematurely with a message in the following form :
+
+```
+GCCP BYE
 ```
 
 The client will then send a message to the server to request a computation. The message will be in the following form :
