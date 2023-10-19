@@ -1,4 +1,5 @@
 # Protocol Design CTP-Calcul transfer protocol
+Authors: Andrea Graf, Justin Ferrara
 
 ## Overview
 The client-server application is a calculator. The client sends an operation to the server and the server returns the
