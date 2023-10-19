@@ -1,5 +1,5 @@
 # Calculation protocol
-This is the protocol specification of a simple calculation server that supports 2 operands calculation with various formats. We are using TCP and Java sockets. This is the role of the server to close the connection after the calculation is done. It means only one calculation can be done by the server.
+This is the protocol specification of a simple calculation server that supports 2 operands calculation with various formats. We are using TCP and Java sockets. This is the role of the server to close the connection after the calculation is done. It means only one calculation can be done by the server. After the connection is established, the server send a `Welcome !` message back.
 
 ## Features
 1. **Various numbers formats**
@@ -29,6 +29,7 @@ Valid format:
 ```mermaid
 sequenceDiagram
 	client->>server: Open connection
+	server->>client: Send back `Welcome!`
 	client->>server: Send a calculation like `5*3`
 	server->>client: Give back the answer: `15`
 	server->>client: Close the connection
@@ -38,6 +39,7 @@ Invalid format:
 ```mermaid
 sequenceDiagram
 	client->>server: Open connection
+	server->>client: Send back `Welcome!`
 	client->>server: Send a wrong string `invalid numbers...`
 	server->>client: Give back the error: `error: format`
 	server->>client: Close the connection
@@ -47,6 +49,7 @@ Timeout error:
 ```mermaid
 sequenceDiagram
 	client->>server: Open connection but doesn't <br>send anything under 2 seconds
+	server->>client: Send back `Welcome!`
 	server->>client: Give back the error: `error: timeout`
 	server->>client: Close the connection
 ```
@@ -54,6 +57,7 @@ Calculation error:
 ```mermaid
 sequenceDiagram
 	client->>server: Open connection
+	server->>client: Send back `Welcome!`
 	client->>server: Send a wrong string `10 / 0`
 	server->>client: Give back the error: `error: calculation`
 	server->>client: Close the connection
