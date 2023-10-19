@@ -21,7 +21,7 @@ Le serveur renvoit le résultat ou un message d'erreur puis ferme la connection.
 ### Messages serveur :
 - RESULT <x> : résultat d'une opération demandée par le client
 - ERROR <e>  : le serveur envoie un message d'erreur avec le type d'erreur spécifique : Bad operation, Bad value, Missing argument
-  
+
 ### BONUS:
 - Gestion des nombres complexes.
 
