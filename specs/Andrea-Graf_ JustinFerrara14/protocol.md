@@ -7,7 +7,7 @@ result of the operation. The client can send multiple operations with one connec
 and the server keeps the connection open until the client sends a command to quit the connection. The server then closes the connection.
 
 ## Transport layer protocol
-We will use tcp as transport layer protocol on port 8888. The client create and close the connection. The server waits for
+We will use tcp as transport layer protocol on port 8888 with utf8. The client create and close the connection. The server waits for
 a connection until a client connects. The server then waits for a command from the client. The server then sends the result
 to the client. The server then waits for the next command from the client and so on. The server closes the connection when
 he receives the command to quit the connection. If the server receives a command that is not supported, he sends an
