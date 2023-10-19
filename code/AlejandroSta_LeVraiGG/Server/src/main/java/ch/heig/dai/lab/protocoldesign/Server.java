@@ -1,7 +1,7 @@
 package ch.heig.dai.lab.protocoldesign;
 
 public class Server {
-    final int SERVER_PORT = 1234;
+    final int SERVER_PORT = 4242;
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -11,7 +11,7 @@ public class Server {
 
     private void run() {
         //Copy of given example on side:
-        try (ServerSocket serverSocket = new ServerSocket(4242)) {
+        try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)) {
             while (true) {
                 try (Socket socket = serverSocket.accept();
                      InputStream in = new BufferedInputStream(socket.getInputStream());

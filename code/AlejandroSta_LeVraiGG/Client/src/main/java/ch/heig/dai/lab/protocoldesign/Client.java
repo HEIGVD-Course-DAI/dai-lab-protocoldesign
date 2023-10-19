@@ -1,8 +1,8 @@
 package ch.heig.dai.lab.protocoldesign;
 
 public class Client {
-    final String SERVER_ADDRESS = "1.2.3.4";
-    final int SERVER_PORT = 1234;
+    final String SERVER_ADDRESS = "localhost";
+    final int SERVER_PORT = 4242;
 
     public static void main(String[] args) {
         // Create a new client and run it
@@ -12,7 +12,7 @@ public class Client {
 
     private void run() {
         //Copy of given example on side:
-        try (Socket socket = new Socket("localhost", 4242)) ;
+        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT)) ;
         InputStream in = new BufferedInputStream(socket.getInputStream());
         OutputStream out = new BufferedOutputStream(socket.getOutputStream());){
             for (int i = 0; i < 10; i++) {
