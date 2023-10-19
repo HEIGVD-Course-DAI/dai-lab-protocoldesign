@@ -10,7 +10,7 @@ Goals
 Overview
 --------
 
-You will work on this lab in groups of 2 students (or 1, but not 3). You will need to *fork this repository* under the GitHub account of one of the students. Both students can then clone the forked respository on their machine.
+You will work on this lab in groups of 2 students (or 1, but not 3). You will need to *fork this repository* under the GitHub account of one of the students. Both students can then clone the forked repository on their machine.
 
 In this lab, you will design and implement a client-server application. The server can perform computations such as "ADD 10 20". The client reads user inputs from stdin, sends them to the server and displays the result.
 
