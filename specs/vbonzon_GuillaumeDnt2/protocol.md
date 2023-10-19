@@ -17,11 +17,13 @@ Le serveur renvoit le résultat ou un message d'erreur puis ferme la connection.
 - DIV <args> : le serveur divise les arguments dans leur ordre d'apparition et renvoit le résultat 
 - POW <a> <b> : le serveur met l'argument a à la puissance b et renvoit le résultat
 - MEAN <args> : le serveur renvoit la moyenne de tous les arguments
-BONUS:
-- Gestion des nombres complexes.
+
 ### Messages serveur :
 - RESULT <x> : résultat d'une opération demandée par le client
 - ERROR <e>  : le serveur envoie un message d'erreur avec le type d'erreur spécifique : Bad operation, Bad value, Missing argument
+  
+### BONUS:
+- Gestion des nombres complexes.
 
 ## Exemples
 Client : *ouvre la connection
