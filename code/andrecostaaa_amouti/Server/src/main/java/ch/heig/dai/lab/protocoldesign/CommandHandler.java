@@ -4,8 +4,10 @@ import java.util.HashSet;
 
 public class CommandHandler {
 
-    private static final String COMMAND_OK_RESPONSE = "OK";
-    private static final String COMMAND_ERROR_RESPONSE = "NOK";
+    private static final String OK_RESPONSE = "OK";
+    private static final String ERROR_INVALID_COMMAND = "NOK - INVALID COMMAND";
+    private static final String ERROR_INVALID_ARGUMENTS = "NOK - INVALID ARGUMENTS";
+
     private static final String TOKEN_SEPARATOR = " ";
     private static final String END_LINE_IN_COMMAND = "|";
 
@@ -37,17 +39,17 @@ public class CommandHandler {
         return result.toString();
     }
 
-    public String handleCommand(String fullCommand) {
+    public CommandResponse handleCommand(String fullCommand) {
 
         if (fullCommand == null || fullCommand.isEmpty()) {
-            return COMMAND_ERROR_RESPONSE;
+            return invalidCommand();
         }
 
         String[] tokens = fullCommand.split(TOKEN_SEPARATOR);
 
         // check if first token is a valid command
         if (!commandsStringMap.contains(tokens[0])) {
-            return COMMAND_ERROR_RESPONSE;
+            return invalidCommand();
         }
 
         // convert first token
@@ -60,15 +62,15 @@ public class CommandHandler {
             try {
                 parsedTokens[i - 1] = Double.parseDouble(tokens[i]);
             } catch (NumberFormatException e) {
-                return COMMAND_ERROR_RESPONSE;
+                return invalidArguments();
             }
         }
         double result;
         switch (command) {
             case help:
-                return COMMAND_OK_RESPONSE + " " + listOfCommands();
+                return helpResponse();
             case quit:
-                return COMMAND_OK_RESPONSE;
+                return quitResponse();
             case add:
                 result = MathHelper.add(parsedTokens);
                 break;
@@ -80,24 +82,41 @@ public class CommandHandler {
                 break;
             case div:
                 if (parsedTokens.length != 2)
-                    return COMMAND_ERROR_RESPONSE;
+                    return invalidArguments();
                 result = MathHelper.div(parsedTokens[0], parsedTokens[1]);
                 break;
             case inv:
                 if (parsedTokens.length != 1)
-                    return COMMAND_ERROR_RESPONSE;
+                    return invalidArguments();
                 result = MathHelper.inv(parsedTokens[0]);
                 break;
             case pow:
                 if (parsedTokens.length != 2)
-                    return COMMAND_ERROR_RESPONSE;
+                    return invalidArguments();
                 result = MathHelper.pow(parsedTokens[0], parsedTokens[1]);
                 break;
             default:
                 // We will never get here
-                return COMMAND_ERROR_RESPONSE;
+                return invalidCommand();
         }
-        return String.format("%s %f", COMMAND_OK_RESPONSE, result);
+        return response(result);
     }
 
+    private CommandResponse invalidArguments(){
+        return CommandResponse.errorCommandResponse(ERROR_INVALID_ARGUMENTS);
+    }
+
+    private CommandResponse invalidCommand(){
+        return CommandResponse.errorCommandResponse(ERROR_INVALID_COMMAND);
+    }
+
+    private CommandResponse quitResponse(){
+        return CommandResponse.quitResponse(OK_RESPONSE);
+    }
+    private CommandResponse helpResponse(){
+     return CommandResponse.commandResponse(OK_RESPONSE + " " + listOfCommands());
+    }
+    private CommandResponse response(double result){
+        return CommandResponse.commandResponse(String.format("%s %f", OK_RESPONSE, result));
+    }
 }
