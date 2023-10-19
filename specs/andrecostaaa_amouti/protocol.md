@@ -1,6 +1,6 @@
 # Connection
 
-- Server address will depend on machine since we won't deploy it to a static ip address server
+- Server address will depend on the machine since we won't deploy it to a static ip address server
 
 - Client connects to server on port 64000
 
@@ -23,7 +23,7 @@ The following commands are allowed:
 |   add   |    Add a list of numbers    | `add 10 20 30\n` |         `OK 60\n`         |
 |   mul   | Multiply a list of numbers  | `mul 10 20 30\n` |        `OK 6000\n`        |
 |   sub   | Substract a list of numbers | `sub 10 20 30\n` |        `OK -40\n`         |
-|   div   |  Divide a list of numbers   |  `div 10 20\n`   |        `OK 0.5\n`         |
+|   div   |     Divide two numbers      |  `div 10 20\n`   |        `OK 0.5\n`         |
 |   pow   | Elevate a number to another |   `pow 2 5\n`    |         `OK 32\n`         |
 |   inv   |      inverses a number      |    `inv 10\n`    |        `OK 0.1\n`         |
 |  help   |  List of allowed commands   |     `help\n`     | `OK <List of commands>\n` |
@@ -33,4 +33,4 @@ The following commands are allowed:
 
 After connecting, the server sends a list of commands
 
-When disconnecting, the client sends a message informing the server that he would like to close the connection. The server will the close the connection.
+When disconnecting, the client sends a message informing the server that he would like to close the connection. The server will then close the connection.

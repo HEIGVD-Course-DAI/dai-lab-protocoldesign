@@ -4,11 +4,11 @@ import java.util.HashSet;
 
 public class CommandHandler {
 
-
     private static final String COMMAND_OK_RESPONSE = "OK";
     private static final String COMMAND_ERROR_RESPONSE = "NOK";
     private static final String TOKEN_SEPARATOR = " ";
     private static final String END_LINE_IN_COMMAND = "|";
+
     private enum CommandEnum {
         add, mul, sub, div, pow, inv, help, quit
     }
@@ -28,8 +28,7 @@ public class CommandHandler {
         commandsStringMap = getCommandsString();
     }
 
-    public String listOfCommands()
-    {
+    public String listOfCommands() {
         StringBuilder result = new StringBuilder();
         for (CommandEnum c : CommandEnum.values()) {
             result.append(c.name()).append(END_LINE_IN_COMMAND);
@@ -37,6 +36,7 @@ public class CommandHandler {
 
         return result.toString();
     }
+
     public String handleCommand(String fullCommand) {
 
         if (fullCommand == null || fullCommand.isEmpty()) {
@@ -45,24 +45,21 @@ public class CommandHandler {
 
         String[] tokens = fullCommand.split(TOKEN_SEPARATOR);
 
-        //check if first token is a valid command
+        // check if first token is a valid command
         if (!commandsStringMap.contains(tokens[0])) {
             return COMMAND_ERROR_RESPONSE;
         }
 
-        //convert first token
+        // convert first token
         CommandEnum command = CommandEnum.valueOf(tokens[0]);
 
+        // parse other tokens
+        double[] parsedTokens = new double[tokens.length - 1];
 
-        //parse other tokens
-        double[] parsedTokens = new double[tokens.length -1];
-
-        for(int i = 1; i < tokens.length; ++i)
-        {
-            try{
-                parsedTokens[i-1] = Double.parseDouble(tokens[i]);
-            }
-            catch(NumberFormatException e) {
+        for (int i = 1; i < tokens.length; ++i) {
+            try {
+                parsedTokens[i - 1] = Double.parseDouble(tokens[i]);
+            } catch (NumberFormatException e) {
                 return COMMAND_ERROR_RESPONSE;
             }
         }
@@ -79,25 +76,25 @@ public class CommandHandler {
                 result = MathHelper.mul(parsedTokens);
                 break;
             case sub:
-                result =MathHelper.sub(parsedTokens);
+                result = MathHelper.sub(parsedTokens);
                 break;
             case div:
-                if(parsedTokens.length != 2)
+                if (parsedTokens.length != 2)
                     return COMMAND_ERROR_RESPONSE;
                 result = MathHelper.div(parsedTokens[0], parsedTokens[1]);
                 break;
             case inv:
-                if(parsedTokens.length != 1)
+                if (parsedTokens.length != 1)
                     return COMMAND_ERROR_RESPONSE;
                 result = MathHelper.inv(parsedTokens[0]);
                 break;
             case pow:
-                if(parsedTokens.length != 2)
+                if (parsedTokens.length != 2)
                     return COMMAND_ERROR_RESPONSE;
                 result = MathHelper.pow(parsedTokens[0], parsedTokens[1]);
                 break;
             default:
-                //We will never get here
+                // We will never get here
                 return COMMAND_ERROR_RESPONSE;
         }
         return String.format("%s %f", COMMAND_OK_RESPONSE, result);
