@@ -10,7 +10,7 @@ Goals
 Overview
 --------
 
-You will work on this lab in groups of 2 students (or 1, but not 3). You will need to *fork this repository* under the GitHub account of one of the students. Both students can then clone the forked respitory on their machine.
+You will work on this lab in groups of 2 students (or 1, but not 3). You will need to *fork this repository* under the GitHub account of one of the students. Both students can then clone the forked respository on their machine.
 
 In this lab, you will design and implement a client-server application. The server can perform computations such as "ADD 10 20". The client reads user inputs from stdin, sends them to the server and displays the result.
 
@@ -18,7 +18,7 @@ In this lab, you will design and implement a client-server application. The serv
 
 The first goal is to **specify a client-server protocol**.
 
-You decide the functionality to be implemented, but KEEP IT SIMPLE. Essentially, as a client I should be able to send an operation (addition or multiplication) to the server and get my result back. Of course, once you have the basics in place, you can extend as much as you want. But we do not expect a fully functional calculator, with 1'000 operations and features.
+You decide the functionality to be implemented. You can keep it simple or go as far as you like. At the least, as a client I should be able to send an operation (addition or multiplication) to the server and get my result back. Of course, once you have the basics in place, you can extend as much as you want. Use your creativity.
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Calculator_on_macOS.png/381px-Calculator_on_macOS.png)
 
@@ -34,24 +34,8 @@ Steps
 ### Phase 1: write the specification (individually, 20 minutes)
 
 Rename the folder `specs/student1_student2` to indicate the GitHub user IDs of your group.
-Then, in this folder, create a file named `protocol.md` and write your **specification**:
-
-* Protocol objectives: what does the protocol do?
-* Overall behavior:
-  * What transport protocol do we use?
-  * How does the client find the server (addresses and ports)?
-  * Who speaks first? Ideally the server announces the operation it supports in the welcome message.
-  * Who closes the connection and when?
-* Messages:
-  * What is the syntax of the messages?
-  * What is the sequence of messages exchanged by the client and the server? (flow)
-  * What happens when a message is received from the other party? (semantics)
-* Specific elements (if useful)
-  * Supported operations
-  * Error handling
-  * Extensibility
-* Examples: examples of some typical dialogs.
-  
+Then, in this folder, create a file named `protocol.md` and write your **specification**.
+ 
 ### Phase 2: review specifications (in pairs, 5 minutes)
 
 * Are there big differences between the specification?
