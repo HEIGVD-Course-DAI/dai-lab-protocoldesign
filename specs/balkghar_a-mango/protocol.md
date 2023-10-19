@@ -58,7 +58,7 @@ GCCP HELLO <OPERATIONS>
 Example : GCCP HELLO + * / sin ln
 ```
 
-The client may then close the connection prematurely with a message in the following form :
+The client may then ask the server to close the connection prematurely with a message in the following form :
 
 ```
 GCCP BYE
