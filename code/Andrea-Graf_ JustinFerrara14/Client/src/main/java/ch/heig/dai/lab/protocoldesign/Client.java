@@ -13,7 +13,7 @@ public class Client {
     private void run() {
         system.out.println("Client running");
 
-        try (Socket socket = new Socket("localhost", SERVER_PORT));
+        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT));
         var in = new BufferedReader(
                 new InputStreamReader(socket.getInputStream(),
                         StandardCharsets.UTF_8));
@@ -29,7 +29,7 @@ public class Client {
             out.flush();
             }
         } catch (IOException e) {
-            System.out.println("Client: exc.: " + e);
+            System.out.println("Client error: " + e);
         }
 
     }
