@@ -19,10 +19,10 @@ There are three types of messages in MYOCP:\
 The client request a calculation. <calculation to perform> can contain any two integers and 
 a keyword to describe the operation to perform between these 2 numbers, in any order. 
 The integers must be separated by a blank space.\
-• 2 - **INVALID INPUT <calculation to perform>**
+• 2 - **TRASH INPUT <calculation to perform>**
 Error message if the input is not well-formed as described above.\
-• 3 - **ERROR <calculation to perform>**
-Error response message after a GET message, if the file does not exist.\
+• 3 - **WTF <calculation to perform>**
+Error response message after a CALC message, if the file does not exist.\
 All of these messages are UTF-8 encoded with “\n” as end-of-line character.
 
 If the answer is valid, it is returned to the client using a byte stream.
