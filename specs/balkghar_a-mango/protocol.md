@@ -1,32 +1,48 @@
 # DAI - Lab 03 - Protocol Design
 
-## Overview
+## 1. Overview
 
-The `calc` protocol is a text-based protocol that allows users to do mathematical calculations on a server. The protocol
-is based on a client-server architecture, with a single exchange where the client sends a request to the server and the
-server responds with the result of the calculation. The messages are sent in raw text format, with mathematical symbols
-denoting operations and operations formulated in reverse polish notation. It is possible to do more than one operation
-at a time in a single message. Only arithmetical operations are supported
+The **Green Cat Calculation Protocol** (GCCP) protocol is a text-based protocol that allows users to do mathematical
+calculations on a server. The protocol
+is based on a client-server architecture where the client communicates with the server to get a computation done.
+The client initiates the connection with a special message, to which the server answers with a list of its capabilities.
+The client can then send the request to the server and the server will respond with the result of the computation. The
+server will then close the connection with a special message.
+The messages are sent in raw text format, with classical mathematical symbols denoting operations and expressions
+formulated in [Reverse Polish Notation (RPN)](https://en.wikipedia.org/wiki/Reverse_Polish_notation). The symbols of the
+expression must be separated by a whitespace character. It is possible to do more than one operation in a single
+expression.
 
-## Transport layer
+## 2. Transport layer
 
 The protocol will use TCP and the port 51740 for 0xCA1C. The client will initiate the communication with a special
-message and the server will
-respond with a special message as well. The client will then send the request and the server will respond with the
+message and the server will respond with a special message as well. The client will then send the request and the server
+will respond with the
 result.
 
-## Messages format
+## 3. Messages format
 
-The messages are sent in raw text format, with mathematical symbols denoting operations and operations formulated in [
-RPN](https://en.wikipedia.org/wiki/Reverse_Polish_notation). The server may also provide some mathematical functions, in
-which cas it will announce it in it's HELLO reply.
-The messages are sent in UTF-8 encoding.
-The messages will always be a single line terminated by a single newline character.
+The messages are sent in UTF-8 encoding and are always a single line terminated by a single newline character. The
+maximum
+length for a message is 8192 characters.
 
 The client will send a message to the server to initiate the communication. The message will be in the following form :
 
 ```
-CALC <REQUEST> 
+GCCP HELLO
+```
+
+The server will respond with a message in the following form :
+
+```
+GCCP HELLO <OPERATIONS>
+Example : GCCP HELLO + * / sin ln
+```
+
+The client will then send a message to the server to request a computation. The message will be in the following form :
+
+```
+GCCP <REQUEST> 
 Example : CALC 2 3 +
           CALC 2 3 + 4 *
           CALC 2 3 + 4 * 5 6 + *
@@ -35,66 +51,114 @@ Example : CALC 2 3 +
 The server will respond with a message in the following form :
 
 ```
-CALC <RESULT>
-ou
-CALC ERR <errno>
+GCCP <RESULT>
+or
+GCCP ERR <errno>
 ```
 
-## Specificities
+The server will then close the connection with a message in the following form :
 
-### Operations
+```
+GCCP BYE
+```
 
-The supported arithmetical operations are specified in the [following Wikipedia
-pag](https://en.wikipedia.org/wiki/Glossary_of_mathematical_symbols#Arithmetic_operators)
+## 4. Specificities
 
-### Symbols
+### 4.1 Authentication
 
-The project supports the $\pi$, $\e$ and $\phi$ constants.
+No authentication is required for the protocol.
 
-### Functions
+### 4.2 Security
 
-The server understands the following functions :
+The protocol implements a very basic security mechanism by ciphering the messages between the client and the server
+using Base64 encoding.
+
+### 4.3 Mathematical objects
+
+#### 4.3.1 Operations
+
+The server must support the following operations :
+
+- Addition using the `+` symbol
+- Subtraction using the `-` symbol
+- Multiplication using the `*` symbol
+- Division using the `/` symbol
+- Exponentiation using the `^` symbol
+- Square root using the `√` symbol
+- Factorial using the `!` symbol
+
+Other operations may be supported.
+
+#### 4.3.2 Operands
+
+The operands must be positive integers or floating-point numbers with a maximum of 6 digits after the decimal point.
+
+#### 4.3.3 Constants
+
+The project must support the $\pi$, $\e$ and $\phi$ mathematical constants. Other constants may be supported.
+
+#### 4.3.4 Functions
+
+The server must handle the following transcendental functions :
 
 - Sine
 - Cosine
 - Tangent
 - Natural logarithm
 
-### Errors
+Other functions may be supported.
 
-The following errors may be raised :
+### 4.4 Errors
 
-0x1 SYNTAX
-0x2 LOGIC
-0x3 INTERNAL
-0x4 UNSUPPORTED
+The server must handle the following errors :
 
-The server will answer with an error code and the client is in charge of interpreting it.
+| Error code | Description           | Example                                            |
+|------------|-----------------------|----------------------------------------------------|
+| 01         | Syntax error          | `CALC 2 3 + + - *   `                              |
+| 02         | Logic error           | `CALC 2 0 /`                                       |
+| 03         | Internal error        | Server is out of memory. Operation overflows       |
+| 04         | Unsupported operation | `CALC 2 3 =`                                       |
+| 05         | Invalid input         | The message is malformed. The message is too long. |
 
-### Additional capabilities
+The server will answer with an error code and the client is in charge of displaying a helpful error message for the
+user.
 
-An easter egg will be available when sending the "🟢🐱" (greencat) sequence instead of the opeartion in the opening `CALC`
-message.
+### 4.5 Concurrency
 
-## Diagram
+The server is only able to handle one connection per client at a time. Different clients can connect to the server at
+the same time.
+
+### 4.6 Additional capabilities
+
+A server-specific Easter-egg may be available when sending the "🟢🐱" (Green Cat) sequence instead of an expression in
+the opening `GCCP` message.
+
+## 5. Diagram
+
+### 5.1 Successful communication
+
+The following diagram shows a successful communication between a client and a server :
 
 ```mermaid
 sequenceDiagram
-	box Succesful communication
-    participant Client A
-    participant Serveur A
-    end
-    Box Erroneus communication
-    participant Client B
-    participant Serveur B
-    end
-    Client A-->>Serveur A: Open TCP connection
-    Client A->>Serveur A: CALC 2 3 +
-	Serveur A->>Client A: CALC 5
-	Serveur A-->>Client A: Close TCP connection
-	Client B-->>Serveur B: Open TCP connection
-    Client B->>Serveur B: CALC 2 3 + + - *
-	Serveur B->>Client B: CALC ERR 1
-	Serveur B-->>Client B: Close TCP connection
+    Client-->>Serveur: Open TCP connection
+    Client->>Serveur: GCCP HELLO
+    Serveur->>Client: GCCP HELLO +
+    Client->>Serveur: GCCP 2 3 +
+	Serveur->>Client: GCCP 5
+    Serveur-->>Client: GCCP BYE
+	Serveur-->>Client A: Close TCP connection
+```
+
+### 5.2 Erroneous communication
+
+```mermaid
+sequenceDiagram
+	Client-->>Serveur: Open TCP connection
+    Client->>Serveur: GCCP HELLO
+    Client->>Serveur: GCCP 2 3 + + - *
+	Serveur->>Client: GCCP ERR 1
+    Serveur-->>Client: GCCP BYE
+	Serveur-->>Client: Close TCP connection
 ```
 
