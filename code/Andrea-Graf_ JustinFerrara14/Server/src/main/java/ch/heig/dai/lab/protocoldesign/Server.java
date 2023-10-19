@@ -4,7 +4,7 @@ import static java.nio.charset.StandardCharsets.*;
 
 public class Server {
     final int SERVER_PORT = 8888;
-    String[] supportedCommands = {"init", "add", "mul", "div", "quit"};
+    String[] supportedCommands = {"init", "add", "mul", "quit"};
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -31,15 +31,28 @@ public class Server {
     private void command(var in, var out) {
         String line;
         while ((line = in.readLine()) != null) {
-            switch (line) {
+            String[] command = line.split(" ");
+            if(command[0] == "quit") {
+                break;
+            }
+            switch (command[0]) {
                 case "init":
-                    out.write("hello\n");
+                    out.write("info");
+                    for(String command : supportedCommands) {
+                        out.write(" " + command);
+                    }
+                    out.write("\n
                     break;
-                case "bye":
-                    out.write("bye\n");
+                case "add":
+                    out.write("result" + (Integer.parseInt(command[1]) + Integer.parseInt(command[2])) + "\n");
+                    break;
+                case "mul":
+                    out.write("result" + (Integer.parseInt(command[1]) * Integer.parseInt(command[2])) + "\n");
+                    break;
+                case "quit":
                     break;
                 default:
-                    out.write("error\n");
+                    out.write("result error\n");
                     break;
             }
             out.flush();

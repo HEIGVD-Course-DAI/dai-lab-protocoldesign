@@ -23,7 +23,6 @@ The messages are sent as text. The messages are separated by a new line. The mes
 ### calculation
 - "add a b" : the client sends this message to the server to add a and b. The server sends the result
 - "mul a b" : the client sends this message to the server to multiply a and b. The server sends the result
-- "div a b" : the client sends this message to the server to divide a by b. The server sends the result
 - "result a" : the server sends this message to the client to send the result of the operation. a can be a number or an error message
   - "a" : the result of the operation
   - "error" : the operation is not supported
