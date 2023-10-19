@@ -23,7 +23,7 @@ Message format will be specified at the end of this chapter.
 
 ### Message format
 
-* Message will be delimited by a `\n` character, each message part will be separated by '|' and the used encoding will be UTF-8
+* Message will be delimited by a `\n` character, each message part will be separated by `|` and the used encoding will be UTF-8
 * Message will start with a type, that can be:
   * WELCOME
   * COMPUTATION_REQUEST
@@ -51,3 +51,4 @@ Message format will be specified at the end of this chapter.
 * if the client send multiple request before the server has the chance to respond to one, the server will give the response to each request in 
 the same order it received request
 * the server is free to support more or less operation, the specification don't enforce any notation for an operation or a limited set of supported operation
+* the server will use port 4242 
