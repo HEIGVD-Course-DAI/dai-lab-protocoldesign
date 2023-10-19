@@ -37,11 +37,11 @@ Message format will be specified at the end of this chapter.
   * for COMPUTATION_ERROR: there won't be any payload
 
 ### Communication flow example
-
+ 
 1. Client establish connection
 2. Server send `WELCOME|+ - * /\n`
 3. Client then send `COMPUTATION_REQUEST|2 *(4+5)\n`
 4. Server respond `COMPUTATION_RESPONSE|18\n`
 5. Client then send `COMPUTATION_REQUEST|2%3\n`
-6. Server respond `COMPUTATION_ERROR`
+6. Server respond `COMPUTATION_ERROR\n`
 7. Client then close the connection
