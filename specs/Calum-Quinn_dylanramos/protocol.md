@@ -1,20 +1,33 @@
 # Protocol Specification
 
 ## Overview
-Purpose and general behavior of the application
 
 The goal of this protocol is to enable communication between a client and a server. It will allow a client to transmit a calculation to the server and receive a solution in turn.
 
 ## Transport layer protocol
-TCP or UDP, IP address, port, who creates and who closes the connection
 
-This 
+This protocol will employ TCP for it's communications. The client establishes the connection. It must know the server's IP address. The server listens for communication on TCP port 32976. The server either transmits the solution or an error message in case of an unsupported request. The client closes the communication after it has made all the requests it wants.
 
 ## Messages
-Who speaks first, syntax of all messages, direction for each message, meaning of each message, required sequence of messages
+
+The following messages will be used by the client:
+- `ADD <firstNumber> <secondNumber>`
+- `SUB <firstNumber> <secondNumber>`
+- `MUL <firstNumber> <secondNumber>`
+- `DIV <firstNumber> <secondNumber>`
+
+The server can then respond with these messages:
+- `<solution>`
+- `UNSUPPORTED OPP`
+- `UNSUPPORTED NUM`
+
+All messages will be encoded using UTF-8 using '\n' as the end of line designator.
 
 ## Specific elements
-e.g., error handling, extensibility
+
+Communication is still possible even after an error message. If the client sends a bad request it can receive two different messages, one in case the operation requested is not recognised and the other in case the numbers given are not supported. Once the error message is received the client can choose to either send another request or close the connection.
 
 ## Example dialogs
-examples of one or several dialogs to clarify the scenarios
+
+Here are some examples of possible dialogs between the client and server.
+![DialogExamples](DialogExamples.png)
