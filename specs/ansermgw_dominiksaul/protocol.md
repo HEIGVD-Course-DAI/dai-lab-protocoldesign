@@ -45,3 +45,8 @@ Message format will be specified at the end of this chapter.
 5. Client then send `COMPUTATION_REQUEST|2%3\n`
 6. Server respond `COMPUTATION_ERROR\n`
 7. Client then close the connection
+
+### Special scenario
+
+* if the client send multiple request before the server has the chance to respond to one, the server will give the response to each request in 
+the same order it received request
