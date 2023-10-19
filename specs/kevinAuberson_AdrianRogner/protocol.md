@@ -1,3 +1,4 @@
+# Protocol "calculator19TH"
 ## Section 1 : overview
 calculator19TH is a client-server protocol. The client connects to a server and send an operation (addition, subtraction, multiplication and division). The server send the result back, if a character is not define return an error.
 
@@ -22,3 +23,4 @@ Messages are UTF-8 encoded with “\n” as end-of-line character.
 The server sends the result as textual message.
 
 ## Section 4 : example dialogs
+![img.png](img.png)
