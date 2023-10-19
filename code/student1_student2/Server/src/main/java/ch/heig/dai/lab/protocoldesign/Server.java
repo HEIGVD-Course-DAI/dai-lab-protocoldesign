@@ -11,7 +11,7 @@ public class Server {
 
     private void run() {
         //Copy of given example on side:
-        try (ServerSocket serverSocket = new ServerSocket(1234)) {
+        try (ServerSocket serverSocket = new ServerSocket(4242)) {
             while (true) {
                 try (Socket socket = serverSocket.accept();
                      InputStream in = new BufferedInputStream(socket.getInputStream());
