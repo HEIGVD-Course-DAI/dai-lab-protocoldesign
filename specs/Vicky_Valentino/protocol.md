@@ -22,16 +22,33 @@ Summary protocol specification
 
 ```mermaid
 sequenceDiagram
-Client ->> Server: Open TCP connection
-Server ->> Client: CONNECTED add,mult,sub,div,mod
-Client ->> Server: OPERATION add 5 5
-Server ->> Client: 10
+box SUCCESSFUL
+participant Client A
+participant Server A
+end
+box COMPUTATION ERROR
+participant Client B
+participant Server B
+end
+box UNKNOWN ERROR
+participant Client C
+participant Server C
+end
 
-Client ->> Server: OPERATION div 5 0
-Server ->> Client: ERROR COMPUTATION FAILED
-    
-Client ->> Server: OPERATION dodo 5 5 5
-Server ->> Client: ERROR UNKNOWN OPERATION
+Client A ->> Server A: Open TCP connection
+Server A ->> Client A: CONNECTED add,mult,sub,div,mod
+Client A ->> Server A: OPERATION add 5 5
+Server A ->> Client A: 10
+loop 
+   Client B-->Server B: still connected
+end
+Client B ->> Server B: OPERATION div 5 0
+Server B ->> Client B: ERROR COMPUTATION FAILED
+loop 
+   Client C-->Server C: still connected
+end
+Client C ->> Server C: OPERATION dodo 5 5 5
+Server C ->> Client C: ERROR UNKNOWN OPERATION
 
-Client ->> Server: EXIT
+Client C ->> Server C: EXIT
 ```
