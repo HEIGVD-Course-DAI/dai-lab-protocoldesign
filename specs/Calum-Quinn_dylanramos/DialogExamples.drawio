@@ -1,0 +1,271 @@
+<mxfile host="Electron" modified="2023-10-19T11:59:08.357Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="7CZUhYnR1JQm6wk8iwJg" version="22.0.2" type="device">
+  <diagram name="Page-1" id="2YBvvXClWsGukQMizWep">
+    <mxGraphModel dx="592" dy="346" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-1" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="322" as="sourcePoint" />
+            <mxPoint x="80" y="82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-2" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="240" y="322" as="sourcePoint" />
+            <mxPoint x="240" y="82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-3" value="Client" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="50" y="50" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-4" value="Server" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="205" y="50" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-5" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="102" as="sourcePoint" />
+            <mxPoint x="240" y="102" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-8" value="Open TCP connection" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-5">
+          <mxGeometry x="0.1543" relative="1" as="geometry">
+            <mxPoint x="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-6" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="240" y="182" as="sourcePoint" />
+            <mxPoint x="80" y="182" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-12" value="5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-6">
+          <mxGeometry x="-0.1829" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-9" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="142" as="sourcePoint" />
+            <mxPoint x="240" y="142" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-11" value="ADD 2 3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-9">
+          <mxGeometry x="0.0471" y="-1" relative="1" as="geometry">
+            <mxPoint x="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-13" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="222" as="sourcePoint" />
+            <mxPoint x="240" y="222" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-14" value="SUB 73 25" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-13">
+          <mxGeometry x="0.1543" relative="1" as="geometry">
+            <mxPoint x="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-15" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="240" y="262" as="sourcePoint" />
+            <mxPoint x="80" y="262" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-16" value="48" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-15">
+          <mxGeometry x="-0.1829" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-17" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="302" as="sourcePoint" />
+            <mxPoint x="240" y="302" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-18" value="Close TCP connection" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-17">
+          <mxGeometry x="0.1543" relative="1" as="geometry">
+            <mxPoint x="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-19" value="Succesful communication" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="70" y="20" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-21" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="338" y="322" as="sourcePoint" />
+            <mxPoint x="338" y="82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-22" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="498" y="322" as="sourcePoint" />
+            <mxPoint x="498" y="82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-23" value="Client" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="310" y="50" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-24" value="Server" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="463" y="50" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-25" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="338" y="102" as="sourcePoint" />
+            <mxPoint x="498" y="102" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-26" value="Open TCP connection" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-25">
+          <mxGeometry x="0.1543" relative="1" as="geometry">
+            <mxPoint x="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-27" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="498" y="182" as="sourcePoint" />
+            <mxPoint x="338" y="182" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-28" value="UNSUPPORTED OPP" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-27">
+          <mxGeometry x="-0.1829" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-29" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="338" y="142" as="sourcePoint" />
+            <mxPoint x="498" y="142" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-30" value="POV 7 6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-29">
+          <mxGeometry x="0.0471" y="-1" relative="1" as="geometry">
+            <mxPoint x="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-35" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="338" y="300" as="sourcePoint" />
+            <mxPoint x="498" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-36" value="Close TCP connection" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-35">
+          <mxGeometry x="0.1543" relative="1" as="geometry">
+            <mxPoint x="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-37" value="Unsuccesful communication" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="323" y="20" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-43" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="220" as="sourcePoint" />
+            <mxPoint x="500" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-44" value="MUL 9 E" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-43">
+          <mxGeometry x="0.0471" y="-1" relative="1" as="geometry">
+            <mxPoint x="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-45" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500" y="260" as="sourcePoint" />
+            <mxPoint x="340" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-46" value="UNSUPPORTED NUM" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-45">
+          <mxGeometry x="-0.1829" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-47" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="598" y="322" as="sourcePoint" />
+            <mxPoint x="598" y="82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-48" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="758" y="322" as="sourcePoint" />
+            <mxPoint x="758" y="82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-49" value="Client" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="570" y="50" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-50" value="Server" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="723" y="50" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-51" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="598" y="102" as="sourcePoint" />
+            <mxPoint x="758" y="102" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-52" value="Open TCP connection" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-51">
+          <mxGeometry x="0.1543" relative="1" as="geometry">
+            <mxPoint x="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-53" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="758" y="182" as="sourcePoint" />
+            <mxPoint x="598" y="182" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-54" value="UNSUPPORTED OPP" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-53">
+          <mxGeometry x="-0.1829" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-55" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="598" y="142" as="sourcePoint" />
+            <mxPoint x="758" y="142" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-56" value="ADF 8 3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-55">
+          <mxGeometry x="0.0471" y="-1" relative="1" as="geometry">
+            <mxPoint x="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-57" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="598" y="300" as="sourcePoint" />
+            <mxPoint x="758" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-58" value="Close TCP connection" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-57">
+          <mxGeometry x="0.1543" relative="1" as="geometry">
+            <mxPoint x="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-59" value="Semi succesful communication" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="573" y="20" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-60" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="220" as="sourcePoint" />
+            <mxPoint x="760" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-61" value="DIV 21 7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-60">
+          <mxGeometry x="0.0471" y="-1" relative="1" as="geometry">
+            <mxPoint x="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-62" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="760" y="260" as="sourcePoint" />
+            <mxPoint x="600" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivQx5NKA54DXNk-F4Mn2-63" value="3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ivQx5NKA54DXNk-F4Mn2-62">
+          <mxGeometry x="-0.1829" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
