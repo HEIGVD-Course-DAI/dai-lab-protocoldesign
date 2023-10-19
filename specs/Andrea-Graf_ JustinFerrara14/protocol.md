@@ -20,7 +20,7 @@ The messages are sent as text. The messages are separated by a new line. The mes
 - "init" : the client sends this message to the server to start the connection. The server sends the supported operations.
             If the server does not respond, the client closes the connection.
 - "info" : the server sends this message after the beginning of a connection to validate the connection and send the supported operations.
-
+            The last command of the server is always the quit command.
 ### Calculation
 - "add a b" : the client sends this message to the server to add a and b. The server sends the result
 - "mul a b" : the client sends this message to the server to multiply a and b. The server sends the result
