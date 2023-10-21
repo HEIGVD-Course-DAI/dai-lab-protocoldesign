@@ -4,11 +4,7 @@ import java.io.*;
 import java.net.*;
 import static java.nio.charset.StandardCharsets.*;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Stack;
-
-import javax.naming.spi.DirStateFactory.Result;
 
 public class Server {
 	final int SERVER_PORT = 51740;
@@ -28,10 +24,12 @@ public class Server {
 						BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8))) {
 
 					String line = in.readLine();
-					double result;
-					if (line != null) {
-						result = calculation(line);
-						out.write(String.valueOf(result));
+
+					if (line != null && line.substring(0, 4) == "CALC") {
+						double result = calculation(line.substring(5));
+						out.write("CALC " + String.valueOf(result));
+					} else {
+						out.write("CALC ERR 1");
 					}
 				} catch (IOException e) {
 					System.out.println("Server: socket ex.: " + e);
@@ -42,17 +40,11 @@ public class Server {
 		}
 	}
 
-	/**
-	 * 
-	 * @param source
-	 * @return
-	 */
 	private double calculation(String source) {
 
 		Stack<Double> stack = new Stack<>();
 
 		for (String token : source.split("\\s+")) {
-			System.out.print(token + "\t");
 			switch (token) {
 				case "+":
 					stack.push(stack.pop() + stack.pop());
@@ -93,7 +85,11 @@ public class Server {
 					stack.push(Math.log(stack.pop()));
 					break;
 				default:
-					stack.push(Double.parseDouble(token));
+					try {
+						stack.push(Double.parseDouble(token));
+					} catch (Exception ex) {
+						throw new IllegalArgumentException("This isn't a double :/");
+					}
 					break;
 			}
 		}
