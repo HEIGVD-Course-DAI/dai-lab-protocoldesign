@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static java.lang.Character.isDigit;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Server {
@@ -15,8 +16,9 @@ public class Server {
         MULTIPLY('*'),
         DIVISION('/'),
         MODULO('%'),
-        BRACKETO('('),
-        BRACKETC(')'),
+        // POWER('^'),
+        BRACKET_OPEN('('),
+        BRACKET_CLOSE(')'),
         SPACE(' ');
 
         public final char label;
@@ -55,9 +57,10 @@ public class Server {
                         // depending on the message type, do ...
                         switch (msgParts[0]) {
                             case "CALCULATION":
+                            //case "CALC":
                                 try {
-                                    int result = calculateString(msgParts[1]);
-                                    out.write("RESULT|" + result + "\n");
+                                    // String result = ;
+                                    out.write("RESULT|" + calculateString(msgParts[1]) + "\n");
                                 } catch (RuntimeException e) {
                                     out.write("ERROR|" + e.getMessage() + "\n");
                                 }
@@ -87,22 +90,60 @@ public class Server {
     }
 
     private int calculateString(String str) {
-        // calculate(str, pos);
+        // convert string so it can be calculated with the method polonaise inverse
 
-        if (str.equals("err")) throw new RuntimeException("invalid format");
-        return 42;
+        // remove spaces
+        str = str.replaceAll("\\s+", "");
+        // if (str.charAt(0) != '(') str = "(" + str + ")";
 
-        // remove all whitespaces in string
-        //String calc = str.replaceAll("\\s+","");
-        /*var numberStack = new Stack<Integer>();
-        var operatorStack = new Stack<Character>();
-        int number;
-        for (int i = 0; i < calc.length(); ++i) {
-            if (calc.charAt(i) == '(' || calc.charAt(i) == ' ') {
-                continue;
-            } else if (calc.charAt(i) == ')') {
+        // add brackets where needed
 
-            } else if ()
-        }*/
+        // calculate the string with the method polonaise inverse
+        return calculate(str, new Position());
+    }
+
+    private int calculate(String str, Position pos) {
+        if (str.charAt(pos.get()) == OPERATORS.BRACKET_OPEN.label) {
+            pos.increase();
+            int v1 = calculate(str, pos);
+            char op = str.charAt(pos.increase());
+            int v2 = calculate(str, pos);
+
+            if (str.charAt(pos.increase()) != OPERATORS.BRACKET_CLOSE.label) {
+                throw new RuntimeException("invalid calculation format");
+            }
+
+            if (op == OPERATORS.PLUS.label) {
+                return v1 + v2;
+            } else if (op == OPERATORS.MINUS.label) {
+                return v1 - v2;
+            } else if (op == OPERATORS.MULTIPLY.label) {
+                return v1 * v2;
+            } else if (op == OPERATORS.DIVISION.label) {
+                return v1 / v2;
+            } else if (op == OPERATORS.MODULO.label) {
+                return v1 % v2;
+            } else {
+                throw new RuntimeException("invalid calculation format");
+            }
+        } else if (isDigit(str.charAt(pos.get()))) {
+            var value = new StringBuilder();
+            while (isDigit(str.charAt(pos.get()))) {
+                value.append(str.charAt(pos.increase()));
+            }
+            return Integer.parseInt(value.toString());
+        } else {
+            throw new RuntimeException("invalid calculation format");
+        }
+    }
+
+    private class Position {
+        int pos = 0;
+        int get() {
+            return pos;
+        }
+        int increase() {
+            return pos++;
+        }
     }
 }
