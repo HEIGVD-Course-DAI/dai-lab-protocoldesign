@@ -170,9 +170,9 @@ sequenceDiagram
     Client->>Serveur: GCCP HELLO
     Serveur->>Client: GCCP HELLO +
     Client->>Serveur: GCCP 2 3 +
-	Serveur->>Client: GCCP 5
+    Serveur->>Client: GCCP 5
     Serveur-->>Client: GCCP BYE
-	Serveur-->>Client A: Close TCP connection
+    Serveur-->>Client: Close TCP connection
 ```
 
 ### 5.2 Erroneous communication
