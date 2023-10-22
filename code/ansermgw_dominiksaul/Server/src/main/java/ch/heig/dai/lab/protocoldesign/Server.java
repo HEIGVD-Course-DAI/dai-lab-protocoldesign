@@ -91,15 +91,11 @@ public class Server {
     }
 
     private int calculateString(String str) {
-        // convert string so it can be calculated with the method polonaise inverse
-
-        // remove spaces
+        // convert string so it can be calculated
         str = str.replaceAll("\\s+", "");
-        // if (str.charAt(0) != '(') str = "(" + str + ")";
         str = "(" + str + ")";
-        // add brackets where needed
 
-        // calculate the string with the method polonaise inverse
+        // calculate the string
         return calculate(str, new Position());
     }
 
