@@ -7,12 +7,16 @@ import static java.nio.charset.StandardCharsets.*;
 import java.util.Stack;
 
 public class Server {
-	final int SERVER_PORT = 51740;
-	final String BASE_MESSAGE = "GCCP";
-	final String INFO_MESSAGE = "HELLO";
-	final String END_MESSAGE = "BYE";
-	final String EASTER_EGG_CODE = "🟢🐱";
-	final String EASTER_EGG_TEXT = "⠀ ／l、\t MEOW \n" + //
+	private final int SERVER_PORT = 51740;
+	private final String BASE_MESSAGE = "GCCP"; // stand for Green Cat Calculation Protocol
+	private final String INFO_MESSAGE = "HELLO";
+	private final String END_MESSAGE = "BYE";
+	private final String ERROR_ONE = "ERR 01";
+	private final String ERROR_TWO = "ERR 02";
+	private final String ERROR_THREE = "ERR 03";
+	private final String ERROR_FOUR = "ERR 04";
+	private final String EASTER_EGG_CODE = "🟢🐱";
+	private final String EASTER_EGG_TEXT = "⠀ ／l、\t MEOW \n" + //
 			"（ﾟ､ ｡７\n" + //
 			"⠀ l、ﾞ~ヽ\n" + //
 			"  じしf_,)ノ\n";
@@ -23,7 +27,7 @@ public class Server {
 		server.run();
 	}
 
-	static double factorial(double n) {
+	private static double factorial(double n) {
 		if (n == 0)
 			return 1;
 		else
@@ -50,9 +54,15 @@ public class Server {
 							} else if (line.substring(5, 9).equals(EASTER_EGG_CODE)) {
 								out.write(EASTER_EGG_TEXT);
 							} else if (line.substring(5, 10).equals(INFO_MESSAGE)) {
-								out.write("GCCP HELLO <OPERATIONS>\n" + " Example : GCCP HELLO + * / sin ln\n");
+								out.write(BASE_MESSAGE + " " + INFO_MESSAGE + " <OPERATIONS>\n"
+										+ " Example : " + BASE_MESSAGE + " " + INFO_MESSAGE + " + * / sin ln\n");
 							} else {
-								out.write(BASE_MESSAGE + " " + String.valueOf(calculation(line.substring(5))) + "\n");
+								try {
+									out.write(BASE_MESSAGE + " " + String.valueOf(calculation(line.substring(5))) + "\n");
+
+								} catch (IllegalArgumentException e) {
+									out.write(BASE_MESSAGE + " " + ERROR_ONE);
+								}
 							}
 							out.flush();
 						}
