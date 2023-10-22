@@ -11,6 +11,8 @@ public class Server {
 	private final String BASE_MESSAGE = "GCCP"; // stand for Green Cat Calculation Protocol
 	private final String INFO_MESSAGE = "HELLO";
 	private final String END_MESSAGE = "BYE";
+	private final String SUPPORTED_OPERAIONS = "+ - * / ^ √ sin cos tan ln !";
+	private final String MATHS_CONSTANTS = "π e";
 	private final String ERROR_ONE = "ERR 01";
 	private final String ERROR_TWO = "ERR 02";
 	private final String ERROR_THREE = "ERR 03";
@@ -54,8 +56,9 @@ public class Server {
 							} else if (line.substring(5, 9).equals(EASTER_EGG_CODE)) {
 								out.write(EASTER_EGG_TEXT);
 							} else if (line.substring(5, 10).equals(INFO_MESSAGE)) {
-								out.write(BASE_MESSAGE + " " + INFO_MESSAGE + " <OPERATIONS>\n"
-										+ " Example : " + BASE_MESSAGE + " " + INFO_MESSAGE + " + * / sin ln\n");
+								out.write(BASE_MESSAGE + " " + INFO_MESSAGE + " " + SUPPORTED_OPERAIONS + "\n"
+										+ "Additionaly, GCCP support those maths constant : " + MATHS_CONSTANTS + "\n"
+										+ "To end communication, type : " + BASE_MESSAGE + " " + END_MESSAGE + "\n");
 							} else {
 								try {
 									out.write(BASE_MESSAGE + " " + String.valueOf(calculation(line.substring(5))) + "\n");
