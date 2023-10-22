@@ -16,9 +16,10 @@ public class Server {
         MULTIPLY('*'),
         DIVISION('/'),
         MODULO('%'),
-        // POWER('^'),
+        POWER('^'),
         BRACKET_OPEN('('),
         BRACKET_CLOSE(')'),
+        POINT('.'),
         SPACE(' ');
 
         public final char label;
@@ -57,7 +58,7 @@ public class Server {
                         // depending on the message type, do ...
                         switch (msgParts[0]) {
                             case "CALCULATION":
-                            //case "CALC":
+                                //case "CALC":
                                 try {
                                     // String result = ;
                                     out.write("RESULT|" + calculateString(msgParts[1]) + "\n");
@@ -95,7 +96,7 @@ public class Server {
         // remove spaces
         str = str.replaceAll("\\s+", "");
         // if (str.charAt(0) != '(') str = "(" + str + ")";
-
+        str = "(" + str + ")";
         // add brackets where needed
 
         // calculate the string with the method polonaise inverse
@@ -106,11 +107,17 @@ public class Server {
         if (str.charAt(pos.get()) == OPERATORS.BRACKET_OPEN.label) {
             pos.increase();
             int v1 = calculate(str, pos);
+
+            // return if it's a single value inside brackets, f.ex ((3))
+            if (str.charAt(pos.get()) == OPERATORS.BRACKET_CLOSE.label) {
+                return v1;
+            }
+
             char op = str.charAt(pos.increase());
             int v2 = calculate(str, pos);
 
             if (str.charAt(pos.increase()) != OPERATORS.BRACKET_CLOSE.label) {
-                throw new RuntimeException("invalid calculation format");
+                throw new RuntimeException("invalid calculation format 1");
             }
 
             if (op == OPERATORS.PLUS.label) {
@@ -123,25 +130,32 @@ public class Server {
                 return v1 / v2;
             } else if (op == OPERATORS.MODULO.label) {
                 return v1 % v2;
+            } else if (op == OPERATORS.POWER.label) {
+                return (int) Math.pow(v1, v2);
             } else {
-                throw new RuntimeException("invalid calculation format");
+                throw new RuntimeException("invalid calculation format 2");
             }
-        } else if (isDigit(str.charAt(pos.get()))) {
+        } else if (isDigit(str.charAt(pos.get())) || str.charAt(pos.get()) == OPERATORS.MINUS.label) {
             var value = new StringBuilder();
+            if (str.charAt(pos.get()) == OPERATORS.MINUS.label) {
+                value.append(str.charAt(pos.increase()));
+            }
             while (isDigit(str.charAt(pos.get()))) {
                 value.append(str.charAt(pos.increase()));
             }
             return Integer.parseInt(value.toString());
         } else {
-            throw new RuntimeException("invalid calculation format");
+            throw new RuntimeException("invalid calculation format 3");
         }
     }
 
     private class Position {
         int pos = 0;
+
         int get() {
             return pos;
         }
+
         int increase() {
             return pos++;
         }
