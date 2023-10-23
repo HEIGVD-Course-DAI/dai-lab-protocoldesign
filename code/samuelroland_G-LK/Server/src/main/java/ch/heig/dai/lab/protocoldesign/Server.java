@@ -28,6 +28,8 @@ public class Server {
 								new OutputStreamWriter(
 										socket.getOutputStream(), UTF_8))) {
 
+					out.write(getWelcomeMessage() + "\n");
+					out.flush();
 					// wait for a client to be connected with the server
 					String line;
 					while ((line = in.readLine()) != null) {
@@ -41,6 +43,16 @@ public class Server {
 		} catch (IOException e) {
 			System.out.println("Server: server socket ex.: " + e);
 		}
+	}
+
+	private String getWelcomeMessage() {
+		return "Welcome to SuperCalculationServer !\n" +
+				"\n" +
+				"You can do the following calculations.\n" +
+				"- Sum: <operand 1> + <operand 2>\n" +
+				"- Substraction: <operand 1> - <operand 2>\n" +
+				"- Multiplication: <operand 1> * <operand 2>\n" +
+				"- Division: <operand 1> / <operand 2>";
 	}
 
 }
