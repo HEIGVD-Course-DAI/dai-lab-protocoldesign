@@ -8,7 +8,11 @@ This protocol uses TCP as transport layer protocol. It has to known the IP addre
 
 The client closes the connection by sending the `END` message. The server closes the connection when it receives the `END` message or after a timeout of 10 seconds.
 
-Data is sent as a string. The string is composed of the operation and the operands separated by a space. The server sends the result or the error message as a string.
+Data is sent as a UTF-8 string. The string is composed of the operation and the operands separated by a space. The server sends the result or the error message as a string.
+
+The operands are integers.
+
+Each line is terminated by a `;` character.
 
 ## 3. Messages
 Here are the messages exchanged between the client and the server :
