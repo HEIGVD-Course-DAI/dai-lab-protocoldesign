@@ -24,9 +24,14 @@ public class Client {
         client.run(args);
     }
 
+    private void help() {
+        System.out.println("Usage: java Client <server IPv4 address>");
+        System.exit(1);
+    }
+
     private void parseArguments(String[] args) {
-        if (args.length != 1 || !args[0].matches(IPV4_PATTERN)) {
-            System.out.println("Usage: java Client <server IPv4 address>");
+        if (args.length != 1 || args[0].matches("help") || !args[0].matches(IPV4_PATTERN)) {
+            help();
             System.exit(1);
         }
 
