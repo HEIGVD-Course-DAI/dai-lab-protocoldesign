@@ -10,9 +10,11 @@ public class Client {
     static final private String IPV4_PATTERN = "^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\\.(?!$)|$)){4}$";
     static final int SERVER_PORT = 0xCA1C;
 
-    static final String MSG_PREFIX = "GCCP ";
-    static final String MSG_HELLO = MSG_PREFIX + "HELLO";
-    static final String MSG_BYE = MSG_PREFIX + "BYE";
+    static final private String MSG_PREFIX = "GCCP ";
+    static final private String MSG_HELLO = MSG_PREFIX + "HELLO";
+    static final private String MSG_BYE = MSG_PREFIX + "BYE";
+
+
 
     /**
      * Application entry point.
