@@ -55,11 +55,11 @@ public class Client {
             // Connection to the server established and ready to run
             // Loop between asking for input and displaying answer
             while (!line.startsWith(MSG_BYE)) {
-//                if (!line.startsWith(MSG_PREFIX)) continue;
                 write(userInput, out);  // Get user input
                 line = read(in);               // Get server response
             }
 
+            System.out.println("Server: connection closed");
         } catch (IOException e) {
             System.out.println("Server: socket exception: " + e);
         }
@@ -103,8 +103,9 @@ public class Client {
     private String read(BufferedReader in) throws IOException {
         String response;
         while (!(response = in.readLine()).startsWith(MSG_PREFIX)) {
-            // Do nothing
+            // Blockingly wait for a well-formatted message
         }
+        System.out.println("Server: " + response.substring(MSG_PREFIX.length()));
         return response;
     }
 }
