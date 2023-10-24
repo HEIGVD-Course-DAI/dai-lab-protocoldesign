@@ -26,7 +26,7 @@ Spaces will be needed between the operands and operations.
 
 # Section 3: Messages and error handling
 
-All the messages will be encoded with UTF-8 and \n at the 
+All the messages will be encoded with UTF-8 and \n at the end
 The follings prefixes will be used for transmitting messages for calculations:
     * COMPUTE:<operand1><operation><operand2>
         To send regular computations to the server.
@@ -41,7 +41,8 @@ The following error messages will be used to handle errors:
 The following message will be sent to close the connexion:
     * BYE
         Since the server always waits new requests from the client it only closes the connexion when it receives such a message.
-
+        
+In case of a timeout (120 sec) the server will close the connection.
 
 # Section 4: Examples
 
