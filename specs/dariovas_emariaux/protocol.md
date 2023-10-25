@@ -2,21 +2,22 @@
 
 ### Section 1 : Overview
 
-XXX is a client-server protocol. 
+MOP (Math Operation protocol) is a client-server protocol. 
 The client connects to a server and waits until the user entered his calculation containing his operation followed by two numbers, then sends it to the servers.
 
-The operation possible will be “ADD”, “SUB”, “MULT”, “DIV” :
+The operation possible will be “ADD”, “SUB”, “MULT”, “DIV”, "MOD" :
 -	ADD -> Addition
 -	SUB -> Substraction
 -	MULT -> Multiplication
 -	DIV -> Division
+-	MOD -> Modulo
 
 The server sends the result back or an error message, if the operation is not covered.
 Then, the clients displays the result.
 
 ### Section 2 : Transport layer protocol
 
-XXXX uses TCP. The client established the connection. 
+MOP uses TCP. The client established the connection. 
 It has to know the IP address of the server. 
 The server listens on TCP port 69420.
 
