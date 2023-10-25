@@ -23,6 +23,16 @@ public class Client {
 
             while (true) {
 
+                if ((line = in.readLine()) != null) {
+                    System.out.println(line);
+
+                    // Exemple de demande de fermeture de connexion
+                    if (line.equals("EXIT")) {
+                        out.write("EXIT\n");
+                        out.flush();
+                        break;
+                    }
+                }
                 System.out.print("Enter a command: ");
                 String userInputLine = userInput.readLine();
 
@@ -32,16 +42,6 @@ public class Client {
                     out.flush();
                 }
 
-                if ((line = in.readLine()) != null) {
-                    System.out.println("Server says: " + line);
-
-                    // Exemple de demande de fermeture de connexion
-                    if (line.equals("EXIT")) {
-                        out.write("EXIT\n");
-                        out.flush();
-                        break;
-                    }
-                }
             }
         } catch (IOException e) {
             System.out.println("Client: " + e);
