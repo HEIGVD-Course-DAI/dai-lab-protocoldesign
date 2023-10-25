@@ -52,23 +52,23 @@ public class Server {
 					String line;
 
 					while ((line = in.readLine()) != null) {
-						if (line.substring(0, 4).equals(BASE_MESSAGE)) {
+						if (line.length() >= 8 && line.substring(0, 4).equals(BASE_MESSAGE)) {
 							if (line.substring(5, 8).equals(END_MESSAGE)) {
 								out.write(BASE_MESSAGE + " " + END_MESSAGE);
-								out.flush();
-								in.close();
-								out.close();
-							} else if (line.substring(5, 9).equals(EASTER_EGG_CODE)) {
+
+							} else if (line.length() >= 9 && line.substring(5, 9).equals(EASTER_EGG_CODE)) {
 								out.write(EASTER_EGG_TEXT);
-							} else if (line.substring(5, 10).equals(INFO_MESSAGE)) {
+							} else if (line.length() >= 10 && line.substring(5, 10).equals(INFO_MESSAGE)) {
 								out.write(WELCOME_MESSAGE);
-							} else {
+							} else if (line.length() >= 8) {
 								try {
 									out.write(BASE_MESSAGE + " " + String.valueOf(calculation(line.substring(5))) + "\n");
 
 								} catch (IllegalArgumentException e) {
-									out.write(BASE_MESSAGE + " " + ERROR_ONE);
+									out.write(BASE_MESSAGE + " " + ERROR_ONE + "\n");
 								}
+							} else {
+								out.write(BASE_MESSAGE + " " + ERROR_ONE + "\n");
 							}
 							out.flush();
 						}
