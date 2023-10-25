@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 public class Server {
     final int SERVER_PORT = 32976;
@@ -11,12 +12,33 @@ public class Server {
                                 "SUB <firstNumber> <secondNumber> \n" +
                                 "MUL <firstNumber> <secondNumber> \n" +
                                 "DIV <firstNumber> <secondNumber>";
-    final String[] OPS = {"ADD","SUB","MUL","DIV"};
+    static final String[] OPS = {"ADD","SUB","MUL","DIV"};
 
     public static void main(String[] args) {
         // Create a new server and run it
         Server server = new Server();
         server.run();
+    }
+
+    // Check if the number string represents a number
+    public static boolean isNumeric(String number) {
+        return number.matches("-?\\d+");
+    }
+
+    // Carries out the operation
+    public static String operation(String op, String num1, String num2) {
+        int number1 = Integer.parseInt(num1);
+        int number2 = Integer.parseInt(num2);
+        switch (op) {
+            case "ADD" : return Integer.toString(number1 + number2);
+            case "SUB" : return Integer.toString(number1 - number2);
+            case "MUL" : return Integer.toString(number1 * number2);
+            case "DIV" :
+                if (number2 != 0) {
+                    return Integer.toString(number1 / number2);
+                }
+            default: return "UNSUPPORTED OPP";
+        }
     }
 
     private void run() {
@@ -35,8 +57,9 @@ public class Server {
                 boolean validOp = false;
 
                 for (String op : OPS) {
-                    if(opp == op) {
+                    if (Objects.equals(opp, op)) {
                         validOp = true;
+                        break;
                     }
                 }
 
@@ -46,14 +69,15 @@ public class Server {
                     out.flush();
                 }
                 else {
-                    try {
-                        Double.parseDouble(num1); // Try to parse the string as a double
-                        Double.parseDouble(num2);
-                    } catch (NumberFormatException e) {
-                        out.write("UNSUPPORTED NUM"); // Parsing failed, so it's not numerical
+                    if(!(isNumeric(num1) && isNumeric(num2))) {
+                        out.write("UNSUPPORTED NUM");
                         out.flush();
                     }
-
+                    else {
+                        // Valid operation and numbers
+                        out.write(operation(opp,num1,num2));
+                        out.flush();
+                    }
                 }
             }
             catch(IOException e) {
