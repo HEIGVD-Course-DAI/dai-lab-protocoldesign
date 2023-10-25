@@ -9,7 +9,7 @@ Summary protocol specification
    - The calculator uses TCP. The client establishes the connection. It has to know the IP address of the server. The server listens on TCP port 12345. The server send the requested result or an error message. The client closes the connection when wanted.
 
 3. Messages
-   - Client speak first and will close the connection too. Client will wait server response before speaking again.
+   - Client speaks first and will close the connection too. Client will wait server response before speaking again.
    - There are 5 types of messages.
      - `OPERATION <operation> <operand1> <operand2>` : The client request an operation applied to two numbers.
      - `EXIT` : The client request the closure of the connection. 
@@ -18,7 +18,7 @@ Summary protocol specification
      - `ERROR COMPUTATION FAILED` :  Error response message from the server, if the computation failed.
    - Messages are UTF-8 encoded with `\n` as end-of-line character.
 
-4. Example dialogs examples of one or several  dialogs to clarify the scenarios
+4. Example of one or several dialogs to clarify the scenarios
 
 ```mermaid
 sequenceDiagram
