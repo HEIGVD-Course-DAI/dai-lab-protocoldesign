@@ -1,15 +1,50 @@
 package ch.heig.dai.lab.protocoldesign;
+import java.io.*;
+import java.net.Socket;
+
+import static java.nio.charset.StandardCharsets.*;
 
 public class Client {
-    final String SERVER_ADDRESS = "1.2.3.4";
-    final int SERVER_PORT = 1234;
+    final String SERVER_ADDRESS = "localhost"; // Adresse IP du serveur - 127.0.0.1
+    final int SERVER_PORT = 12345; // Port du serveur
 
     public static void main(String[] args) {
-        // Create a new client and run it
         Client client = new Client();
         client.run();
     }
 
     private void run() {
+        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
+             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8));
+             BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in))) {
+
+            String line;
+
+            while (true) {
+
+                System.out.print("Enter a command: ");
+                String userInputLine = userInput.readLine();
+
+                // if the user wrote smth
+                if (userInputLine != null) {
+                    out.write(userInputLine + "\n");
+                    out.flush();
+                }
+
+                if ((line = in.readLine()) != null) {
+                    System.out.println("Server says: " + line);
+
+                    // Exemple de demande de fermeture de connexion
+                    if (line.equals("EXIT")) {
+                        out.write("EXIT\n");
+                        out.flush();
+                        break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Client: " + e);
+        }
     }
 }
