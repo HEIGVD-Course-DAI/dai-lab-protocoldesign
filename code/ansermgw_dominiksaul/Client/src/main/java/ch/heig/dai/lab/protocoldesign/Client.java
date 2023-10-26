@@ -84,7 +84,11 @@ public class Client {
     }
 
     private Message getMessageFromServer(BufferedReader in) throws IOException {
-        return parseMessage(in.readLine());
+        var msg = in.readLine();
+        if(msg == null) {
+            throw new RuntimeException("Server closed connection");
+        }
+        return parseMessage(msg);
     }
 
     private String[] extractSupportedOperators(String content) {
