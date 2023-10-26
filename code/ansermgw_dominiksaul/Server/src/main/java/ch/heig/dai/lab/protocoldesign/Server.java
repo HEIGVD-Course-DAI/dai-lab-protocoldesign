@@ -24,7 +24,7 @@ public class Server {
 
         public final char label;
 
-        private OPERATORS(char label) {
+        OPERATORS(char label) {
             this.label = label;
         }
     }
@@ -38,10 +38,13 @@ public class Server {
     private void run() {
         // Create a passive socket (class ServerSocket)
         try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)) {
+            System.out.println("Server up and running on port " + SERVER_PORT);
+
             while (true) {
                 try (Socket socket = serverSocket.accept();
                      var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
                      var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8))) {
+                    System.out.println("New client connected...");
 
                     // Send WELCOME message (with the possible operators) to the clients on new connection
                     out.write("WELCOME|" + getOperators() + "\n");
