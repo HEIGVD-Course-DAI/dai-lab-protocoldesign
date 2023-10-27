@@ -5,11 +5,13 @@
 MOP (Math Operation protocol) is a client-server protocol. 
 The client connects to a server and waits for the user to enter his calculation containing his operation followed by two digits, then sends it to the servers.
 
-The operations possible will be “ADD”, “SUB”, “MULT”, “DIV” :
+The operations possible will be “ADD”, “SUB”, “MULT”, “DIV”, "POW", "MOD" :
 -	ADD -> Addition
 -	SUB -> Substraction
 -	MULT -> Multiplication
 -	DIV -> Division
+-	POW -> Power
+-	MOD -> Modulo
 
 The server sends the result back or an error message, if the operation is not covered.
 Then, the clients displays the result.
@@ -29,7 +31,7 @@ There are these types of messages :
      The client opens the communication and the server sends a welcome message with the possible operations.
 -	CALCULATION <operation, nb1, nb2>
      The clients sends the operation. The operation must be in uppercase.
--	RESULT 
+-	RESULT <Number>
      The server sends back the result of the calculation, then the client displays it.
 -	OPERATION_NOT_VALID <operation>
      Error response message after a CALCULATION message, if the operation is not covered.
@@ -50,8 +52,8 @@ If the operation exists, the server sends the result back.
 **OPERATION_NOT_VALID :**
 1. Client opens TCP connection.
 2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, PLEASE ENTER YOUR CALCULATION FOLLOWING THIS FORMAT : <OP> <NB1> <NB2> (ADD 21 12).
-3. Client provides an operation followed by two numbers -> MOD 21 2
-4. Server responds that the operation doesn’t exist. --> MOD OPERATION DOES'T EXISTS, PLEASE ENTER ANOTHER CALCULATION.
+3. Client provides an operation followed by two numbers -> MIN 21 2
+4. Server responds that the operation doesn’t exist. --> MIN OPERATION DOES'T EXISTS, PLEASE ENTER ANOTHER CALCULATION.
 5. Server waits a new calculation.
 
 **NUMBER_NOT_VALID :**
