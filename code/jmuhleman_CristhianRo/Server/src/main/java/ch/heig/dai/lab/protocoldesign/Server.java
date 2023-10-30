@@ -1,9 +1,11 @@
 package ch.heig.dai.lab.protocoldesign;
 import java.io.*;
 import java.net.*;
+import java.util.Timer;
+
 import static java.nio.charset.StandardCharsets.*;
 
-class TextualTCPServer {
+class Server {
  public static void main(String[] args) {
        
     try (ServerSocket serverSocket = new ServerSocket(12345)) {
@@ -19,15 +21,18 @@ class TextualTCPServer {
                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), UTF_8));
                     BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), UTF_8))) {
 
-
+                clientSocket.setSoTimeout(10000);
 
                 System.out.println("Client connecté.");  
                 out.write("\n\n|----Bienvenue chez le supercalculateur des services secrets suisses !----|\n\n");
                 out.write("Voici les commandes supportées: \r\n* Multiplication (*)\r\n* Division (/)\r\n* Addition (+)\r\n* Substraction(-)\r\n* Modulus (%)\r\n* Powe(pow<base>-<exposent>)\r\n");
                 out.flush();
+                long startTime = System.currentTimeMillis();    
+                
 
                 String input;
                 while ((input = in.readLine()) != null) {
+                    startTime = System.currentTimeMillis();
 
                     if (input.equals("bye")) {
                         break;
@@ -38,6 +43,7 @@ class TextualTCPServer {
                         out.flush();
                         continue;
                     }
+
                     double operand1 = Double.parseDouble(input.substring(0, 1));
                     double operand2 = Double.parseDouble(input.substring(2,3));
                     String operator = input.substring(1, 2);
@@ -48,6 +54,9 @@ class TextualTCPServer {
                     switch (operator) {
                         case "+":
                             result = operand1 + operand2;
+                            break;
+                        case "%":
+                            result = operand1 % operand2;
                             break;
                         case "-":
                             result = operand1 - operand2;
@@ -62,30 +71,37 @@ class TextualTCPServer {
                                 result = Double.NaN; // Indiquer une division par zéro
                                 out.write("ERROR:div0\n");
                                 out.flush();
-
+                                continue;
                             }
-                            continue;
+                            break;
                         default:
                             result = Double.NaN; // Indiquer une opération invalide
                             out.write("ERROR:invalid expression\n");
                             out.flush();
                     }
 
-
-
                     out.write("Résultat : " + result + "\n");
                     out.flush();
+
+                    
+
+
                 }
 
+                out.write("Session terminée.");
+                out.flush();
                 System.out.println("Session terminée.");
                 
                 }
             }
         }
-
+        catch (SocketTimeoutException e){
+            System.out.println("Timeout pas de connection\n");
+        }
         catch (IOException e) {
             System.err.println("Erreur d'E/S : " + e.getMessage());
         }
     }
 
-    }
+
+}
