@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Client {
-    final String SERVER_ADDRESS = "1.2.3.4";
+    final String SERVER_ADDRESS = "0.0.0.0";
     final int SERVER_PORT = 32976;
 
     public static void main(String[] args) {
@@ -17,24 +17,26 @@ public class Client {
     }
 
     private void run() {
-        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT)) {
-            var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-            var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
+        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+             var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+             var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8))) {
 
             // Read the welcome message
-            String line;
-            while((line = in.readLine()) != null) {
-                System.out.println(line);
-            }
+            String line = in.readLine();
+            System.out.println(line);
 
             Scanner scanner = new Scanner(System.in);
             String msg;
-            while (!Objects.equals(msg = scanner.next(), "q")) {
+            while (!Objects.equals(msg = scanner.nextLine(), "exit")) {
+                // Send the message to the server
                 out.write(msg + "\n");
                 out.flush();
+                // Read the response from the server
+                line = in.readLine();
+                System.out.println(line);
             }
         } catch (IOException e) {
-            System.out.println("Client: exc.: " + e);
+            System.out.println("Client: exception while using client socket: " + e);
         }
     }
 }
