@@ -10,7 +10,9 @@ class TextualTCPServer {
             
             System.out.println("Serveur en attente de connexions...");
 
-
+    //TODO: implement: * timeout
+    //                 * correct parsing
+    //                 * implement power fct in switch case
             while (true) {
 
                 try(Socket clientSocket = serverSocket.accept();
@@ -30,17 +32,15 @@ class TextualTCPServer {
                     if (input.equals("bye")) {
                         break;
                     }
-                    //TODO à gérer le timeout
                     // Analyser la commande et effectuer le calcul
                     if (input.length() < 3){
                         out.write("ERROR:invalid expression\n");
                         out.flush();
                         continue;
                     }
-                    String[] parts = input.split(" ");
-                    double operand1 = Double.parseDouble(parts[0]);
-                    double operand2 = Double.parseDouble(parts[2]);
-                    String operator = parts[1];
+                    double operand1 = Double.parseDouble(input.substring(0, 1));
+                    double operand2 = Double.parseDouble(input.substring(2,3));
+                    String operator = input.substring(1, 2);
                     double result;
 
 
