@@ -4,27 +4,88 @@ import java.net.*;
 import static java.nio.charset.StandardCharsets.*;
 
 class TextualTCPServer {
-    public static void main(String args[]) {
+ public static void main(String[] args) {
+       
+    try (ServerSocket serverSocket = new ServerSocket(12345)) {
+            
+            System.out.println("Serveur en attente de connexions...");
 
-        try (ServerSocket serverSocket = new ServerSocket(1234)) {
+
             while (true) {
 
-                try (Socket socket = serverSocket.accept();
-                     var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
-                     var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8))) {
+                try(Socket clientSocket = serverSocket.accept();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), UTF_8));
+                    BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), UTF_8))) {
 
-                    String line;
-                    while ((line = in.readLine()) != null) {
-                        // There are two errors here!
-                        out.write(line);
+
+
+                System.out.println("Client connecté.");  
+                out.write("\n\n|----Bienvenue chez le supercalculateur des services secrets suisses !----|\n\n");
+                out.write("Voici les commandes supportées: \r\n* Multiplication (*)\r\n* Division (/)\r\n* Addition (+)\r\n* Substraction(-)\r\n* Modulus (%)\r\n* Powe(pow<base>-<exposent>)\r\n");
+                out.flush();
+
+                String input;
+                while ((input = in.readLine()) != null) {
+
+                    if (input.equals("bye")) {
+                        break;
                     }
+                    //TODO à gérer le timeout
+                    // Analyser la commande et effectuer le calcul
+                    if (input.length() < 3){
+                        out.write("ERROR:invalid expression\n");
+                        out.flush();
+                        continue;
+                    }
+                    String[] parts = input.split(" ");
+                    double operand1 = Double.parseDouble(parts[0]);
+                    double operand2 = Double.parseDouble(parts[2]);
+                    String operator = parts[1];
+                    double result;
+
+
+
+                    switch (operator) {
+                        case "+":
+                            result = operand1 + operand2;
+                            break;
+                        case "-":
+                            result = operand1 - operand2;
+                            break;
+                        case "*":
+                            result = operand1 * operand2;
+                            break;
+                        case "/":
+                            if (operand2 != 0) {
+                                result = operand1 / operand2;
+                            } else {
+                                result = Double.NaN; // Indiquer une division par zéro
+                                out.write("ERROR:div0\n");
+                                out.flush();
+
+                            }
+                            continue;
+                        default:
+                            result = Double.NaN; // Indiquer une opération invalide
+                            out.write("ERROR:invalid expression\n");
+                            out.flush();
+                    }
+
+
+
+                    out.write("Résultat : " + result + "\n");
+                    out.flush();
+                }
+
+                System.out.println("Session terminée.");
                 
-                } catch (IOException e) {
-                    System.out.println("Server: socket ex.: " + e);
                 }
             }
-        } catch (IOException e) {
-            System.out.println("Server: server socket ex.: " + e);
+        }
+
+        catch (IOException e) {
+            System.err.println("Erreur d'E/S : " + e.getMessage());
         }
     }
-}
+
+    }
