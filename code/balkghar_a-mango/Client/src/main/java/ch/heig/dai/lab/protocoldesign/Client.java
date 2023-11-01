@@ -2,6 +2,8 @@ package ch.heig.dai.lab.protocoldesign;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -14,7 +16,17 @@ public class Client {
     static final private String MSG_HELLO = MSG_PREFIX + "HELLO";
     static final private String MSG_BYE = MSG_PREFIX + "BYE";
 
+    static final private String ALLOWED_OPERANDS_PATTERN = "[0-9]+";
 
+    private ArrayList<String> allowedOperators;
+
+    private void setAllowedOperators(ArrayList<String> allowedOperators) {
+        this.allowedOperators = allowedOperators;
+    }
+
+    private ArrayList<String> getAllowedOperators() {
+        return allowedOperators;
+    }
 
     /**
      * Application entry point.
@@ -58,7 +70,7 @@ public class Client {
             // Loop between asking for input and displaying answer
             while (!line.startsWith(MSG_BYE)) {
                 write(userInput, out);  // Get user input
-                line = read(in);               // Get server response
+                line = read(in);        // Get server response
             }
 
             System.out.println("Server: connection closed");
@@ -84,6 +96,10 @@ public class Client {
             }
             System.out.println("Server: connection established");
             System.out.println("Server: " + response);
+            // Parse the allowed operators
+            ArrayList<String> allowedOperators = new ArrayList<>();
+            Collections.addAll(allowedOperators, response.substring(MSG_PREFIX.length()).split(" "));
+            setAllowedOperators(allowedOperators);
         }
     }
 
@@ -93,9 +109,19 @@ public class Client {
         // FIXME: find a way to empty the buffer of previous input
 
         // Get user input
-        String message = in.readLine();
+        Boolean messageOk = false;
+        String message;
+        while(!messageOk) {
+            message = in.readLine();
+            for (String ch : message.split(" ")) {
+
+            }
+        }
 
         // FIXME: check if message is formatted correctly here
+        // Iterate over charaters
+
+
 
         // Write user input to output
         out.write(MSG_PREFIX + message + "\n");
