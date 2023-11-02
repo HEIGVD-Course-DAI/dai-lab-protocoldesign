@@ -47,6 +47,8 @@ public class Server {
                         out.write("Guest: >");
                     }
 
+                    out.write("\0");
+
                     out.flush();
 
 
@@ -71,8 +73,10 @@ public class Server {
             add(out, cmd);
         }else if(cmd.contains("SUB") || cmd.contains("sub")) {
             sub(out, cmd);
-        }else if(cmd.contains("password")){
+        }else if(cmd.contains("password")) {
             auth(cmd);
+        }else if(cmd.equals("quit") || cmd.equals("exit")){
+            closeConn();
         }else {
             out.write("Commande Non reconnue \n");
         }
@@ -128,5 +132,9 @@ public class Server {
         if(params[1].equals("salut")){
             adminRight = 1;
         }
+    }
+
+    public void closeConn(){
+        adminRight = 0;
     }
 }
