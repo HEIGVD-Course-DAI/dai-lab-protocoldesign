@@ -5,13 +5,12 @@
 MOP (Math Operation protocol) is a client-server protocol. 
 The client connects to a server and waits for the user to enter his calculation containing his operation followed by two digits, then sends it to the servers.
 
-The operations possible will be “ADD”, “SUB”, “MULT”, “DIV”, "POW", "MOD" :
+The operations possible will be “ADD”, “SUB”, “MULT”, “DIV”, "POW" :
 -	ADD -> Addition
 -	SUB -> Substraction
 -	MULT -> Multiplication
 -	DIV -> Division
 -	POW -> Power
--	MOD -> Modulo
 
 The server sends the result back or an error message, if the operation is not covered.
 Then, the clients displays the result.
