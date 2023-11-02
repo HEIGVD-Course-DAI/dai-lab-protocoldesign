@@ -8,6 +8,7 @@ import java.util.regex.*;
 
 public class Server {
     final int SERVER_PORT = 1234;
+    public int adminRight = 0;
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -16,6 +17,7 @@ public class Server {
     }
 
     private void run() {
+
         // Implement Server functionalities
         try(ServerSocket ss = new ServerSocket(SERVER_PORT)){
             while(true){
@@ -39,7 +41,11 @@ public class Server {
                     out.write("2. Ping\n");
                     out.write("3. Textual RPG\n\n");
 
-                    out.write("Your choice : ");
+                    if(adminRight == 1){
+                        out.write("Admin: >");
+                    }else {
+                        out.write("Guest: >");
+                    }
 
                     out.flush();
 
@@ -63,12 +69,18 @@ public class Server {
             ping(out);
         }else if(cmd.contains("ADD") || cmd.contains("add")){
             add(out, cmd);
-        }else if(cmd.contains("SUB") || cmd.contains("sub")){
+        }else if(cmd.contains("SUB") || cmd.contains("sub")) {
             sub(out, cmd);
+        }else if(cmd.contains("password")){
+            auth(cmd);
         }else {
             out.write("Commande Non reconnue \n");
         }
-        out.write("Your choice : ");
+        if(adminRight == 1){
+            out.write("Admin: >");
+        }else {
+            out.write("Guest: >");
+        }
         out.flush();
     }
 
@@ -108,5 +120,13 @@ public class Server {
 
         System.out.println("Resultat de soustraction = " + res + "\n");
         out.write(res + "\n");
+    }
+
+    public void auth(String cmd){
+        var params = cmd.split(" ");
+
+        if(params[1].equals("salut")){
+            adminRight = 1;
+        }
     }
 }
