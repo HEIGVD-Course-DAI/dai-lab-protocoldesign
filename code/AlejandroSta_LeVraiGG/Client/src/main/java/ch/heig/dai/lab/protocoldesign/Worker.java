@@ -20,8 +20,18 @@ public class Worker {
         out.flush();
     }
 
+    void sub(double x, double y) {
+        out.println("SUB " + x + " " + y);
+        out.flush();
+    }
+
     void mul(double x, double y) {
         out.println("MUL " + x + " " + y);
+        out.flush();
+    }
+
+    void div(double x, double y) {
+        out.println("DIV " + x + " " + y);
         out.flush();
     }
 
