@@ -44,3 +44,9 @@ When disconnecting, the client sends a message informing the server that he woul
 | :-------------------------: | :------------------------------------: |
 |  `NOK - INVALID COMMAND\n`  |   The command provided doesn't exist   |
 | `NOK - INVALID ARGUMENTS\n` | Arguments for this command are invalid |
+
+
+# Contributors
+
+* André Costa (andrecostaaa)
+* Amir Mouti (amouti)
