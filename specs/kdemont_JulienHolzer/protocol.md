@@ -14,6 +14,6 @@ Make simple operations : add and multiple.
 * send the user command to the server : 
   * ADD 10 20  
   * MUL 5 2
-* print the result with a message "result is : "
+* print the result with a message "Result is : "
   * result is : 30
   * result is : 10
