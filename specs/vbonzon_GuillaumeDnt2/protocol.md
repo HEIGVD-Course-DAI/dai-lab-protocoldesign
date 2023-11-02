@@ -2,7 +2,7 @@
 Ceci est un protocol client-serveur qui permet au client d'envoyer une opération mathématique au serveur et à ce dernier d'envoyer le résultat
 
 ## Transport 
-Le protocol fonctionne sur TCP. Le serveur écoute sur le port 3141 et le client doit connaître l'adresse IP du serveur.
+Le protocol fonctionne sur TCP. Le serveur écoute sur le port 31415 et le client doit connaître l'adresse IP du serveur.
 Le client ouvre la connection et le serveur ferme la connection après avoir reçu le message CLOSE du client.
 
 ## Message
