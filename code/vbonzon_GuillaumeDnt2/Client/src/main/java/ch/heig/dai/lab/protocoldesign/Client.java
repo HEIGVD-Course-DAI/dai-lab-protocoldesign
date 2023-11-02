@@ -10,8 +10,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Client {
-    final String SERVER_ADDRESS = "localhost";
-    final int SERVER_PORT = 3141;
+    String SERVER_ADDRESS = "localhost";
+    final int SERVER_PORT = 31415;
     final String[] OPERATIONS = {"ADD", "SUB"};
     final Charset ENCODING = StandardCharsets.UTF_8;
 
@@ -28,6 +28,15 @@ public class Client {
     }
 
     private void run() {
+        //Ask for the server adresse
+        System.out.print("Entre server adresse (by default localhost): ");
+        Scanner scn = new Scanner(System.in);
+        String result = scn.nextLine();
+
+        if(!result.isEmpty()){
+            SERVER_ADDRESS = result;
+        }
+
         //Connect to the server
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT)) {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), ENCODING));
@@ -37,27 +46,28 @@ public class Client {
             System.out.println(in.readLine());
             
             //Start the looping for command to send
-            String userInput = "";
-            Scanner scn = new Scanner(System.in);
-            while(true){
+            while(!socket.isClosed()){
                 //Get the command from the user and sends it
                 System.out.print("Enter your command: ");
-                userInput = scn.nextLine();
-                out.write(userInput + "\n");
+                // Scanner scn = new Scanner(System.in);
+                out.write(scn.nextLine() + "\n");
                 out.flush();
 
+                //Wait for the server result
+                result = in.readLine();
+
                 //End the connection if the command is CLOSE
-                if(userInput == "CLOSE"){
-                    in.close();
-                    out.close();
+                if(result.equals("CLOSING")){
+                    System.out.println("Disconnecting ...");
+                    //socket.close();
                     break;
                 }
 
                 //Display the result
-                System.out.println(in.readLine());
+                System.out.println(result);
             }
         } catch (IOException e){
-
+            System.out.println("An exception happened!");
         }
     }
 }
