@@ -28,6 +28,7 @@ public class Client {
             String serverMessage = in.readLine();
             String userInput;
             String result;
+            System.out.println("Server: " + serverMessage);
 
             if (serverMessage.contains(WELCOME_MSG)) {
                 System.out.println("Enter your calculation: ");
@@ -37,6 +38,7 @@ public class Client {
                 out.flush();
 
                 result = in.readLine();
+                System.out.println("Result: " + result);
 
                 if(result.equals(ERROR_INVALID)){
                     throw new IOException("Client: One of the operand isn't a number");
