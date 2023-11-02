@@ -2,6 +2,7 @@ package ch.heig.dai.lab.protocoldesign;
 
 import java.io.*;
 import java.net.*;
+import static java.nio.charset.StandardCharsets.*;
 
 public class Server {
     final int SERVER_PORT = 1234;
@@ -21,11 +22,12 @@ public class Server {
                 System.out.println("Client connected: " + clientSocket.getInetAddress().getHostAddress());
 
                 // Create input and output streams
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), UTF_8));
+                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), UTF_8));
 
-                out.println("Welcome to the Calculator Server!");
-                out.println("Supported operations: ADD, MUL");
+                out.write("Welcome to the Calculator Server!\n");
+                out.write("Supported operations: ADD, MUL\n");
+                out.flush();
 
                 String clientMessage;
                 while ((clientMessage = in.readLine()) != null) {
@@ -42,7 +44,8 @@ public class Server {
                             result = num1 * num2;
                         }
 
-                        out.println("Result is: " + result);
+                        out.write("Result is: " + result);
+                        out.flush();
                     }
                 }
 

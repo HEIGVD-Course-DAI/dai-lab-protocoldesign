@@ -2,7 +2,7 @@ package ch.heig.dai.lab.protocoldesign;
 
 import java.io.*;
 import java.net.*;
-
+import static java.nio.charset.StandardCharsets.*;
 
 public class Client {
     final String SERVER_ADDRESS = "127.0.0.1";
@@ -17,8 +17,8 @@ public class Client {
     private void run() {
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT)) {
             // Create input and output streams
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8));
 
             // Read and print the welcome message and supported operations
             String welcomeMessage = in.readLine();
@@ -30,7 +30,8 @@ public class Client {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             String userInput;
             while ((userInput = reader.readLine()) != null) {
-                out.println(userInput);
+                out.write(userInput + "\n");
+                out.flush();
                 String result = in.readLine();
                 System.out.println("Result is: " + result);
             }
