@@ -13,7 +13,9 @@ public class Server {
 	private final String END_MESSAGE = "BYE";
 	private final String SUPPORTED_OPERAIONS = "+ - * / ^ √ sin cos tan ln !";
 	private final String MATHS_CONSTANTS = "π e";
-	private final String WELCOME_MESSAGE = BASE_MESSAGE + " " + INFO_MESSAGE + " " + SUPPORTED_OPERAIONS + "\n";
+	private final String WELCOME_MESSAGE = BASE_MESSAGE + " " + INFO_MESSAGE + " " + SUPPORTED_OPERAIONS + " "
+			+ MATHS_CONSTANTS
+			+ "\n";
 	private final String ERROR_ONE = BASE_MESSAGE + " ERR 01\n";
 	private final String ERROR_TWO = BASE_MESSAGE + " ERR 02\n";
 	private final String ERROR_THREE = BASE_MESSAGE + " ERR 03\n";
