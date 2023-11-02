@@ -8,7 +8,7 @@ import java.util.Scanner;
 import static java.nio.charset.StandardCharsets.*;
 
 public class Client {
-    final String SERVER_ADDRESS = "0.0.0.0";
+    final String SERVER_ADDRESS = "sever";
     final int SERVER_PORT = 8888;
 
     public static void main(String[] args) {
