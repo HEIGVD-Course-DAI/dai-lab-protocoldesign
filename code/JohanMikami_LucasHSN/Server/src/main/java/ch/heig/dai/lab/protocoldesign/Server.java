@@ -52,6 +52,8 @@ public class Server {
                      var in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), UTF_8));
                      var out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), UTF_8))) {
 
+                    /// TODO : Print possible operation as welcome message
+
                     // Compute the result
                     String result = computeResult(in.readLine());
 
