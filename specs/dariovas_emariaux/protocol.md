@@ -44,21 +44,21 @@ If the operation exists, the server sends the result back.
 **Successful CALCULATION :**
 1. Client opens TCP connection.
 2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, (12 + 12) | <OP>. 
-3. Client provides an operation followed by two numbers -> ADD 21 2
+3. Client provides an operation followed by two numbers -> CALCULATION 12 + 12
 4. Server responds the result --> RESULT 23
 5. Server closes the TCP connection
 
 **OPERATION_NOT_VALID :**
 1. Client opens TCP connection.
 2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, (12 + 12) | <OP>. 
-3. Client provides an operation followed by two numbers -> 21 % 2
+3. Client provides an operation followed by two numbers -> CALCULATION 21 % 2
 4. Server responds that the operation doesn’t exist. --> % OPERATION DOES'T EXISTS, PLEASE ENTER ANOTHER CALCULATION.
 5. Server waits a new calculation.
 
 **NUMBER_NOT_VALID :**
 1. Client opens TCP connection.
 2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, (12 + 12) | <OP>. 
-3. Client provides an operation followed by two numbers -> c + 2
+3. Client provides an operation followed by two numbers -> CALCULATION c + 2
 4. Server responds that the values are incorrect. --> c ARE NOT A CORRECT VALUE, PLEASE ENTER A CORRECT VALUE.
 5. Server waits a new calculation.
 
