@@ -1,8 +1,5 @@
 package ch.heig.dai.lab.protocoldesign;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -23,11 +20,12 @@ public class Server {
         try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)) {
             while (true) {
                 try (Socket socket = serverSocket.accept();
-                     InputStream in = new BufferedInputStream(socket.getInputStream(), Charset.UTF_8);
-                     OutputStream out = new
-                             BufferedOutputStream(socket.getOutputStream());) {
-                    //TODO: lecture du paquet et traitement
-                    String op = in.
+                     BufferedReader in = new BufferedReader(
+                                         new InputStreamReader(socket.getInputStream(), UTF_8));
+                     BufferedWriter out = new BufferedWriter(
+                                          new OutputStreamWriter(socket.getOutputStream(), UTF_8))) {
+                    //TODO : lecture du paquet et traitement
+                    String op;
                 } catch (IOException e) {
                     System.out.println("Server: socket ex. : " + e);
                 }
