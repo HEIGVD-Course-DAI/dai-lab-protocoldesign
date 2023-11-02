@@ -1,7 +1,11 @@
 package ch.heig.dai.lab.protocoldesign;
 
+import java.io.*;
+import java.net.*;
+
+
 public class Client {
-    final String SERVER_ADDRESS = "1.2.3.4";
+    final String SERVER_ADDRESS = "127.0.0.1";
     final int SERVER_PORT = 1234;
 
     public static void main(String[] args) {
@@ -11,5 +15,27 @@ public class Client {
     }
 
     private void run() {
+        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT)) {
+            // Create input and output streams
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+            // Read and print the welcome message and supported operations
+            String welcomeMessage = in.readLine();
+            String supportedOperations = in.readLine();
+            System.out.println(welcomeMessage);
+            System.out.println(supportedOperations);
+
+            // Read and send user commands
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            String userInput;
+            while ((userInput = reader.readLine()) != null) {
+                out.println(userInput);
+                String result = in.readLine();
+                System.out.println("Result is: " + result);
+            }
+        } catch (IOException e) {
+            System.out.println("Client: exception while using client socket: " + e);
+        }
     }
 }
