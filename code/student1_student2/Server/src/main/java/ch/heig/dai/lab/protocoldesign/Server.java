@@ -22,13 +22,19 @@ public class Server {
 
                     String line;
                     String answer = null;
+                    String[] instrWords = null;
 
                     while ((line = in.readLine()) != null) {
                         //TODO
-                        String header = getFirstWord(line);
+                        instrWords = splitStringIntoWords(line);
+                        String header = instrWords[0];
                         switch(header){
                             case "HEY":
                                 answer = "hey ( ◣‿◢')";
+                                break;
+                            case "CALC":
+                                //answer = computeCalc(String[] instrWords);
+                                break;
                         }
                         out.write(answer + "\n");
                         out.flush();
@@ -51,4 +57,16 @@ public class Server {
             return firstWord;
         }
     }
+
+    private String[] splitStringIntoWords(String input){
+        return input.split(" ");
+    }
+
+   private String computeCalc(String[] instruction) {
+       String operation = instruction[1];
+       int lfs = Integer.parseInt(instruction[2]);
+       int rhs = Integer.parseInt(instruction[3]);
+
+       return null; //operation(lfs, rhs);
+   }
 }

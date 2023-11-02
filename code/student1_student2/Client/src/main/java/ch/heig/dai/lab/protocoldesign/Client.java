@@ -22,14 +22,12 @@ public class Client {
             String messages = "HEY \n"; //CALC ADD 12 23 \n";
             String[] lines = messages.split("\r\n|\r|\n");
             int nblines = lines.length;
-            
+
             for(int i = 0; i < nblines; ++i){
                 out.write(lines[i] + "\n");
                 out.flush();
                 System.out.println("Echo: " + in.readLine());
             }
-
-
 
         } catch (IOException e) {
             System.out.println("Client: exception while using client socket: " + e);
