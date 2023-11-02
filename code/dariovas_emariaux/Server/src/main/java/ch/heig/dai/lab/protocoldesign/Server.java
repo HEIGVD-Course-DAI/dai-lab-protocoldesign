@@ -6,7 +6,7 @@ import java.net.*;
 import static java.nio.charset.StandardCharsets.*;
 
 public class Server {
-    final int SERVER_PORT = 69420;
+    final int SERVER_PORT = 42069;
 
     private enum Operation  {
         ADD("+"),
@@ -40,12 +40,14 @@ public class Server {
                              socket.getOutputStream(), UTF_8))){
 
                     // Send WELCOME message (with the possible operators) to the clients on new connection
-                    out.write("WELCOME, PLEASE ENTER YOUR CALCULATION FOLLOWING THIS FORMAT : (ADD 21 12).|" + getOperation() + "\n");
+                    out.write("WELCOME | " + getOperations() + "\n");
                     out.flush();
 
                     while (true){
                         String msg = in.readLine();
-                        
+
+                        if(msg != null)
+                            break;
                     }
 
                 }
@@ -58,11 +60,13 @@ public class Server {
         }
     }
 
-    private String getOperation(){
+    private String getOperations(){
         StringBuilder operation = new StringBuilder();
+
         for (Operation op : Operation.values()){
             operation.append(op.label).append(" ");
         }
+
         return operation.toString();
     }
 }
