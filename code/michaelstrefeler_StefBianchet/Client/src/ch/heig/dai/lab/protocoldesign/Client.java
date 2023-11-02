@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Client {
     final String SERVER_ADDRESS = "127.0.0.1";
-    final int SERVER_PORT = 45000;
+    final int SERVER_PORT = 52273;
 
     public static void main(String[] args) {
         // Create a new client and run it
