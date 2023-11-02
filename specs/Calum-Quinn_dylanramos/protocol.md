@@ -7,12 +7,15 @@ The goal of this protocol is to enable communication between a client and a serv
 ## Transport layer protocol
 
 This protocol will employ TCP for it's communications. 
-The client establishes the connection. 
-It must know the server's IP address. 
-The server transmits the possible operations to the Client in a "Welcome message".
-The server listens for communication on TCP port 32976. 
+
+The client establishes the connection. It must know the server's IP address. 
+
+The server transmits the possible operations to the Client in a "Welcome message". It listens for communication on TCP port 32976.
+
 The client transmits their desired operation. 
+
 The server either transmits the solution or an error message in case of an unsupported request. 
+
 The client closes the communication after it has made all the requests it wants.
 
 ## Messages
