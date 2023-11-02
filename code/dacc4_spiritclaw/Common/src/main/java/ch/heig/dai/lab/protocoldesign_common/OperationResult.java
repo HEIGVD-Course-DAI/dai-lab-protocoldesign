@@ -1,4 +1,4 @@
-package ch.heig.dai.lab.protocoldesign;
+package ch.heig.dai.lab.protocoldesign_common;
 
 public class OperationResult {
     private OperationError error;

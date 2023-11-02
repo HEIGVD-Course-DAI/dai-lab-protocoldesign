@@ -1,5 +1,7 @@
 package ch.heig.dai.lab.protocoldesign;
 
+import ch.heig.dai.lab.protocoldesign_common.Operation;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;

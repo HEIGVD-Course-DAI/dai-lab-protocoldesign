@@ -1,5 +1,8 @@
 package ch.heig.dai.lab.protocoldesign;
 
+import ch.heig.dai.lab.protocoldesign_common.Operation;
+import ch.heig.dai.lab.protocoldesign_common.OperationResult;
+
 import java.net.Socket;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
