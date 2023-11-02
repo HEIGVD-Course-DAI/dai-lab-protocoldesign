@@ -22,16 +22,20 @@ public class Server {
                 {
                     String line;
                     while ((line = in.readLine()) != null) {
-                        //TODO
+                        //TODO Compute
+                        System.out.println(line);
+                        out.write("OK : " + line + "\n");
+                        out.flush();
                     }
                     
+                    
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    System.out.println("Server: socket ex.: " + e);
                 }
             }
 
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println("Server: server socket ex.: " + e);
         }
 
     } 
