@@ -8,12 +8,13 @@ public class Client {
     final String SERVER_ADDRESS = "1.2.3.4";
     final int SERVER_PORT = 1234;
     Socket socket;
-    OutputStream out;
+    OutputStream os;
     OutputStreamWriter OsWriter;
     BufferedReader in;
+    BufferedWriter out;
     
 
-    public static void main(String[] args) throws UnknownHostException, IOException {
+    public static void main(String[] args) {
         // Create a new client and run it
         Client client = new Client();
         client.connect();
@@ -23,10 +24,11 @@ public class Client {
     }
     private void connect() {
         try {
-            this.socket = new Socket(this.SERVER_ADDRESS, this.SERVER_PORT);
-            this.out = this.socket.getOutputStream();
-            this.OsWriter = new OutputStreamWriter(this.out, StandardCharsets.UTF_8);
-            this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.socket = new Socket("localhost", this.SERVER_PORT);
+            this.os = this.socket.getOutputStream();
+            this.OsWriter = new OutputStreamWriter(this.os, StandardCharsets.UTF_8);
+            this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+            this.out = new BufferedWriter(new OutputStreamWriter(this.os));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -36,7 +38,7 @@ public class Client {
     private void disconnect() {
         try {
         this.socket.close();
-        this.out.close();
+        this.os.close();
         this.in.close();
         this.OsWriter.close();
 
@@ -46,8 +48,9 @@ public class Client {
     }
     private void run() {
         try {
-            String response = in.readLine();
-            System.out.println(response);
+            String request = "Hello my friend";
+            this.out.write(request);
+            this.out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
