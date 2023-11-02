@@ -55,6 +55,6 @@ Server: 30
 
 **Example Dialog 3 - Error Handling:**
 
-Client: REQUEST ADD x y
+Client: ADD x y
 
 Server: Error: Invalid operands
