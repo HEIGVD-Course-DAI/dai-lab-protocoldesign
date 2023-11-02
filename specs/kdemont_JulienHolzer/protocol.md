@@ -6,7 +6,7 @@ Make simple operations : add and multiple.
 ### Server
 * send the supported operations in a welcome message
 * calculate the result of the operation
-* send the result to the client as a numeric value  
+* send the result to the client
 
 ### Client
 * print the supported operations 
