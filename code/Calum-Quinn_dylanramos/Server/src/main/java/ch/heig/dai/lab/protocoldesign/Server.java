@@ -60,18 +60,24 @@ public class Server {
                 String request;
                 while ((request = in.readLine()) != null) {
                     String[] arguments = request.split("\\s+");
-                    String opp = arguments[0];
-                    String num1 = arguments[1];
-                    String num2 = arguments[2];
+                    if (arguments.length != 3) {
+                        out.write("UNSUPPORTED OPP\n");
+                        out.flush();
+                    }
+                    else {
+                        String opp = arguments[0];
+                        String num1 = arguments[1];
+                        String num2 = arguments[2];
 
-                    // Check if numbers are valid
-                    if (!(isNumeric(num1) && isNumeric(num2))) {
-                        out.write("UNSUPPORTED NUM\n");
-                        out.flush();
-                    } else {
-                        // Valid numbers
-                        out.write(operation(opp, num1, num2));
-                        out.flush();
+                        // Check if numbers are valid
+                        if (!(isNumeric(num1) && isNumeric(num2))) {
+                            out.write("UNSUPPORTED NUM\n");
+                            out.flush();
+                        } else {
+                            // Valid numbers
+                            out.write(operation(opp, num1, num2));
+                            out.flush();
+                        }
                     }
                 }
             } catch (IOException e) {

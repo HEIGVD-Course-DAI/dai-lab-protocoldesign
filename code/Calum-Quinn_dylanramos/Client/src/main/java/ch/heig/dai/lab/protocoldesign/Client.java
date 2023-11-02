@@ -30,7 +30,7 @@ public class Client {
             // Read user input
             Scanner scanner = new Scanner(System.in);
             String msg;
-            while (!Objects.equals(msg = scanner.nextLine(), "exit")) {
+            while (!Objects.equals(msg = scanner.nextLine(), "EXIT")) {
                 // Send the message to the server
                 out.write(msg + "\n");
                 out.flush();
