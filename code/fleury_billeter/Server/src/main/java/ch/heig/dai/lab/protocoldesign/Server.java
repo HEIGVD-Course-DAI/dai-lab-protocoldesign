@@ -93,7 +93,7 @@ public class Server {
     //
     public void ping(BufferedWriter out) throws  IOException{
         out.write("pong\n");
-        out.write("Guest: >");
+        out.write("Guest: >\n");
     }
 
     public void add(BufferedWriter out, int a, int b) throws IOException{
