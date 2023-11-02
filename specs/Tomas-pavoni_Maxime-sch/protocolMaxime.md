@@ -1,5 +1,5 @@
 # Section 1: Overview #
-**MYOptimizedCalculatorProtocol** is a client-server protocol. 
+**MYOptimizedCalculatorProtocol** is a client-server protocol.
 
 The client connects to a server and sends a request for a mathematical calculation.\
 The server sends the answer or an error message if the requested calculation is not well-formed
@@ -16,8 +16,8 @@ For now, MYOCP can only handle additions, substractions and multiplications.
 # Section 3: Messages #
 There are three types of messages in MYOCP:\
 • 1 - **CALC <calculation to perform>**
-The client request a calculation. <calculation to perform> can contain any two integers and 
-a keyword to describe the operation to perform between these 2 numbers, in any order. 
+The client request a calculation. <calculation to perform> can contain any two integers and
+a keyword to describe the operation to perform between these 2 numbers, in any order.
 The integers must be separated by a blank space.\
 • 2 - **TRASH INPUT <calculation to perform>**
 Error message if the input is not well-formed as described above.\
