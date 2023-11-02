@@ -21,7 +21,7 @@ The client wants to open an exchange. The server should answer "hey ( ◣‿◢'
 The client requests a calculation. <calculation to perform> can contain any two integers and
 a keyword (ADD, SUB, MUL) to describe the operation to perform between these 2 numbers, in any order.
 The integers must be separated by a blank space.\
-• 2 - **TRASH INPUT <calculation to perform>**
+• 2 - **INVALIDINPUT**
 Error message if the input is not well-formed as described above.\
 • 3 - **WTF <calculation to perform>**
 Error response message after a CALC message, if the file does not exist.\

@@ -19,11 +19,12 @@ public class Client {
              var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8))) {
 
             //TODO
-            String messages = "HEY \n"; //CALC ADD 12 23 \n";
+            String messages = "HEY \nCALC ADD 12 23\nCALC SUB 10 12\n  CALC MUL 90 38\n CLOWN\nCALC 1";
             String[] lines = messages.split("\r\n|\r|\n");
             int nblines = lines.length;
 
             for(int i = 0; i < nblines; ++i){
+                System.out.println("Sent to server: " + lines[i]);
                 out.write(lines[i] + "\n");
                 out.flush();
                 System.out.println("Echo: " + in.readLine());

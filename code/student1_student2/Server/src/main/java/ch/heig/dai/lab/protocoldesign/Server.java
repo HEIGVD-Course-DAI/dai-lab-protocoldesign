@@ -26,16 +26,21 @@ public class Server {
 
                     while ((line = in.readLine()) != null) {
                         //TODO
+                        line = line.trim();
                         instrWords = splitStringIntoWords(line);
                         String header = instrWords[0];
+
                         switch(header){
                             case "HEY":
-                                answer = "hey ( ◣‿◢')";
+                                answer = "Heyy (◣‿◢)";
                                 break;
                             case "CALC":
-                                //answer = computeCalc(String[] instrWords);
+                                answer = computeCalc(instrWords);
                                 break;
+                            default:
+                                answer = "INVALIDINPUT Please use one of the following commands: HEY / CALC [ADD/SUB/MUL] intLHS intRHS";
                         }
+
                         out.write(answer + "\n");
                         out.flush();
                     }
@@ -64,9 +69,24 @@ public class Server {
 
    private String computeCalc(String[] instruction) {
        String operation = instruction[1];
-       int lfs = Integer.parseInt(instruction[2]);
+       int lhs = Integer.parseInt(instruction[2]);
        int rhs = Integer.parseInt(instruction[3]);
+       int result = 0;
 
-       return null; //operation(lfs, rhs);
+       switch(operation){
+           case "ADD":
+               result = lhs+rhs;
+               break;
+           case "SUB":
+               result = lhs-rhs;
+               break;
+           case "MUL":
+               result = lhs*rhs;
+               break;
+           default:
+               return "WTF";
+       }
+
+       return Integer.toString(result);
    }
 }
