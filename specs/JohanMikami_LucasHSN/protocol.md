@@ -49,7 +49,7 @@ Server: 30
 
 **Example Dialog 2 - Multiplication Operation:**
 
-Client: MULTIPLY 5 6
+Client: MUL 5 6
 
 Server: 30
 
@@ -57,4 +57,10 @@ Server: 30
 
 Client: ADD x y
 
-Server: Error: Invalid operands
+Server: ERROR: Invalid operands
+
+**Example Dialog 4 - Error Handling:**
+
+Client: HI 3 9
+
+Server: ERROR: Unknown operation
