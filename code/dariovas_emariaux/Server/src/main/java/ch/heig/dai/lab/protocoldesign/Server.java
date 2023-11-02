@@ -45,9 +45,10 @@ public class Server {
 
                     while (true){
                         String msg = in.readLine();
+                        System.out.println("Echo: " + msg);
 
-                        if(msg != null)
-                            break;
+                        //if(msg != null)
+                           // break;
                     }
 
                 }
