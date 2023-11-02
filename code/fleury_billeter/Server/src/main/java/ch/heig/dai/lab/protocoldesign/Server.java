@@ -42,12 +42,10 @@ public class Server {
                     out.write("3. Textual RPG\n\n");
 
                     if(adminRight == 1){
-                        out.write("Admin: >");
+                        out.write("Admin: >\n");
                     }else {
-                        out.write("Guest: >");
+                        out.write("Guest: >\n");
                     }
-
-                    out.write("....\n");
 
                     out.flush();
 
@@ -83,9 +81,9 @@ public class Server {
             out.write("Commande Non reconnue \n");
         }
         if(adminRight == 1){
-            out.write("Admin: >");
+            out.write("Admin: >\n");
         }else {
-            out.write("Guest: >");
+            out.write("Guest: >\n");
         }
         out.flush();
     }
