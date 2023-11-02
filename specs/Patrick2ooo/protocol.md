@@ -32,15 +32,26 @@ Si l'on a une quelconque erreur tel que mauvaise opération, pas assez de nombre
 ## Exemple
 
 Serveur : Bonjour, voici les opération possible :
+
 Serveur : - ADD
+
 Serveur : - SUB
+
 Serveur : - MUK
+
 Serveur : - DIV
+
 Client  : ADD 1 2
+
 Serveur : 3
+
 Client  : SUB a 3
+
 Serveur : Invalid Operand
+
 Client : ABCDEF
+
 Serveur : Operation Impossible
+
 Client : QUIT
 
