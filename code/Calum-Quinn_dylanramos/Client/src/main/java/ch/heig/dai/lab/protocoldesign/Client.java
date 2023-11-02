@@ -22,8 +22,10 @@ public class Client {
              var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8))) {
 
             // Read the welcome message
-            String line = in.readLine();
-            System.out.println(line);
+            String line;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+            }
 
             Scanner scanner = new Scanner(System.in);
             String msg;

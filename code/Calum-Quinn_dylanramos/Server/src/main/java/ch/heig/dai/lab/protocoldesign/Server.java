@@ -8,10 +8,10 @@ import java.util.Objects;
 
 public class Server {
     final int SERVER_PORT = 32976;
-    final String OPERATIONS =   "ADD <firstNumber> <secondNumber> \n" +
-                                "SUB <firstNumber> <secondNumber> \n" +
-                                "MUL <firstNumber> <secondNumber> \n" +
-                                "DIV <firstNumber> <secondNumber>";
+    final String OPERATIONS =   "ADD <firstNumber> <secondNumber>\n" +
+                                "SUB <firstNumber> <secondNumber>\n" +
+                                "MUL <firstNumber> <secondNumber>\n" +
+                                "DIV <firstNumber> <secondNumber>\n";
     static final String[] OPS = {"ADD","SUB","MUL","DIV"};
 
     public static void main(String[] args) {
@@ -88,5 +88,5 @@ public class Server {
         catch (IOException e) {
             System.out.println(("Server: server socket ex.: " + e));
         }
-    } 
+    }
 }
