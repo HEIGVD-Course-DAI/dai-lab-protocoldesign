@@ -50,7 +50,10 @@ public class Client {
         parseArguments(args);
         System.out.println("Connecting to server " + serverAddress + ":" + SERVER_PORT);
 
-        try (Socket socket = new Socket(serverAddress, SERVER_PORT); BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8)); BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8)); BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in))) {
+        try (Socket socket = new Socket(serverAddress, SERVER_PORT);
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
+                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8));
+                BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in))) {
             String line = "";
             // Establish the connection with the server
             connect(in, out);
@@ -58,8 +61,8 @@ public class Client {
             // Connection to the server established and ready to run
             // Loop between asking for input and displaying answer
             while (!line.startsWith(MSG_PREFIX + MSG_BYE)) {
-                write(userInput, out);  // Get user input
-                line = read(in);        // Get server response
+                write(userInput, out); // Get user input
+                line = read(in); // Get server response
             }
 
             System.out.println("Server: connection closed");
