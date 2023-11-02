@@ -42,6 +42,7 @@ public class Client {
             } while (operation == Operation.NULL);
 
 
+
         }
 
         catch (IOException e) {

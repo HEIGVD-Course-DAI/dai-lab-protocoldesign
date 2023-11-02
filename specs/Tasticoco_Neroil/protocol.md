@@ -26,5 +26,3 @@ The server closes the connection when the result has been sent or the error mess
 
 The server sends the result as a binary stream. 
 
-## Exemple dialogs 
-
