@@ -11,7 +11,7 @@ public class Server {
     String[] supportedCommands = {"init", "add", "mult", "quit"};
 
     public static void main(String[] args) {
-        System.out.println("Server running on port ");
+        System.out.println("Server running");
         while(true){
             // Create a new client and run it
             Server server = new Server();

@@ -8,7 +8,7 @@ import java.util.Scanner;
 import static java.nio.charset.StandardCharsets.*;
 
 public class Client {
-    final String SERVER_ADDRESS = "sever";
+    final String SERVER_ADDRESS = "0.0.0.0";
     final int SERVER_PORT = 8888;
 
     public static void main(String[] args) {
@@ -26,6 +26,8 @@ public class Client {
              var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
              var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8))) {
 
+            out.write("init" + "\n");
+            out.flush();
             String[] command = in.readLine().split(" ");
             System.out.println("Server commands: ");
             for(int i = 1; i < command.length; i++) {
