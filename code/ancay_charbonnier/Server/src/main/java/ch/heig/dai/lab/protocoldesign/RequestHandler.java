@@ -37,7 +37,7 @@ public class RequestHandler {
         }
         for(String tok : tokens)
             if(tok.isEmpty()) {
-                errorCode = 3;
+                errorCode = 1;
                 return null;
             }
 
@@ -82,10 +82,13 @@ public class RequestHandler {
 
         switch(operation) {
             case "ADD":
+                handleADDOperation(operands);
                 break;
             case "MPLY":
+                handleMPLYOperation(operands);
                 break;
             case "AVG":
+                handleAVGOperation(operands);
                 break;
             default:
                 errorCode = 2;

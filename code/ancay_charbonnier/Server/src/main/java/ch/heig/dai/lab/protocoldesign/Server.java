@@ -27,14 +27,13 @@ public class Server {
                         out.write(response);
                         out.flush();
                     }
-                    
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    System.out.println("Server: socket ex.: " + e);
                 }
             }
 
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println("Server: server socket ex.: " + e);
         }
 
     } 
