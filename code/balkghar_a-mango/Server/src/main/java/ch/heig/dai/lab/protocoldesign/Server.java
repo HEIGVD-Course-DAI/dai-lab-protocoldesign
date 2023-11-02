@@ -42,10 +42,11 @@ public class Server {
 	private void run() {
 		try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)) {
 			while (true) {
-
 				try (Socket socket = serverSocket.accept();
 						BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
 						BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8))) {
+
+					System.out.println("New client connected");
 
 					String line;
 
@@ -53,7 +54,7 @@ public class Server {
 						if (line.length() >= 8 && line.substring(0, 4).equals(BASE_MESSAGE)) {
 							if (line.substring(5, 8).equals(END_MESSAGE)) {
 								out.write(BASE_MESSAGE + " " + END_MESSAGE);
-
+								break;
 							} else if (line.length() >= 9 && line.substring(5, 9).equals(EASTER_EGG_CODE)) {
 								out.write(EASTER_EGG_TEXT);
 							} else if (line.length() >= 10 && line.substring(5, 10).equals(INFO_MESSAGE)) {
@@ -71,11 +72,15 @@ public class Server {
 							out.flush();
 						}
 					}
+					socket.close();
 
-				} catch (IOException e) {
-					System.out.println("Server: socket ex.: " + e);
-					return;
+				} catch (SocketException e) {
+					if (e.toString().equals("java.net.SocketException: Socket closed"))
+						System.out.println("Client closed connection");
+					else
+						System.out.println("Error during communication");
 				}
+
 			}
 		} catch (IOException e) {
 			System.out.println("Server: server socket ex.: " + e);
