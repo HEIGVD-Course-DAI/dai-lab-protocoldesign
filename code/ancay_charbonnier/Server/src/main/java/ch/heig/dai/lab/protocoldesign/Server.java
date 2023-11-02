@@ -22,7 +22,10 @@ public class Server {
                 {
                     String line;
                     while ((line = in.readLine()) != null) {
-                        //TODO
+                        var handler = new RequestHandler(line);
+                        String response = handler.getResponse();
+                        out.write(response);
+                        out.flush();
                     }
                     
                 } catch (Exception e) {
