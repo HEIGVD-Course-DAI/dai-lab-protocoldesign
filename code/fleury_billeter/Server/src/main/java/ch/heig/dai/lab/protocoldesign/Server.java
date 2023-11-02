@@ -47,7 +47,7 @@ public class Server {
                         out.write("Guest: >");
                     }
 
-                    out.write("\0");
+                    out.write("....");
 
                     out.flush();
 
