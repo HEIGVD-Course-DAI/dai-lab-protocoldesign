@@ -3,21 +3,23 @@ package ch.heig.dai.lab.protocoldesign;
 import java.io.*;
 import java.net.*;
 
+import static java.lang.Character.isDigit;
 import static java.nio.charset.StandardCharsets.*;
 
 public class Server {
     final int SERVER_PORT = 42069;
 
     private enum Operation  {
-        ADD("+"),
-        SUB("-"),
-        DIV("/"),
-        MULT("*"),
-        POW("^"),
-        BRACKET_OPEN("("),
-        BRACKET_CLOSE(")");
-        public final String label;
-        private Operation(String label) {
+        ADD('+'),
+        SUB('-'),
+        DIV('/'),
+        MULT('*'),
+        POW('^'),
+        BRACKET_OPEN('('),
+        BRACKET_CLOSE(')');
+
+        public final char label;
+        Operation(char label) {
             this.label = label;
         }
     }
@@ -40,7 +42,7 @@ public class Server {
                              socket.getOutputStream(), UTF_8))){
 
                     // Send WELCOME message (with the possible operators) to the clients on new connection
-                    out.write("WELCOME (12 + 12) | " + getOperations() + "\n");
+                    out.write("WELCOME 4*(12 + 12)| " + getOperations() + "\n");
                     out.flush();
 
                     while (true){
@@ -50,11 +52,15 @@ public class Server {
                         if(msg == null)
                             break;
 
-                        System.out.println(msgParts[0]);
+                        for(String i : msgParts){
+                            System.out.println(i);
+                        }
 
                         switch (msgParts[0]){
                             case "CALCULATION":
-                                System.out.println("CALCULATION");
+                                out.write("RESULT|" + calculate(msgParts[1]) + "\n");
+                                break;
+                            case "":
                                 break;
                         }
                     }
@@ -77,5 +83,31 @@ public class Server {
         }
 
         return operation.toString();
+    }
+
+    private int calculate(String str){
+        if(!(isDigit(str.charAt(0)) && isDigit(str.charAt(2)))){
+            throw new RuntimeException("Not a number");
+        }
+
+        int n1 = str.charAt(0);
+        int n2 = str.charAt(2);
+        char op = str.charAt(1);
+
+        if(op == Operation.ADD.label){
+            return n1 + n2;
+        } else if (op == Operation.SUB.label) {
+            return n1 - n2;
+        }
+        else if (op == Operation.DIV.label){
+            return n1 / n2;
+        }
+        else if (op == Operation.MULT.label){
+            return n1 * n2;
+        } else if (op == Operation.POW.label) {
+            return n1 ^ n2;
+        }else {
+            throw new RuntimeException("OPERATION_NOT_VALID");
+        }
     }
 }
