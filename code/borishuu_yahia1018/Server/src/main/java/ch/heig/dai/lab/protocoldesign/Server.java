@@ -39,6 +39,62 @@ public class Server {
         }
     }
 
+    private String parseQueryString(String query) {
+        String[] queryElements = query.split(" ");
+        Boolean operatorFound = false;
+
+        System.out.print(queryElements[0]);
+        
+        for (String operator : supportedOperators) {
+            System.out.print(" " + operator);     
+            if (operator == queryElements[0].trim()) {
+                operatorFound = true;
+                break;
+            }
+        }
+
+        if (!operatorFound) {
+            return "INVALID_QUERY operator";
+        }
+
+        String firstOperandString, secondOperandString;
+        try {
+            firstOperandString = queryElements[1];
+            secondOperandString = queryElements[2];
+        } catch (Exception ex) {
+            return "INVALID_QUERY missing_operand";
+        }
+
+        int firstOperand, secondOperand;
+        try {
+            firstOperand = Integer.parseInt(firstOperandString);
+            secondOperand = Integer.parseInt(secondOperandString);
+        } catch (Exception ex) {
+            return "INVALID_QUERY syntax";
+        }
+
+        int result = 0;
+        switch (queryElements[0]) {
+            case "ADD":
+                result = firstOperand + secondOperand;
+                break;
+            case "SUB":
+                result = firstOperand - secondOperand;
+                break;
+            case "MUL":
+                result = firstOperand * secondOperand;
+                break;
+            case "DIV":
+                result = firstOperand / secondOperand;
+                break;        
+            default:
+                result = 0;
+                break;
+        }
+
+        return "RESULT " + result;
+    }
+
     private void run() {
         displayWelcomeMessage();
         serverRunning = true;
@@ -52,9 +108,11 @@ public class Server {
                     var out = new BufferedWriter(
                         new OutputStreamWriter(
                             socket.getOutputStream(), UTF_8))) {
+
                         String line;
-                        while ((line = in.readLine()) != null) {                    
-                            out.write(line + "\n");
+                        while ((line = in.readLine()) != null) {
+                            String response = parseQueryString(line);
+                            out.write(response + "\n");
                             out.flush();
                         }
                 } catch (IOException e) {
