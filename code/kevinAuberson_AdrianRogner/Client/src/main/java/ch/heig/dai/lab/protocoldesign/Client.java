@@ -1,4 +1,4 @@
-package ch.heig.dai.lab.protocoldesign;
+package code.kevinAuberson_AdrianRogner.Client.src.main.java.ch.heig.dai.lab.protocoldesign;
 
 public class Client {
     final String SERVER_ADDRESS = "1.2.3.4";
@@ -11,5 +11,8 @@ public class Client {
     }
 
     private void run() {
+        TextualTCPClient tcp = new TextualTCPClient(SERVER_ADDRESS, SERVER_PORT);
+        tcp.openConnection();
+        tcp.sendRequest();
     }
 }
