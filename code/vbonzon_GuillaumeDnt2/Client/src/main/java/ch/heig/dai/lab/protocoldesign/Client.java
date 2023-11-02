@@ -48,7 +48,7 @@ public class Client {
             //Start the looping for command to send
             while(!socket.isClosed()){
                 //Get the command from the user and sends it
-                System.out.print("Enter your command: ");
+                System.out.print("Enter your command (CLOSE to quit the app): ");
                 // Scanner scn = new Scanner(System.in);
                 out.write(scn.nextLine() + "\n");
                 out.flush();
