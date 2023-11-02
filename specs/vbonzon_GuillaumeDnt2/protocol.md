@@ -2,7 +2,7 @@
 Ceci est un protocol client-serveur qui permet au client d'envoyer une opération mathématique au serveur et à ce dernier d'envoyer le résultat
 
 ## Transport 
-Le protocol fonctionne sur TCP. Le serveur écoute sur le port 31415 et le client doit connaître l'adresse IP du serveur.
+Le protocol fonctionne sur TCP. Le serveur écoute sur le port 3141 et le client doit connaître l'adresse IP du serveur.
 Le client ouvre la connection et le serveur ferme la connection après avoir reçu le message CLOSE du client.
 
 ## Message
@@ -14,7 +14,7 @@ Le serveur renvoit le résultat ou un message d'erreur puis ferme la connection.
 - ADD <args>  : le serveur ajoute les entiers séparés par un espace et renvoit le résultat
 - MULT <args> : le serveur multiplie les entiers séparés par un espace et renvoit le résultat
 - SUB <args>  : le serveur soustrait les arguments dans leur ordre d'apparition et renvoit le résultat
-- DIV <args>  : le serveur divise les arguments dans leur ordre d'apparition et renvoit le résultat 
+- DIV \<args\>  : le serveur divise les arguments dans leur ordre d'apparition et renvoit le résultat 
 - POW <a> <b> : le serveur met l'argument a à la puissance b et renvoit le résultat
 - MEAN <args> : le serveur renvoit la moyenne de tous les arguments
 - CLOSE       : le serveur ferme la connexion proprement et envoit un message de confirmation au client
