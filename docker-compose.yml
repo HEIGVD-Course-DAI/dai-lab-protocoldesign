@@ -4,10 +4,14 @@ services:
 
   server:
     image: server-1.0.jar
+    ports:
+      - "8888:8888"
     build:
       context: ./code/Andrea-Graf_ JustinFerrara14/Server
   
   client:
     image: client-1.0.jar
+    ports:
+      - "8080:8888"
     build:
       context: ./code/Andrea-Graf_ JustinFerrara14/Client

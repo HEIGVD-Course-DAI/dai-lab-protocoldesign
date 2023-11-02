@@ -1,4 +1,4 @@
-package src.main.java.ch.heig.dai.lab.protocoldesign;
+package ch.heig.dai.lab.protocoldesign;
 
 import java.net.*;
 import java.io.*;
@@ -8,13 +8,15 @@ import java.util.Scanner;
 import static java.nio.charset.StandardCharsets.*;
 
 public class Client {
-    final String SERVER_ADDRESS = "192.168.1.143";
+    final String SERVER_ADDRESS = "0.0.0.0";
     final int SERVER_PORT = 8888;
 
     public static void main(String[] args) {
-        // Create a new client and run it
-        Client client = new Client();
-        client.run();
+        while(true){
+            // Create a new client and run it
+            Client client = new Client();
+            client.run();
+        }
     }
 
     private void run() {

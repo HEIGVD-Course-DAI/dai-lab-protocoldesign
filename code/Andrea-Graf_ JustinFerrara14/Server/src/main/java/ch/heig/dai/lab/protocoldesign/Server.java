@@ -1,4 +1,4 @@
-package src.main.java.ch.heig.dai.lab.protocoldesign;
+package ch.heig.dai.lab.protocoldesign;
 
 import java.net.*;
 import java.io.*;
@@ -11,9 +11,11 @@ public class Server {
     String[] supportedCommands = {"init", "add", "mult", "quit"};
 
     public static void main(String[] args) {
-        // Create a new server and run it
-        Server server = new Server();
-        server.run();
+        while(true){
+            // Create a new client and run it
+            Server server = new Server();
+            server.run();
+        }
     }
 
     private void run() {
