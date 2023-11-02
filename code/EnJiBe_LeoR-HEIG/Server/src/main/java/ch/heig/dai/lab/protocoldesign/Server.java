@@ -1,67 +1,98 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
+package ch.heig.dai.lab.protocoldesign;
 
 public class Server {
+    final int SERVER_PORT = 1234;
 
     public static void main(String[] args) {
-        int port = 42069;
+        // Create a new server and run it
+        Server server = new Server();
+        server.run();
+    }
 
-        try (ServerSocket serverSocket = new ServerSocket(port);
-             Socket clientSocket = serverSocket.accept();
-             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())))
+    private void run() {
+        try
         {
+            ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
+            System.out.println("Server is running...");
 
-            out.println("AVAILABLE OPERATIONS ADD (ex. ADD 10 20) MUL (ex. MUL 30 4 66)");
-
-            String inputLine;
-
-            while ((inputLine = in.readLine()) != null)
+            while (true)
             {
-                String[] tokens = inputLine.split(" ");
-                String command = tokens[0];
-                int[] operands = new int[tokens.length - 1];
+                Socket clientSocket = serverSocket.accept();
 
-                for (int i = 0; i < operands.length; i++)
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+                String inputLine;
+
+                while ((inputLine = in.readLine()) != null)
                 {
-                    operands[i] = Integer.parseInt(tokens[i + 1]);
+                    String response = processRequest(inputLine);
+                    out.println(response);
                 }
 
-                int result;
-
-                switch (command)
-                {
-                    case "ADD":
-                        result = 0;
-                        for (int operand : operands)
-                        {
-                            result += operand;
-                        }
-                        break;
-                    case "MUL":
-                        result = 1;
-                        for (int operand : operands)
-                        {
-                            result *= operand;
-                        }
-                        break;
-                    case "QUIT":
-                        out.println("CLOSED");
-                        return;
-                    default:
-                        out.println("ERROR: Invalid command");
-                        continue;
-                }
-
-                out.println(result);
+                in.close();
+                out.close();
+                clientSocket.close();
             }
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             e.printStackTrace();
         }
     }
 }
+
+    private String processRequest(String request)
+    {
+        StringTokenizer tokenizer = new StringTokenizer(request, " ");
+        String command = tokenizer.nextToken();
+
+        if (command.equals("HELLO"))
+        {
+            return "AVAILABLE OPERATIONS ADD (ex. ADD 10 20) MUL (ex. MUL 30 4 66)";
+        }
+        else if (command.equals("QUIT"))
+        {
+            return "CLOSED";
+        }
+        else if (command.equals("ADD"))
+        {
+            int result = 0;
+
+            while (tokenizer.hasMoreTokens())
+            {
+                try
+                {
+                    result += Integer.parseInt(tokenizer.nextToken());
+                }
+                catch (NumberFormatException e)
+                {
+                    return "ERROR: Invalid operands";
+                }
+            }
+
+            return String.valueOf(result);
+        }
+        else if (command.equals("MUL"))
+        {
+            int result = 1;
+
+            while (tokenizer.hasMoreTokens())
+            {
+                try
+                {
+                    result *= Integer.parseInt(tokenizer.nextToken());
+                }
+                catch (NumberFormatException e)
+                {
+                    return "ERROR: Invalid operands";
+                }
+            }
+
+            return String.valueOf(result);
+        }
+        else
+        {
+            return "ERROR: Invalid command";
+        }
+    }

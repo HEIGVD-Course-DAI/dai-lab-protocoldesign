@@ -1,36 +1,48 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
+package ch.heig.dai.lab.protocoldesign;
 
-public class Client
-{
-    public static void main(String[] args)
-    {
-        String host = "localhost";
-        int port = 42069;
+public class Client {
+    final String SERVER_ADDRESS = "1.2.3.4";
+    final int SERVER_PORT = 1234;
 
-        try (Socket socket = new Socket(host, port);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
+    public static void main(String[] args) {
+        // Create a new client and run it
+        Client client = new Client();
+        client.run();
+    }
 
-            System.out.println(in.readLine());
+    private void run() {
+        try {
+            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
 
-            String userInput;
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-            while ((userInput = stdIn.readLine()) != null)
+            Scanner scanner = new Scanner(System.in);
+            while (true)
             {
-                out.println(userInput);
+                System.out.print("Enter your request: ");
+                String request = scanner.nextLine();
 
-                String serverResponse = in.readLine();
-                System.out.println(serverResponse);
-                out.flush();
+                out.println(request);
+
+                String response = in.readLine();
+                System.out.println("Server response: " + response);
+
+                if (request.equals("QUIT"))
+                {
+                    break;
+                }
             }
+
+            in.close();
+            out.close();
+            socket.close();
+
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             e.printStackTrace();
         }
+    }
     }
 }
