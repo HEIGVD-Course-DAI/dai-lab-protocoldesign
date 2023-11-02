@@ -26,7 +26,7 @@ List of errors ids :
 2) Illegal amount of parameter : Too least or too many parameters given.
 3) not a number : At least one of the parameter who need to be convertible to double is not convertible.
 4) Illegal move : division by 0, square root of a negative number, ...
-5) Internal errors : various errors that happend on the server side, as an example : the result is too big to be stock in a double.
+5) Internal errors : various errors that happened on the server side, as an example : the result is too big to be stock in a double.
 
 # Example dialogs
 
