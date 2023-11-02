@@ -22,6 +22,7 @@ The following messages will be used by the client:
 - `SUB <firstNumber> <secondNumber>`
 - `MUL <firstNumber> <secondNumber>`
 - `DIV <firstNumber> <secondNumber>`
+- `EXIT`
 
 The server can then respond with these messages:
 - `<solution>`
