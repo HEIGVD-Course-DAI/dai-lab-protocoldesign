@@ -26,10 +26,12 @@ public class Server {
        
         try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)){
             while(true){
+                System.out.println("Waiting new connection...");
                 try (Socket socket = serverSocket.accept();
                     var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
                     var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8)) ) {
 
+                        System.out.println("Connection enabled");
                         String welcomeMessage = "Voici les operations : ";
                         output = out;
                         for(String s : OP){
@@ -41,21 +43,30 @@ public class Server {
                         String line;
                         while ((line = in.readLine()) != null){
                             
-
-                            String resultLine = operationSelector(line);
-                            if(!errorHappened){
-                                out.write(resultLine + "\n");
+                            String[] split = line.split(" ");
+                            
+                            //Check if close message
+                            if(split[0].equals("CLOSE")){
+                                
+                                out.write("Closing connection...\n");
                                 out.flush();
-                                
-                                
+                                System.out.println("Closing connection...");
+                                socket.close();
+                                break;
                             }
-                            errorHappened = false;
-                            
+                            else{
+                                
+                                String resultLine = operationSelector(split);
+                                if(!errorHappened){
+                                    out.write(resultLine + "\n");
+                                    out.flush();
+                                }
 
-                            
-                            
+                                errorHappened = false;
+                            }
                         }
-
+                        System.out.println("Connection closed");
+                        
 
                     
                 } catch (Exception e) {
@@ -70,34 +81,32 @@ public class Server {
 
     } 
 
-    private String operationSelector(String input){
+    private String operationSelector(String[] input){
 
-        String[] split = input.split(" ");
-        String output = "";
-        if(split.length <= 2)
+        if(input.length <= 2)
             errorMessage(errors.BAD_ARG);
         
-           
+        String output = "";
         Integer result = 0;
-        switch (split[0]){
+        switch (input[0]){
 
             case "ADD":
-                result = add(stringToInt(split));
+                result = add(stringToInt(input));
                 break;
             case "POW":
-                result = pow(stringToInt(split));
+                result = pow(stringToInt(input));
                 break;    
             case "MULT":
-                result = mult(stringToInt(split));
+                result = mult(stringToInt(input));
                 break; 
             case "DIV":
-                result = div(stringToInt(split));
+                result = div(stringToInt(input));
                 break; 
             case "SUB":
-                result = sub(stringToInt(split));
+                result = sub(stringToInt(input));
                 break;    
             case "MEAN":
-                result = mean(stringToInt(split));
+                result = mean(stringToInt(input));
                 break;  
                      
             default:
