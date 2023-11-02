@@ -20,7 +20,7 @@ public class Client {
                 // There are two errors here!
 
                 System.out.println("Echo: " + in.readLine());
-                out.write("CALCULATION ADD (2 3)");
+                out.write("CALCULATION 2 + 3" + "\n");
                 out.flush();
             } }
         catch(IOException e){
