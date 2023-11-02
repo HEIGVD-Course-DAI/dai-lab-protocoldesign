@@ -34,6 +34,7 @@ public class Client {
                 }
             }
 
+            out.flush();
             in.close();
             out.close();
             socket.close();
