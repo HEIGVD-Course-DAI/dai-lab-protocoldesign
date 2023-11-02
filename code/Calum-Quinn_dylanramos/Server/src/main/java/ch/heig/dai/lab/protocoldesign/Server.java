@@ -4,16 +4,16 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 public class Server {
     final int SERVER_PORT = 32976;
-    final String OPERATIONS = "ADD <firstNumber> <secondNumber>\n" +
-            "SUB <firstNumber> <secondNumber>\n" +
-            "MUL <firstNumber> <secondNumber>\n" +
-            "DIV <firstNumber> <secondNumber>\n" +
-            "END\n";
-    static final String[] OPS = {"ADD", "SUB", "MUL", "DIV"};
+    final String OPERATIONS = """
+            ADD <firstNumber> <secondNumber>
+            SUB <firstNumber> <secondNumber>
+            MUL <firstNumber> <secondNumber>
+            DIV <firstNumber> <secondNumber>
+            END
+            """;
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -63,7 +63,6 @@ public class Server {
                     String opp = arguments[0];
                     String num1 = arguments[1];
                     String num2 = arguments[2];
-                    boolean validOp = false;
 
                     // Check if numbers are valid
                     if (!(isNumeric(num1) && isNumeric(num2))) {
@@ -75,11 +74,9 @@ public class Server {
                         out.flush();
                     }
                 }
-
             } catch (IOException e) {
                 System.out.println("Server: socket ex.: " + e);
             }
-
         } catch (IOException e) {
             System.out.println(("Server: server socket ex.: " + e));
         }

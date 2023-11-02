@@ -27,6 +27,7 @@ public class Client {
                 System.out.println(line);
             }
 
+            // Read user input
             Scanner scanner = new Scanner(System.in);
             String msg;
             while (!Objects.equals(msg = scanner.nextLine(), "exit")) {
