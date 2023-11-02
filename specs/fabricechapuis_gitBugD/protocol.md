@@ -22,8 +22,9 @@ The server send the answer as a string that contains a status code (0 or other c
 ## Specific elements
 Status code for sucess: 0.
 Error response message if:
-1. Undefined operation -> 1
+1. Unknown operation -> 1
 2. Numbers in wrong format (for example, letters instead of digits) -> 2
+3. Wrong number of arguments (for example, 5 arguments given instead of 3) -> 3
 If one or both numbers sent by the client are not specified, 0 will be taken as the missing number/s.
 Messages are UTF-8 encoded, with “\n” as end-of-line character.
 
