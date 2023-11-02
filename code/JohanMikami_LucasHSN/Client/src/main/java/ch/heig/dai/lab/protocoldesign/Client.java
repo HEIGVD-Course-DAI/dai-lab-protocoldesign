@@ -1,4 +1,4 @@
-package src.main.java.ch.heig.dai.lab.protocoldesign;
+package ch.heig.dai.lab.protocoldesign;
 
 import java.io.*;
 import java.net.Socket;
@@ -24,7 +24,7 @@ public class Client {
             // Print the welcome message from the server
             System.out.println(in.readLine());
 
-            System.out.println("Ecrivez votre calcul :");
+            System.out.println("Write your calculation :");
             String str;
             do{
                 str = br.readLine();
@@ -33,7 +33,7 @@ public class Client {
             out.write(str + "\n");
             out.flush();
 
-            System.out.println(in.readLine());
+            System.out.println("Result : " + in.readLine());
 
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
