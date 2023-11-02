@@ -25,6 +25,7 @@ public class Client
 
                 String serverResponse = in.readLine();
                 System.out.println(serverResponse);
+                out.flush();
             }
         }
         catch (Exception e)
