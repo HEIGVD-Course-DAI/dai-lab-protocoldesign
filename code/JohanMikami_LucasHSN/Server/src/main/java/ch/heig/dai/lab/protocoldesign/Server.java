@@ -17,13 +17,25 @@ public class Server {
     public String computeResult(String message) {
         // Retrieve each arguments from the message
         String[] arguments = message.split(" ");
+
+        if (arguments.length != 3)
+            return "ERROR: Invalid number of arguments";
+
+        if (!arguments[1].matches("-?\\d+") || !arguments[2].matches("-?\\d+"))
+            return "ERROR: Invalid arguments";
+
         String operation = arguments[0];
-        /// TODO Verifier que les arguments sont bien des entiers et que si c'est pas le cas, pose pas de problème
-        int operand1 = Integer.parseInt(arguments[1]);
-        int operand2 = Integer.parseInt(arguments[2]);
+        int operand1;
+        int operand2;
+        try {
+            operand1 = Integer.parseInt(arguments[1]);
+            operand2 = Integer.parseInt(arguments[2]);
+        } catch (NumberFormatException e) {
+            return "ERROR: Argument too big";
+        }
 
         // Compute the result
-        String result = "";
+        String result;
         switch (operation) {
             case "ADD":
                 result = String.valueOf(operand1 + operand2);
@@ -52,7 +64,9 @@ public class Server {
                      var in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), UTF_8));
                      var out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), UTF_8))) {
 
-                    /// TODO : Print possible operation as welcome message
+                    // Send a welcome message to the client with all possible operation (ADD, SUB, MUL, DIV)
+                    out.write("Possible operations are: ADD, SUB, MUL, DIV\n");
+                    out.flush();
 
                     // Compute the result
                     String result = computeResult(in.readLine());

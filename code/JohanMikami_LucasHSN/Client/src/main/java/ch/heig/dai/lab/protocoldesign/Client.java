@@ -1,4 +1,4 @@
-package ch.heig.dai.lab.protocoldesign;
+package src.main.java.ch.heig.dai.lab.protocoldesign;
 
 import java.io.*;
 import java.net.Socket;
@@ -6,8 +6,8 @@ import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
 public class Client {
-    final String SERVER_ADDRESS = "0.0.0.0";
-    final int SERVER_PORT = 1234;
+    final String SERVER_ADDRESS = "localhost";
+    final int SERVER_PORT = 54321;
 
     public static void main(String[] args) {
         // Create a new client and run it
@@ -21,13 +21,16 @@ public class Client {
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){
 
+            // Print the welcome message from the server
+            System.out.println(in.readLine());
+
             System.out.println("Ecrivez votre calcul :");
             String str;
             do{
                 str = br.readLine();
             }while (str.isEmpty());
 
-            out.write(str);
+            out.write(str + "\n");
             out.flush();
 
             System.out.println(in.readLine());
