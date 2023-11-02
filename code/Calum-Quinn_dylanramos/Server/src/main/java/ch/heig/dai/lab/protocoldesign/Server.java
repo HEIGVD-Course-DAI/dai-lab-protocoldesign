@@ -11,7 +11,8 @@ public class Server {
     final String OPERATIONS =   "ADD <firstNumber> <secondNumber>\n" +
                                 "SUB <firstNumber> <secondNumber>\n" +
                                 "MUL <firstNumber> <secondNumber>\n" +
-                                "DIV <firstNumber> <secondNumber>\n";
+                                "DIV <firstNumber> <secondNumber>\n" +
+                                "END\n";
     static final String[] OPS = {"ADD","SUB","MUL","DIV"};
 
     public static void main(String[] args) {
@@ -49,6 +50,7 @@ public class Server {
 
                 out.write(OPERATIONS);
                 out.flush();
+
 
                 String[] request = in.readLine().split(" ");
                 String opp = request[0];

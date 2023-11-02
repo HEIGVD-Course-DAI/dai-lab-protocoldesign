@@ -23,7 +23,7 @@ public class Client {
 
             // Read the welcome message
             String line;
-            while ((line = in.readLine()) != null) {
+            while ((line = in.readLine()) != null && !line.equals("END")) {
                 System.out.println(line);
             }
 
