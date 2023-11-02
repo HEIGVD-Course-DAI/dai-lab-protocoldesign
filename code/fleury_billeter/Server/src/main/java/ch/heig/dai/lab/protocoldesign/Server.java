@@ -47,7 +47,7 @@ public class Server {
                         out.write("Guest: >");
                     }
 
-                    out.write("....");
+                    out.write("....\n");
 
                     out.flush();
 
@@ -67,15 +67,17 @@ public class Server {
 
     // Selection de method en fonction de la commande appelée
     public void commandSwitch(String cmd, BufferedWriter out) throws IOException {
-        if(cmd.equals("ping")) {
+        var params = cmd.split(" ");
+
+        if(params[0].equals("ping")) {
             ping(out);
-        }else if(cmd.contains("ADD") || cmd.contains("add")){
-            add(out, cmd);
-        }else if(cmd.contains("SUB") || cmd.contains("sub")) {
+        }else if(params[0].equals("ADD") || params[0].equals("add")){
+            add(out, Integer.valueOf(params[1]), Integer.valueOf(params[2]));
+        }else if(params[0].equals("SUB") || params[0].equals("sub")) {
             sub(out, cmd);
-        }else if(cmd.contains("password")) {
+        }else if(params[0].equals("password")) {
             auth(cmd);
-        }else if(cmd.equals("quit") || cmd.equals("exit")){
+        }else if(params[0].equals("quit") || params[0].equals("exit")){
             closeConn();
         }else {
             out.write("Commande Non reconnue \n");
@@ -95,20 +97,9 @@ public class Server {
         out.write("pong\n");
     }
 
-    public void add(BufferedWriter out, String cmd) throws IOException{
-        Pattern p = Pattern.compile("\\d+");
-        Matcher m = p.matcher(cmd);
-        int res = 0;
-
-        m.find();
-        var arg1 = Integer.valueOf(m.group());
-        m.find();
-        var arg2 = Integer.valueOf(m.group());
-
-        res = arg1 + arg2;
-
-        System.out.println("Resultat de l'addition = " + res + "\n");
-        out.write(res + "\n");
+    public void add(BufferedWriter out, int a, int b) throws IOException{
+        System.out.println("Resultat de l'addition = " + (a+b) + "\n");
+        out.write((a+b) + "\n");
     }
 
     public void sub(BufferedWriter out, String cmd) throws IOException{
