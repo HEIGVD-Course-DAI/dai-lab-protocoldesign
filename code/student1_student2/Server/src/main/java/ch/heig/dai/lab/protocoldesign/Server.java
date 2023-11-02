@@ -8,7 +8,7 @@ import static java.nio.charset.StandardCharsets.*;
 
 
 public class Server {
-    final int SERVER_PORT = 1234;
+    final int SERVER_PORT = 42020;
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -34,9 +34,10 @@ public class Server {
                         if(line.compareTo("CLOSE") == 0){
                             
                         } else if (cal.isValidOperator()) {
-                            out.write("ANSWER : " + cal.resultat());
+                            out.write("ANSWER : " + cal.resultat() +"\n");
+                            out.flush();
                         } else {
-                            out.write("");
+                            out.write("error :(");
                         }
 
 
