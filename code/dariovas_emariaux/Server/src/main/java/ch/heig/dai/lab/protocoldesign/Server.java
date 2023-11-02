@@ -40,15 +40,23 @@ public class Server {
                              socket.getOutputStream(), UTF_8))){
 
                     // Send WELCOME message (with the possible operators) to the clients on new connection
-                    out.write("WELCOME | " + getOperations() + "\n");
+                    out.write("WELCOME (12 + 12) | " + getOperations() + "\n");
                     out.flush();
 
                     while (true){
                         String msg = in.readLine();
-                        System.out.println("Echo: " + msg);
+                        String[] msgParts = msg.split("\\|");
 
-                        //if(msg != null)
-                           // break;
+                        if(msg == null)
+                            break;
+
+                        System.out.println(msgParts[0]);
+
+                        switch (msgParts[0]){
+                            case "CALCULATION":
+                                System.out.println("CALCULATION");
+                                break;
+                        }
                     }
 
                 }

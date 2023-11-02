@@ -19,7 +19,7 @@ Then, the clients displays the result.
 
 MOP uses TCP. The client establishes the connection. 
 It has to know the IP address of the server. 
-The server listens on TCP port 69420.
+The server listens on TCP port 42069.
 
 The server closes the connection when the result has been sent.
 
@@ -28,7 +28,7 @@ The server closes the connection when the result has been sent.
 There are these types of messages :
 -	WELCOME
      The client opens the communication and the server sends a welcome message with the possible operations.
--	CALCULATION <operation, nb1, nb2>
+-	CALCULATION <nb1 OPERATION nb2>
      The clients sends the operation. The operation must be in uppercase.
 -	RESULT <Number>
      The server sends back the result of the calculation, then the client displays it.
@@ -43,22 +43,22 @@ If the operation exists, the server sends the result back.
 
 **Successful CALCULATION :**
 1. Client opens TCP connection.
-2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, PLEASE ENTER YOUR CALCULATION FOLLOWING THIS FORMAT : <OP> <NB1> <NB2> (ADD 21 12). 
+2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, (12 + 12) | <OP>. 
 3. Client provides an operation followed by two numbers -> ADD 21 2
 4. Server responds the result --> RESULT 23
 5. Server closes the TCP connection
 
 **OPERATION_NOT_VALID :**
 1. Client opens TCP connection.
-2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, PLEASE ENTER YOUR CALCULATION FOLLOWING THIS FORMAT : <OP> <NB1> <NB2> (ADD 21 12).
-3. Client provides an operation followed by two numbers -> MIN 21 2
-4. Server responds that the operation doesn’t exist. --> MIN OPERATION DOES'T EXISTS, PLEASE ENTER ANOTHER CALCULATION.
+2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, (12 + 12) | <OP>. 
+3. Client provides an operation followed by two numbers -> 21 % 2
+4. Server responds that the operation doesn’t exist. --> % OPERATION DOES'T EXISTS, PLEASE ENTER ANOTHER CALCULATION.
 5. Server waits a new calculation.
 
 **NUMBER_NOT_VALID :**
 1. Client opens TCP connection.
-2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, PLEASE ENTER YOUR CALCULATION FOLLOWING THIS FORMAT : <OP> <NB1> <NB2> (ADD 21 12).
-3. Client provides an operation followed by two numbers -> ADD c 2
+2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, (12 + 12) | <OP>. 
+3. Client provides an operation followed by two numbers -> c + 2
 4. Server responds that the values are incorrect. --> c ARE NOT A CORRECT VALUE, PLEASE ENTER A CORRECT VALUE.
 5. Server waits a new calculation.
 
