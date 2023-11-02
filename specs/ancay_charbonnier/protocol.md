@@ -10,6 +10,10 @@ CRP uses TCP. The client establishes the connection and has to know the IP adres
 
 This section contains all the different types of requests and responses that any version of CRP needs to implement.
 
+### Request delimiter
+
+Requests and response must end with a newline character (```\n```).
+
 ### ```CMPT``` Request
 
 Syntax : ```CMPT [operation] [op1] [op2] [..] [opN]```
@@ -23,6 +27,12 @@ The following operations have to be supported in any implementation of CRP :
 As long as these two operations are supported, the developer is free to implement as many additional operations as he wants or needs.
 
 In case the requested operation is not in the list of supported operations, the server returns an ```ERROR``` message with code ```2```.
+
+### ```RSLT``` Message
+
+Syntax : ```RSLT [result]```.
+
+Contains the result to a specific ```CMPT``` operation.
 
 #### Supported data types for the operands
 CRP supports arbritrary size integer arithmetic. This means that the operands and the result of a computation do not have to fit in a 64 or 32 bit integer type, they can be of any size.
