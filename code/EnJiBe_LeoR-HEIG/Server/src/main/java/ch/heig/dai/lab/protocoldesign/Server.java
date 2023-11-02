@@ -1,7 +1,11 @@
 package ch.heig.dai.lab.protocoldesign;
 
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
 public class Server {
-    final int SERVER_PORT = 1234;
+    final int SERVER_PORT = 42069;
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -27,6 +31,8 @@ public class Server {
                 while ((inputLine = in.readLine()) != null)
                 {
                     String response = processRequest(inputLine);
+                    System.out.println(inputLine);
+                    System.out.println(response);
                     out.println(response);
                 }
 
@@ -40,59 +46,48 @@ public class Server {
             e.printStackTrace();
         }
     }
-}
 
     private String processRequest(String request)
     {
         StringTokenizer tokenizer = new StringTokenizer(request, " ");
         String command = tokenizer.nextToken();
 
-        if (command.equals("HELLO"))
-        {
-            return "AVAILABLE OPERATIONS ADD (ex. ADD 10 20) MUL (ex. MUL 30 4 66)";
-        }
-        else if (command.equals("QUIT"))
-        {
-            return "CLOSED";
-        }
-        else if (command.equals("ADD"))
-        {
-            int result = 0;
-
-            while (tokenizer.hasMoreTokens())
-            {
-                try
-                {
-                    result += Integer.parseInt(tokenizer.nextToken());
-                }
-                catch (NumberFormatException e)
-                {
-                    return "ERROR: Invalid operands";
-                }
+        switch (command) {
+            case "HELLO" -> {
+                return "AVAILABLE OPERATIONS ADD (ex. ADD 10 20) MUL (ex. MUL 30 4 66)";
             }
-
-            return String.valueOf(result);
-        }
-        else if (command.equals("MUL"))
-        {
-            int result = 1;
-
-            while (tokenizer.hasMoreTokens())
-            {
-                try
-                {
-                    result *= Integer.parseInt(tokenizer.nextToken());
-                }
-                catch (NumberFormatException e)
-                {
-                    return "ERROR: Invalid operands";
-                }
+            case "QUIT" -> {
+                return "CLOSED";
             }
+            case "ADD" -> {
+                int result = 0;
 
-            return String.valueOf(result);
-        }
-        else
-        {
-            return "ERROR: Invalid command";
+                while (tokenizer.hasMoreTokens()) {
+                    try {
+                        result += Integer.parseInt(tokenizer.nextToken());
+                    } catch (NumberFormatException e) {
+                        return "ERROR: Invalid operands";
+                    }
+                }
+
+                return String.valueOf(result);
+            }
+            case "MUL" -> {
+                int result = 1;
+
+                while (tokenizer.hasMoreTokens()) {
+                    try {
+                        result *= Integer.parseInt(tokenizer.nextToken());
+                    } catch (NumberFormatException e) {
+                        return "ERROR: Invalid operands";
+                    }
+                }
+
+                return String.valueOf(result);
+            }
+            default -> {
+                return "ERROR: Invalid command";
+            }
         }
     }
+}

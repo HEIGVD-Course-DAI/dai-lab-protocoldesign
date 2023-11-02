@@ -1,8 +1,12 @@
 package ch.heig.dai.lab.protocoldesign;
 
+import java.io.*;
+import java.net.Socket;
+import java.util.*;
+
 public class Client {
-    final String SERVER_ADDRESS = "1.2.3.4";
-    final int SERVER_PORT = 1234;
+    final String SERVER_ADDRESS = "0.0.0.0";
+    final int SERVER_PORT = 42069;
 
     public static void main(String[] args) {
         // Create a new client and run it
@@ -44,6 +48,5 @@ public class Client {
         {
             e.printStackTrace();
         }
-    }
     }
 }
