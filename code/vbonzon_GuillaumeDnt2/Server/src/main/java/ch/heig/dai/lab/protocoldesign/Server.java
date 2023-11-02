@@ -1,11 +1,7 @@
 package ch.heig.dai.lab.protocoldesign;
 import java.net.*;
 import java.io.*;
-import java.lang.Math.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 import static java.nio.charset.StandardCharsets.*;
 
@@ -16,6 +12,7 @@ public class Server {
 
     boolean errorHappened = false;
 
+    //To have the output buffer accessible by errorMessage method
     private BufferedWriter output;
     
 
@@ -27,7 +24,6 @@ public class Server {
 
     private void run() {
 
-       
         try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)){
             while(true){
                 System.out.println("Waiting new connection...");
@@ -35,7 +31,9 @@ public class Server {
                     var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
                     var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8)) ) {
 
-                        System.out.println("Connection enabled");
+                        System.out.println("Connected to " + socket.getRemoteSocketAddress().toString());
+
+                        //----Send welcome message---- 
                         String welcomeMessage = "Voici les operations : ";
                         
                         for(String s : OP){
@@ -44,24 +42,25 @@ public class Server {
                         output = out;
                         out.write(welcomeMessage + "\n");
                         out.flush();
+
+                        //------Process the command from the client------
                         String line;
                         while ((line = in.readLine()) != null){
                             
                             String[] split = line.split(" ");
                             
-                            //Check if close message
-                            if(split[0].equals("CLOSE")){
+                            //Check if close message was send
+                            if(split[0].toUpperCase().equals("CLOSE")){
                                 
-                                out.write("Closing connection...\n");
+                                out.write("CLOSING\n");
                                 out.flush();
                                 System.out.println("Closing connection...");
-                                socket.close();
                                 break;
                             }
                             else{
                                 
                                 //Get the result of the opperation and send it if no error happened
-                                String resultLine = operationSelector(split);
+                                String resultLine = process(split);
                                 if(!errorHappened){
                                     out.write(resultLine + "\n");
                                     out.flush();
@@ -84,14 +83,17 @@ public class Server {
 
     } 
 
-    private String operationSelector(String[] input){
+    private String process(String[] input){
 
+        //If not enough argument, send an error message
         if(input.length <= 2)
             errorMessage(errors.BAD_ARG);
         
-        String output = "";
+        String outputTxt = "";
         Double result = 0.0;
-        switch (input[0]){
+
+        //Select the opperation and get the result
+        switch (input[0].toUpperCase()){
 
             case "ADD":
                 result = add(stringToDouble(input));
@@ -111,18 +113,21 @@ public class Server {
             case "MEAN":
                 result = mean(stringToDouble(input));
                 break;  
-                     
             default:
                 errorMessage(errors.BAD_OP);    
 
         }
-    
-        output = "RESULT " + result.toString();
-        return output;
-        
-        
-        
+        //Remove the .0 if the result is an integer
+        String resultTxt;
+        if(result % 1 == 0){
+            resultTxt = result.toString().substring(0, result.toString().length()-2);
+        }
+        else{
+            resultTxt = result.toString();
+        }
 
+        outputTxt = "RESULT " + resultTxt;
+        return outputTxt;
         
     }
 
@@ -144,31 +149,19 @@ public class Server {
         }
 
         try {
+            //Send the error message
             System.out.println(errorMsg);
             output.write(errorMsg + "\n");
             output.flush();
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println(e);
         }
         
     }
 
-    private int[] stringToInt(String[] input){
-        int[] value = new int[input.length -1];
-        for(int i = 0; i < input.length-1; i++){
-            try {
-                value[i] = Integer.parseInt(input[i+1]);
-            } catch (Exception e) {
-                // TODO: handle exception
-                errorMessage(errors.BAD_VAL);
-            }
-            
-        }
-
-
-        return value;
-    }
-
+    /*
+     * Convert a string array to a double array
+     */
     private double[] stringToDouble(String[] input){
         double[] value = new double[input.length -1];
         for(int i = 0; i < input.length-1; i++){
@@ -180,21 +173,12 @@ public class Server {
             }
             
         }
-
-
         return value;
     }
 
-    private int add(int[] values){
-        
-        int sum = 0;
-        for(int v : values){
-            sum += v;
-        }
-        
-        return sum;
-    }
-
+    /*
+     * Return the sum of all values in values array parameter
+     */
     public double add(double[] values) {   
         double sum = 0.0;
         for(double v : values){
@@ -202,17 +186,10 @@ public class Server {
         }
         return sum;
     }
-
     
-
-    private int mult(int[] values){
-        int mult = 1;
-        for(int v : values){
-            mult *= v;
-        }
-        return mult;
-    }
-
+    /*
+     * Return the multiplication of all values from the array
+     */
     private double mult(double[] values){
         double mult = 1.0;
         for(double v : values){
@@ -220,17 +197,11 @@ public class Server {
         }
         return mult;
     }
-
-    private int sub(int[] values){ //TODO
-        
-        int diff = values[0];
-        for(int v  = 1; v < values.length; v++){
-            diff -= values[v];
-        }
-        return diff;
-    }
-
-    private double sub(double[] values){ //TODO
+    
+    /*
+     * Return the difference of all values from the array
+     */
+    private double sub(double[] values){
         
         double diff = values[0];
         for(int v  = 1; v < values.length; v++){
@@ -238,19 +209,10 @@ public class Server {
         }
         return diff;
     }
-
-    private int div(int[] values){ //TODO
-        
-        int quot = values[0];
-        for(int v  = 1; v < values.length; v++){
-            if(values[v] == 0)
-                errorMessage(errors.BAD_VAL);
-            quot /= values[v];
-        }
-        
-        return quot;
-    }
-
+    
+    /*
+     * Return the division of all the values from the array
+     */
     private double div(double[] values){ //TODO
         
         double quot = values[0];
@@ -262,16 +224,10 @@ public class Server {
         
         return quot;
     }
-
-    private int pow(int[] values){
-        
-        if(values.length > 2){
-            errorMessage(errors.BAD_ARG);
-        }
-        return (int)(Math.pow(values[0], values[1]));
-        
-    }
-
+   
+    /*
+     * Return the pow of the 1st value by the 2nd
+     */
     private double pow(double[] values){
         
         if(values.length > 2){
@@ -284,12 +240,10 @@ public class Server {
         return (double)(Math.pow(values[0], values[1]));
         
     }
-
-    private int mean(int[] values){
-        int sum = add(values);
-        return sum/values.length;
-    }
-
+    
+    /*
+     * Return the mean of all values from the array
+     */
     private double mean(double[] values){
         double sum = add(values);
         return sum/values.length;
