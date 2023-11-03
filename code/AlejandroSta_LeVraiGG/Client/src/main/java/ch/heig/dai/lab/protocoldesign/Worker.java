@@ -15,22 +15,22 @@ public class Worker {
         this.in = in;
     }
 
-    void add(double x, double y) {
+    void add(String x, String y) {
         out.println("ADD " + x + " " + y);
         out.flush();
     }
 
-    void sub(double x, double y) {
+    void sub(String x, String y) {
         out.println("SUB " + x + " " + y);
         out.flush();
     }
 
-    void mul(double x, double y) {
+    void mul(String x, String y) {
         out.println("MUL " + x + " " + y);
         out.flush();
     }
 
-    void div(double x, double y) {
+    void div(String x, String y) {
         out.println("DIV " + x + " " + y);
         out.flush();
     }
