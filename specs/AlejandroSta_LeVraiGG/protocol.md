@@ -9,8 +9,10 @@ There are two types of messages:
 
 There are three types of messages.
 
-- ADD \<x\> \<y\> The client requests to do an addition : x+y. The value need to be convertible to double.
-- MUL \<x\> \<y\> The client requests to do a multiplication : x*y. The value need to be convertible to double.
+- ADD \<x\> \<y\> The client requests to do an addition : x + y. The value need to be convertible to double.
+- MUL \<x\> \<y\> The client requests to do a multiplication : x * y. The value need to be convertible to double.
+- SUB \<x\> \<y\> The client requests to do an substraction : x - y. The value need to be convertible to double.
+- DIV \<x\> \<y\> The client requests to do an division : x / y. The value need to be convertible to double.
 - INVALID \<errnum\> Error response message after a client request demand, the errnum parameter give a id of the error type following the list specified further.  
   Both messages are UTF 8 encoded with “\n” as end of line character.
   If the operation is valid, the server sends the result as a text.
@@ -21,12 +23,13 @@ Example :
 - MUL +3 -4
 
 List of errors ids :
-0) not specified : various unknowns errors
-1) not an operation : the operation ask by the client is not valid. For example: "ADDITION 1 2", should be "ADD 1 2".
+0) Not specified : various unknowns errors
+1) Not an operation : the operation ask by the client is not valid. For example: "ADDITION 1 2", should be "ADD 1 2".
 2) Illegal amount of parameter : Too least or too many parameters given.
-3) not a number : At least one of the parameter who need to be convertible to double is not convertible.
+3) Not a number : At least one of the parameter who need to be convertible to double is not convertible.
 4) Illegal move : division by 0, square root of a negative number, ...
-5) Internal errors : various errors that happened on the server side, as an example : the result is too big to be stock in a double.
+5) Maximum resquest reached : the number of request per client reachs its maximum.
+6) Internal errors : various errors that happened on the server side, as an example : the result is too big to be stock in a double.
 
 # Example dialogs
 

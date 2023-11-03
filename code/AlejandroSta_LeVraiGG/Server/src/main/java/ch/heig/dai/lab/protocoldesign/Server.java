@@ -3,12 +3,13 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
+import java.util.Objects;
 
 import static java.nio.charset.StandardCharsets.*;
 
 public class Server {
     final int SERVER_PORT = 4242;
-    final String[] OPERATIONS = {"ADD", "MUL"/*, "SUB", "DIV"*/};
+    final String[] OPERATIONS = {"ADD", "MUL", "SUB"/*, "DIV"*/};
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -19,6 +20,7 @@ public class Server {
     private void run() {
         //Copy of given example on side:
         try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)) {
+            int requests = 0;
             while (true) {
                 try (Socket socket = serverSocket.accept();
                      BufferedReader in = new BufferedReader(
@@ -28,6 +30,12 @@ public class Server {
                     //TODO : lecture du paquet et traitement
                     String line;
                     while ((line = in.readLine()) != null){
+                        ++requests;
+                        if(requests > 10){
+                            out.write("INVALID 5" + '\n');
+                            out.flush();
+                            socket.close();
+                        }
                         String[] args = line.split(" ");
                         double value1, value2, result = 0;
                         if(args.length != 3){
@@ -48,9 +56,17 @@ public class Server {
                         try{
                             value1 = Double.parseDouble(args[1]);
                             value2 = Double.parseDouble(args[2]);
+                            if(value2 == 0 && Objects.equals(args[0], "DIV")){
+                                out.write("INVALID 4" + '\n');
+                                out.flush();
+                                socket.close();
+                                throw new IOException();
+                            }
                             result = switch (args[0]) {
                                 case "ADD" -> value1 + value2;
                                 case "MUL" -> value1 * value2;
+                                case "SUB" -> value1 - value2;
+                                case "DIV" -> value1 / value2;
                                 default -> result;
                             };
                             if(result >= 0) out.write("+");
