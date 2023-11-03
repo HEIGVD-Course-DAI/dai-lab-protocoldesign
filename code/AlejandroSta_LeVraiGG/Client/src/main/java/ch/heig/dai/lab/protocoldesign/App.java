@@ -77,6 +77,7 @@ public class App extends Application {
             }
 
             String data = wrk.read();
+            System.out.println("DATA Got : " + data);
             if (NumberUtils.isParsable(data)) {
                 l_result.setText("Result : " + data);
             } else {

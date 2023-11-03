@@ -44,7 +44,7 @@
                               </children>
                            </AnchorPane>
                            <Button mnemonicParsing="false" onAction="#run" text="Calculate" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                           <Label fx:id="l_result" text="Result : " GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           <Label fx:id="l_result" text="Result : " GridPane.columnIndex="1" GridPane.rowIndex="2" minWidth="200"/>
                                 </children>
                             </GridPane>
                         </children>
