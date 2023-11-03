@@ -15,13 +15,20 @@ public class Server {
     }
 
     private void sendWelcomeMessage(BufferedWriter out) throws IOException {
-        String welcomeMessage = """
+        String welcomeMessage = "Welcome";
+
+        out.write(welcomeMessage + "\n");
+        sendSupportedOps(out);
+    }
+
+    private void sendSupportedOps(BufferedWriter out) throws IOException {
+        String supportedOperations = """
                 Supported operations:
                 ADD <num1> <num2> -> this returns num1 + num2
                 MUL <num1> <num1> -> this returns num1 * num2
                 STOP -> this stops the connection""";
 
-        out.write(welcomeMessage + "\n");
+        out.write(supportedOperations + "\n");
         out.flush();
     }
 
@@ -34,12 +41,12 @@ public class Server {
 
     private Object[] checkRequest(String[] opRequest)
             throws IllegalNumberOfArgumentsException, UnknownOperationException,
-            ArgumentFormatException{
+            ArgumentFormatException {
         String operation = opRequest[0];
         if (opRequest.length != 3) {
             throw new IllegalNumberOfArgumentsException("Too many arguments given! " +
                     "Please send only one instruction for the operation " +
-                    "and two floating or integer numbers!");
+                    "and two floating point or integer numbers!");
         }
         if (!(operation.matches("ADD")
                 | operation.matches("MUL"))) {
@@ -57,9 +64,10 @@ public class Server {
         }
         return new Object[]{opRequest[0], num1, num2};
     }
+
     private double getResultIfPossible(String line)
             throws IllegalNumberOfArgumentsException, UnknownOperationException,
-            ArgumentFormatException{
+            ArgumentFormatException {
         line = line.trim();
         String[] opRequest = line.split(" ");
         Object[] formatted = checkRequest(opRequest);
@@ -84,18 +92,18 @@ public class Server {
                     sendWelcomeMessage(out);
                     String line;
                     while ((line = in.readLine()) != null) {
-                        if(line.matches("STOP")){
+                        if (line.matches("STOP")) {
                             sendByeMessage(out);
                             break;
                         }
                         double res;
-                        try{
+                        try {
                             res = getResultIfPossible(line);
-                        }catch (MyExceptions ex){
-                           out.write(ex.getMessage() + '\n');
-                           sendWelcomeMessage(out);
-                           out.flush();
-                           continue;
+                        } catch (MyExceptions ex) {
+                            out.write(ex.getMessage() + '\n');
+                            sendSupportedOps(out);
+                            out.flush();
+                            continue;
                         }
                         out.write(res + "\n");
                         out.flush();
@@ -111,53 +119,65 @@ public class Server {
     }
 }
 
-abstract class MyExceptions extends IllegalArgumentException{
+abstract class MyExceptions extends IllegalArgumentException {
     int errorCode;
-    public MyExceptions(){
+
+    public MyExceptions() {
         super();
     }
-    public MyExceptions(String s){
+
+    public MyExceptions(String s) {
         super(s);
     }
 }
-class UnknownOperationException extends MyExceptions{
+
+class UnknownOperationException extends MyExceptions {
     int errorCode = 1;
+
     public UnknownOperationException() {
         super();
     }
+
     public UnknownOperationException(String s) {
         super(s);
     }
+
     @Override
-    public String getMessage(){
+    public String getMessage() {
         return "Error code: " + errorCode + "\n" + super.getMessage();
     }
 }
-class ArgumentFormatException extends MyExceptions{
+
+class ArgumentFormatException extends MyExceptions {
     int errorCode = 2;
 
     public ArgumentFormatException() {
         super();
     }
+
     public ArgumentFormatException(String s) {
         super(s);
     }
+
     @Override
-    public String getMessage(){
+    public String getMessage() {
         return "Error code: " + errorCode + "\n" + super.getMessage();
     }
 }
-class IllegalNumberOfArgumentsException extends MyExceptions{
-    int errorCode = 2;
+
+class IllegalNumberOfArgumentsException extends MyExceptions {
+    int errorCode = 3;
 
     public IllegalNumberOfArgumentsException() {
         super();
     }
+
     public IllegalNumberOfArgumentsException(String s) {
         super(s);
     }
+
     @Override
-    public String getMessage(){
+    public String getMessage() {
         return "Error code: " + errorCode + "\n" + super.getMessage();
     }
 }
