@@ -34,6 +34,8 @@ There are these types of messages :
      The server sends back the result of the calculation, then the client displays it.
 -   END
      The client ask to close the connection.
+-   CANNOT_DIVIDE_BY_0
+     Error response message after a division by 0.
 -	OPERATION_NOT_VALID <operation>
      Error response message after a CALCULATION message, if the operation is not covered.
 -   NUMBER_NOT_VALID <nb1, XXXX>
@@ -45,23 +47,23 @@ If the operation exists, the server sends the result back.
 
 **Successful CALCULATION :**
 1. Client opens TCP connection.
-2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, 4*(12+12)| <OP>. 
-3. Client provides an operation followed by two numbers -> CALCULATION|4*(2+2)
-4. Server responds the result --> RESULT|23
+2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME 12+12| <OP>. 
+3. Client provides an operation followed by two numbers -> CALCULATION|4*2
+4. Server responds the result --> RESULT|8
 5. Server wait a new calculation or closes the TCP connection if it receives an END message
 
 **OPERATION_NOT_VALID :**
 1. Client opens TCP connection.
-2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, (12 + 12)| <OP>. 
+2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME 12+12| <OP>. 
 3. Client provides an operation followed by two numbers -> CALCULATION|21%2
-4. Server responds that the operation doesn’t exist. --> % OPERATION DOES'T EXISTS, PLEASE ENTER ANOTHER CALCULATION.
+4. Server responds that the operation doesn’t exist. --> ERROR|OPERATION_NOT_VALID
 5. Server waits a new calculation.
 
 **NUMBER_NOT_VALID :**
 1. Client opens TCP connection.
-2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, (12 + 12)| <OP>. 
-3. Client provides an operation followed by two numbers -> CALCULATION|c+2
-4. Server responds that the values are incorrect. --> c ARE NOT A CORRECT VALUE, PLEASE ENTER A CORRECT VALUE.
+2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME 12+12| <OP>. 
+3. Client provides an operation followed by two numbers -> CALCULATION|12.2+2
+4. Server responds that the values are incorrect. --> ERROR|NUMBER_NOT_VALID
 5. Server waits a new calculation.
 
 

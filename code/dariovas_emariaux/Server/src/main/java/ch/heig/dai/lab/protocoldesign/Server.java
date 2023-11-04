@@ -101,7 +101,6 @@ public class Server {
     private int calculate(String str){
         // Gets numbers from the string by removing all operators and then converting all numbers.
         Integer[] numbers = getNumbersFromString(str.split("[^0-9]"));
-        
         // Gets operators from the string by removing all numbers
         String[] operators = str.split("[0-9]");
         // Removes the empty values
