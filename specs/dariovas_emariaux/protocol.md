@@ -32,6 +32,8 @@ There are these types of messages :
      The clients sends the operation. The operation must be in uppercase.
 -	RESULT <Number>
      The server sends back the result of the calculation, then the client displays it.
+-   END
+     The client ask to close the connection.
 -	OPERATION_NOT_VALID <operation>
      Error response message after a CALCULATION message, if the operation is not covered.
 -   NUMBER_NOT_VALID <nb1, XXXX>
@@ -46,7 +48,7 @@ If the operation exists, the server sends the result back.
 2. Server accepts and sends a WELCOME message with the possible operations -> WELCOME, 4*(12+12)| <OP>. 
 3. Client provides an operation followed by two numbers -> CALCULATION|4*(2+2)
 4. Server responds the result --> RESULT|23
-5. Server closes the TCP connection
+5. Server wait a new calculation or closes the TCP connection if it receives an END message
 
 **OPERATION_NOT_VALID :**
 1. Client opens TCP connection.
