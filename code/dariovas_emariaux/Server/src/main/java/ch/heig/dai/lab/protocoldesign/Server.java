@@ -2,24 +2,22 @@ package ch.heig.dai.lab.protocoldesign;
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
-import static java.lang.Character.isDigit;
 import static java.nio.charset.StandardCharsets.*;
 
 public class Server {
     final int SERVER_PORT = 42069;
 
     private enum Operation  {
-        ADD('+'),
-        SUB('-'),
-        DIV('/'),
-        MULT('*'),
-        POW('^'),
-        BRACKET_OPEN('('),
-        BRACKET_CLOSE(')');
+        ADD("+"),
+        SUB("-"),
+        DIV("/"),
+        MULT("*"),
+        POW("^");
 
-        public final char label;
-        Operation(char label) {
+        public final String label;
+        Operation(String label) {
             this.label = label;
         }
     }
@@ -42,7 +40,7 @@ public class Server {
                              socket.getOutputStream(), UTF_8))){
 
                     // Send WELCOME message (with the possible operators) to the clients on new connection
-                    out.write("WELCOME 4*(12 + 12)| " + getOperations() + "\n");
+                    out.write("WELCOME 12+12| " + getOperations() + "\n");
                     out.flush();
 
                     while (true){
@@ -52,17 +50,19 @@ public class Server {
                         if(msg == null)
                             break;
 
-                        for(String i : msgParts){
-                            System.out.println(i);
-                        }
-
                         switch (msgParts[0]){
                             case "CALCULATION":
-                                out.write("RESULT|" + calculate(msgParts[1]) + "\n");
+                                try {
+                                    out.write("RESULT|" + calculate(msgParts[1]) + "\n");
+                                }catch (RuntimeException e){
+                                    out.write("ERROR|" + e.getMessage() + "\n");
+                                }
                                 break;
-                            case "":
+                            case "END":
+                                serverSocket.close();
                                 break;
                         }
+                        out.flush();
                     }
 
                 }
@@ -79,33 +79,50 @@ public class Server {
         StringBuilder operation = new StringBuilder();
 
         for (Operation op : Operation.values()){
-            operation.append(op.label).append(" ");
+            operation.append(op.label);
         }
 
         return operation.toString();
     }
 
-    private int calculate(String str){
-        if(!(isDigit(str.charAt(0)) && isDigit(str.charAt(2)))){
-            throw new RuntimeException("Not a number");
+    private Integer[] getNumbersFromString(String[] tab) throws RuntimeException{
+        Integer[] numbers = new Integer[tab.length];
+        for(int i = 0;i < tab.length;i++){
+            try {
+                numbers[i] = Integer.parseInt(tab[i]);
+            }
+            catch (RuntimeException e) {
+                throw new RuntimeException("NUMBER_NOT_VALID");
+            }
         }
+        return numbers;
+    }
 
-        int n1 = str.charAt(0);
-        int n2 = str.charAt(2);
-        char op = str.charAt(1);
+    private int calculate(String str){
+        // Gets numbers from the string by removing all operators and then converting all numbers.
+        Integer[] numbers = getNumbersFromString(str.split("[^\\.0123456789]"));
 
-        if(op == Operation.ADD.label){
+        // Gets operators from the string by removing all numbers
+        String[] operators = str.split("[0-9]");
+        // Removes the empty values
+        operators = Arrays.stream(operators).filter(o -> !o.isEmpty()).toArray(String[]::new);
+
+        int n1 = numbers[0];
+        int n2 = numbers[1];
+        String op = operators[0];
+
+        if(op.equals(Operation.ADD.label)){
             return n1 + n2;
-        } else if (op == Operation.SUB.label) {
+        } else if (op.equals(Operation.SUB.label)) {
             return n1 - n2;
         }
-        else if (op == Operation.DIV.label){
+        else if (op.equals(Operation.DIV.label)){
             return n1 / n2;
         }
-        else if (op == Operation.MULT.label){
+        else if (op.equals(Operation.MULT.label)){
             return n1 * n2;
-        } else if (op == Operation.POW.label) {
-            return n1 ^ n2;
+        } else if (op.equals(Operation.POW.label)) {
+            return (int) Math.pow(n1, n2);
         }else {
             throw new RuntimeException("OPERATION_NOT_VALID");
         }
