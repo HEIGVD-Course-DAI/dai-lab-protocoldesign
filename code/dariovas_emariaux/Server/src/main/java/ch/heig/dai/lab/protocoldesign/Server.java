@@ -100,8 +100,8 @@ public class Server {
 
     private int calculate(String str){
         // Gets numbers from the string by removing all operators and then converting all numbers.
-        Integer[] numbers = getNumbersFromString(str.split("[^\\.0123456789]"));
-
+        Integer[] numbers = getNumbersFromString(str.split("[^0-9]"));
+        
         // Gets operators from the string by removing all numbers
         String[] operators = str.split("[0-9]");
         // Removes the empty values
@@ -117,7 +117,9 @@ public class Server {
             return n1 - n2;
         }
         else if (op.equals(Operation.DIV.label)){
-            return n1 / n2;
+            if(n2 != 0)
+                return n1 / n2;
+            throw new RuntimeException("CANNOT_DIVIDE_BY_0");
         }
         else if (op.equals(Operation.MULT.label)){
             return n1 * n2;
