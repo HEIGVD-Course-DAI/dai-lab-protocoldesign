@@ -9,20 +9,34 @@ public class Client {
     final int SERVER_PORT = 42069;
 
     private void run () {
-        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT)) {
+        try (Socket clientSocket = new Socket(SERVER_ADDRESS, SERVER_PORT)) {
             BufferedReader in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream(),
+                    new InputStreamReader(clientSocket.getInputStream(),
                             StandardCharsets.UTF_8));
             BufferedWriter out = new BufferedWriter(
-                    new OutputStreamWriter(socket.getOutputStream(),
+                    new OutputStreamWriter(clientSocket.getOutputStream(),
                             StandardCharsets.UTF_8));
-            while(true) {
-                // There are two errors here!
 
-                System.out.println("Echo: " + in.readLine());
-                out.write("CALCULATION 2 + 3" + "\n");
-                out.flush();
-            } }
+
+
+            System.out.println("Echo: " + in.readLine());
+
+
+
+            out.write("CALCULATION 2+3" + "\n");
+            //out.flush();
+            System.out.println("Response: " + in.readLine());
+            out.write("CALCULATION 2*3" + "\n");
+            System.out.println("Response: " + in.readLine());
+            out.write("CALCULATION 10/2" + "\n");
+            System.out.println("Response: " + in.readLine());
+            out.write("CALCULATION 10-2" + "\n");
+            System.out.println("Response: " + in.readLine());
+
+            out.write("EMD " + "\n");
+            clientSocket.close();
+
+        }
         catch(IOException e){
                 System.out.println("Client: exc.: " + e);
             }
