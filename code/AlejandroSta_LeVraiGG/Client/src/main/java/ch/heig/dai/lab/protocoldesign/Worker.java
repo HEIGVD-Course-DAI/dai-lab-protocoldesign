@@ -38,7 +38,6 @@ public class Worker {
     String read() throws IOException {
         String data;
         if ((data = in.readLine()) != null) {
-            System.out.println("DATA RECEIVED : " + data);
             if (data.split(" ")[0].equals("INVALID")) {
                 return errnumString(Integer.parseInt(data.split(" ")[1]));
             }

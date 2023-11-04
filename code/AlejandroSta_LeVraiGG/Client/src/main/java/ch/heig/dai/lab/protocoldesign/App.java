@@ -1,5 +1,6 @@
 package ch.heig.dai.lab.protocoldesign;
 
+import ch.heig.dai.lab.protocoldesign.helpers.Popups;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,6 +61,15 @@ public class App extends Application {
              PrintWriter out = new PrintWriter(socket.getOutputStream());) {
             Worker wrk = new Worker(out, in);
 
+            String op1 = txt_op1.getText();
+            String op2 = txt_op2.getText();
+            if(op1.charAt(0) != '+' || op1.charAt(0) != '-') {
+                op1 = '+' + op1;
+            }
+            if(op2.charAt(0) != '+' || op2.charAt(0) != '-') {
+                op2 = '+' + op2;
+            }
+
             switch (cbx_op.getSelectionModel().getSelectedItem()) {
                 default:
                     return;
@@ -77,15 +87,14 @@ public class App extends Application {
             }
 
             String data = wrk.read();
-            System.out.println("DATA Got : " + data);
             if (NumberUtils.isParsable(data)) {
                 l_result.setText("Result : " + data);
             } else {
-                l_result.setText(MSG_EXPRESSION_HANDLER + data);
+                Popups.warn("Something went wrong !", MSG_EXPRESSION_HANDLER + data);
             }
 
         } catch (IOException ex) {
-            System.out.println(MSG_EXPRESSION_HANDLER + ex);
+           Popups.error("Error happened", MSG_EXPRESSION_HANDLER + ex);
         }
     }
 
