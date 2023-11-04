@@ -23,17 +23,24 @@ public class Client {
 
 
 
-            out.write("CALCULATION 2+3" + "\n");
-            //out.flush();
-            System.out.println("Response: " + in.readLine());
-            out.write("CALCULATION 2*3" + "\n");
-            System.out.println("Response: " + in.readLine());
-            out.write("CALCULATION 10/2" + "\n");
-            System.out.println("Response: " + in.readLine());
-            out.write("CALCULATION 10-2" + "\n");
-            System.out.println("Response: " + in.readLine());
+            out.write("CALCULATION|" + "2+3" + "\n");
+            out.flush();
+            //out.write("END " + "\n");
 
-            out.write("EMD " + "\n");
+            System.out.println(in.readLine());
+            out.write("CALCULATION|2*3" + "\n");
+            out.flush();
+            System.out.println(in.readLine());
+            out.write("CALCULATION|10/2" + "\n");
+            out.flush();
+            System.out.println(in.readLine());
+            out.write("CALCULATION|10-2" + "\n");
+            out.flush();
+            System.out.println(in.readLine());
+
+            out.write("END|" + "\n");
+
+            out.flush();
             clientSocket.close();
 
         }
