@@ -66,6 +66,7 @@ public class Client {
             try {
                 while (!Objects.equals(operation, "STOP")) {
                     System.out.println("Enter an operation: ");
+                    //TODO: Verify that the operation is valid
                     operation = input.nextLine();
                     
                     this.out.write(operation);
