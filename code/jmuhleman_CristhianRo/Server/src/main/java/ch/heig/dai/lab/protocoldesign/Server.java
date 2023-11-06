@@ -1,6 +1,8 @@
 package ch.heig.dai.lab.protocoldesign;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Timer;
 
 import static java.nio.charset.StandardCharsets.*;
@@ -21,18 +23,16 @@ class Server {
                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), UTF_8));
                     BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), UTF_8))) {
 
-                clientSocket.setSoTimeout(10000);
+                clientSocket.setSoTimeout(300000);
 
                 System.out.println("Client connecté.");  
                 out.write("\n\n|----Bienvenue chez le supercalculateur des services secrets suisses !----|\n\n");
-                out.write("Voici les commandes supportées: \r\n* Multiplication (*)\r\n* Division (/)\r\n* Addition (+)\r\n* Substraction(-)\r\n* Modulus (%)\r\n* Powe(pow<base>-<exposent>)\r\n");
+                out.write("Voici les commandes supportées: \r\n* Multiplication (*)\r\n* Division (/)\r\n* Addition (+)\r\n* Soustraction(-)\r\n* Modulo (%)\r\n");
                 out.flush();
-                long startTime = System.currentTimeMillis();    
-                
+
 
                 String input;
                 while ((input = in.readLine()) != null) {
-                    startTime = System.currentTimeMillis();
 
                     if (input.equals("bye")) {
                         break;
@@ -44,9 +44,20 @@ class Server {
                         continue;
                     }
 
-                    double operand1 = Double.parseDouble(input.substring(0, 1));
-                    double operand2 = Double.parseDouble(input.substring(2,3));
-                    String operator = input.substring(1, 2);
+                    //Scanner sin = new Scanner(input);
+                    int indexOperator = -1;
+                    String[] charSet = new String[5];
+                    charSet[0] = "*";
+                    charSet[1] = "-";
+                    charSet[2] = "/";
+                    charSet[3] = "+";
+                    charSet[4] = "%";
+                    for (int k = 0 ; k < 5 && indexOperator == -1 ; ++k){
+                        indexOperator = input.indexOf(charSet[k]);
+                    }
+                    double operand1 = Double.parseDouble(input.substring(0, indexOperator));
+                    String operator = input.substring(indexOperator, indexOperator+ 1);
+                    double operand2 = Double.parseDouble(input.substring(indexOperator + 1));
                     double result;
 
 
@@ -68,7 +79,6 @@ class Server {
                             if (operand2 != 0) {
                                 result = operand1 / operand2;
                             } else {
-                                result = Double.NaN; // Indiquer une division par zéro
                                 out.write("ERROR:div0\n");
                                 out.flush();
                                 continue;
@@ -83,8 +93,6 @@ class Server {
                     out.write("Résultat : " + result + "\n");
                     out.flush();
 
-                    
-
 
                 }
 
@@ -94,9 +102,12 @@ class Server {
                 
                 }
             }
+
+
+
         }
         catch (SocketTimeoutException e){
-            System.out.println("Timeout pas de connection\n");
+            System.out.println("Timeout écoulé\n");
         }
         catch (IOException e) {
             System.err.println("Erreur d'E/S : " + e.getMessage());
