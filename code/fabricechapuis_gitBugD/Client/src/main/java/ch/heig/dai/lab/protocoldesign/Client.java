@@ -3,6 +3,8 @@ package ch.heig.dai.lab.protocoldesign;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class Client {
     final String SERVER_ADDRESS = "1.2.3.4";
@@ -48,9 +50,34 @@ public class Client {
     }
     private void run() {
         try {
-            String request = "Hello my friend";
+            String request = "Connection Established";
             this.out.write(request);
             this.out.flush();
+            
+            String response = this.in.readLine();
+            String[] operations = response.split(" ");
+            System.out.print("Available operations: ");
+            for (String operation : operations) {
+                System.out.print(operation + " ");
+            }
+            System.out.println();
+            Scanner input = new Scanner(System.in);
+            String operation = "";
+            try {
+                while (!Objects.equals(operation, "STOP")) {
+                    System.out.println("Enter an operation: ");
+                    operation = input.nextLine();
+                    
+                    this.out.write(operation);
+                    this.out.flush();
+                    response = this.in.readLine();
+                    System.out.println("Response: " + response);
+                }
+            } finally {
+                input.close();
+            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
