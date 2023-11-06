@@ -50,17 +50,18 @@ public class Server {
                         if(msg == null)
                             break;
 
-                        switch (msgParts[0]){
-                            case "CALCULATION":
-                                try {
-                                    out.write("RESULT|" + calculate(msgParts[1]) + "\n");
-                                }catch (RuntimeException e){
-                                    out.write("ERROR|" + e.getMessage() + "\n");
-                                }
-                                break;
-                            case "END":
-                                serverSocket.close();
-                                break;
+                        if (msgParts[0].equals("CALCULATION")) {
+                            try {
+                                out.write("RESULT|" + calculate(msgParts[1]) + "\n");
+                            } catch (RuntimeException e) {
+                                out.write("ERROR|" + e.getMessage() + "\n");
+                            }
+                        } else if (msgParts[0].equals("END")) {
+                            out.flush();
+                            socket.close();
+                            break;
+                        } else {
+                            out.write("Please enter the correct message.");
                         }
                         out.flush();
                     }
