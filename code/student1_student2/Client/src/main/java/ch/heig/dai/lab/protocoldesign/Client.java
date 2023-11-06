@@ -23,8 +23,5 @@ public class Client {
         CalcWrapper calc = new CalcWrapper();
         calc.openConnection(SERVER_ADDRESS,SERVER_PORT);
         calc.add(2,1);
-        calc.substract(2,1);
-        calc.divide(1,2);
-        calc.multiply(3,1);
     }
 }
