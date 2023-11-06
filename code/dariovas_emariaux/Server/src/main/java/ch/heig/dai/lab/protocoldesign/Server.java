@@ -35,20 +35,17 @@ public class Server {
             while (true) {
                 try (Socket socket = serverSocket.accept();
                      var in = new BufferedReader(
-                             new InputStreamReader( socket.getInputStream(), UTF_8));
-                     var out = new BufferedWriter( new OutputStreamWriter(
-                             socket.getOutputStream(), UTF_8))){
+                             new InputStreamReader(socket.getInputStream(), UTF_8));
+                     var out = new BufferedWriter(new OutputStreamWriter(
+                             socket.getOutputStream(), UTF_8))) {
 
                     // Send WELCOME message (with the possible operators) to the clients on new connection
                     out.write("WELCOME 12+12| " + getOperations() + "\n");
                     out.flush();
 
-                    while (true){
+                    while (true) {
                         String msg = in.readLine();
                         String[] msgParts = msg.split("\\|");
-
-                        if(msg == null)
-                            break;
 
                         if (msgParts[0].equals("CALCULATION")) {
                             try {
@@ -61,18 +58,16 @@ public class Server {
                             socket.close();
                             break;
                         } else {
-                            out.write("Please enter the correct message.");
+                            out.write("Please enter an instruction.\n");
                         }
                         out.flush();
                     }
-
-                }
-                catch (IOException e){
-                    System.out.println("Server: server socket ex.: " + e);
+                } catch (IOException e) {
+                    System.out.println("Server: socket ex. : " + e);
                 }
             }
         } catch (IOException e) {
-            System.out.println("Server: server socket ex.: " + e);
+            System.out.println("Server: socket ex. : " + e);
         }
     }
 
@@ -100,8 +95,8 @@ public class Server {
     }
 
     private int calculate(String str){
-        // Gets numbers from the string by removing all operators and then converting all numbers.
-        Integer[] numbers = getNumbersFromString(str.split("[^0-9]"));
+        // Gets numbers from the string by removing everything except the numbers.
+        Integer[] numbers = getNumbersFromString(str.split("[^0-9^0-9\\\\.]"));
         // Gets operators from the string by removing all numbers
         String[] operators = str.split("[0-9]");
         // Removes the empty values
