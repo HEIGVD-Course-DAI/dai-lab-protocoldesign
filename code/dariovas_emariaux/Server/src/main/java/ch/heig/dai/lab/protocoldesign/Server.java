@@ -96,7 +96,7 @@ public class Server {
 
     private int calculate(String str){
         // Gets numbers from the string by removing everything except the numbers.
-        Integer[] numbers = getNumbersFromString(str.split("[^0-9^0-9\\\\.]"));
+        Integer[] numbers = getNumbersFromString(str.split("[^0-9\\\\.]"));
         // Gets operators from the string by removing all numbers
         String[] operators = str.split("[0-9]");
         // Removes the empty values
