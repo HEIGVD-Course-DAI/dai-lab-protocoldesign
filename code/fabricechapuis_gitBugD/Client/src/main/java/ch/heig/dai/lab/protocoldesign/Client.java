@@ -50,12 +50,20 @@ public class Client {
         e.printStackTrace();
         }
     }
-    private void run() {
+
+    private boolean sendMessage(String message) {
         try {
-            String request = "Connection Established";
-            this.out.write(request);
+            this.out.write(message);
             this.out.flush();
-            
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    private List<String> initiateConversation() {
+        try {
+            // Getting the list of available operations
             String response = this.in.readLine();
             List<String> operations = Arrays.asList(response.split(" "));
             System.out.print("Available operations: ");
@@ -63,6 +71,15 @@ public class Client {
                 System.out.print(operation + " ");
             }
             System.out.println();
+            return operations;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private void run() {
+            List<String> operations = initiateConversation();
+
             Scanner input = new Scanner(System.in);
             String operation = "";
             try {
@@ -73,19 +90,14 @@ public class Client {
                         System.out.println("Invalid operation: " + operation);
                         continue;
                     }
-                    this.out.write(operation);
-                    this.out.flush();
-                    
-                    response = this.in.readLine();
+                    this.sendMessage(operation);
+                    String response = this.in.readLine();
                     System.out.println("Response: " + response);
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             } finally {
                 input.close();
             }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
