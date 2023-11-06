@@ -5,6 +5,8 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.Arrays;
+import java.util.List;
 
 public class Client {
     final String SERVER_ADDRESS = "1.2.3.4";
@@ -55,7 +57,7 @@ public class Client {
             this.out.flush();
             
             String response = this.in.readLine();
-            String[] operations = response.split(" ");
+            List<String> operations = Arrays.asList(response.split(" "));
             System.out.print("Available operations: ");
             for (String operation : operations) {
                 System.out.print(operation + " ");
@@ -66,11 +68,14 @@ public class Client {
             try {
                 while (!Objects.equals(operation, "STOP")) {
                     System.out.println("Enter an operation: ");
-                    //TODO: Verify that the operation is valid
                     operation = input.nextLine();
-                    
+                    if (!operations.contains(operation.split(" ")[0]) && !operation.equals("STOP")) {
+                        System.out.println("Invalid operation: " + operation);
+                        continue;
+                    }
                     this.out.write(operation);
                     this.out.flush();
+                    
                     response = this.in.readLine();
                     System.out.println("Response: " + response);
                 }
