@@ -7,18 +7,17 @@ public class Calculator {
 
     private operator op;
 
-    boolean errorSyntax;
 
     private enum operator{ADD,SUB,DIV,MUL,ERROR};
 
     private operator toOperator(String operateur){
-        if(operateur.compareTo("ADD") == 0){
+        if(operateur.equals("ADD")){
             return operator.ADD;
-        } else if (operateur.compareTo("SUB") == 0) {
+        } else if (operateur.equals("SUB")) {
             return operator.SUB;
-        } else if (operateur.compareTo("DIV") == 0) {
+        } else if (operateur.equals("DIV")) {
             return operator.DIV;
-        }else if (operateur.compareTo("MUL") == 0){
+        }else if (operateur.equals("MUL")){
             return operator.MUL;
         }
         else{
@@ -27,18 +26,17 @@ public class Calculator {
     }
 
     public Calculator(String clientMessage){
+
         String[] words = clientMessage.split(" ");
 
-
-
         if(words.length == 3){
-            for(int i = 0; i < 3 ; ++i){
-                switch (i){
-                    case 1: op = toOperator(words[i]); break;
-                    case 2: operand1 = Integer.parseInt(words[i]); break;
-                    case 3: operand2 = Integer.parseInt(words[i]); break;
-                }
-            }
+
+            op = toOperator(words[0]);
+            operand1 = Integer.parseInt(words[1]);
+            operand2 = Integer.parseInt(words[2]);
+
+        }else{
+            op = operator.ERROR;
         }
 
 
@@ -59,7 +57,7 @@ public class Calculator {
     }
 
     public boolean isValidOperator(){
-        return op == operator.ERROR;
+        return op != operator.ERROR;
     }
 
 

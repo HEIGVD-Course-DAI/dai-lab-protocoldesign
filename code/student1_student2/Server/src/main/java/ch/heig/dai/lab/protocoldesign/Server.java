@@ -8,7 +8,7 @@ import static java.nio.charset.StandardCharsets.*;
 
 
 public class Server {
-    final int SERVER_PORT = 1234;
+    final int SERVER_PORT = 42020;
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -25,23 +25,42 @@ public class Server {
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(),UTF_8));
                     BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),UTF_8))){
 
-                    String line;
-                    while((line = in.readLine()) != null){
+                    out.write("Welcome in the cloud calculator !\n");
+                    out.write("Supported operation : ADD SUB MUL DIV\n");
+                    out.flush();
 
-                        Calculator cal = new Calculator(line);
+                    String clientMessage;
+                    while((clientMessage = in.readLine()) != null){
+
+                        String[] tokens = clientMessage.split(" ");
 
 
-                        if(line.compareTo("CLOSE") == 0){
-                            
-                        } else if (cal.isValidOperator()) {
-                            out.write("ANSWER : " + cal.resultat());
-                        } else {
-                            out.write("");
+                        //todo meilleure gestion erreur + 30 sec innactivite ferme la connexion
+
+                        if(tokens.length > 3 || tokens.length == 2){
+                            out.write("ERROR SYNTAX\n");
+                            out.flush();
+                        }else{
+                            if(tokens[0].compareTo("CLOSE") == 0){
+                                out.write("Connection closing !\n");
+                                out.flush();
+                                break;
+                            }else{
+                                Calculator cal = new Calculator(clientMessage);
+
+
+                                if(cal.isValidOperator()){
+                                    out.write("ANSWER : " + cal.resultat() +"\n");
+                                    out.flush();
+                                }
+                                else{
+                                    out.write("ERROR OPERAND\n");
+                                    out.flush();
+                                }
+                            }
                         }
-
-
                     }
-                    
+                    break;
                 }catch(IOException e){
                     System.out.println("Server: socket ex : " + e);
                 }
