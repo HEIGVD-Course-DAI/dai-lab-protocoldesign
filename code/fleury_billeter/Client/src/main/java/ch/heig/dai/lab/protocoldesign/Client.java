@@ -7,9 +7,9 @@ import java.util.Scanner;
 
 public class Client {
     static final String SERVER_ADDRESS = "localhost"; // "127.0.0.1"; // "1.2.3.4";
-    static int SERVER_PORT = 1234;
-    static String endServer = "Guest: >";
-    static String sendChar = "\n";
+    static final int SERVER_PORT = 1234;
+    static final String endServer = "....";
+    static final String sendChar = "\n";
 
     public static void main(String[] args) {
         Client client = new Client();
