@@ -10,14 +10,9 @@ class Client {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))){
 
-
-                for (int k = 0 ; k < 11 ; ++k){
-                      String z;
-                      z = in.readLine();
-                      System.out.println(z);
-                }
-            
-
+            for (int k = 0 ; k < 10 ; ++k){
+                System.out.println(in.readLine());
+            }
 
             Scanner scanner = new Scanner(System.in);
             String input;
@@ -25,6 +20,9 @@ class Client {
 
             while (true) {
                 input = scanner.nextLine();
+                if (input.equals("bye")){
+                    break;
+                }
 
                 out.write(input +"\n");
                 out.flush();
