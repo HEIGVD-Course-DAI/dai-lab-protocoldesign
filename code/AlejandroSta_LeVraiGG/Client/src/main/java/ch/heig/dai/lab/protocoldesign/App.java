@@ -74,16 +74,16 @@ public class App extends Application {
                 default:
                     return;
                 case "+":
-                    wrk.add(txt_op1.getText(), txt_op2.getText());
+                    wrk.add(op1, op2);
                     break;
                 case "-":
-                    wrk.sub(txt_op1.getText(), txt_op2.getText());
+                    wrk.sub(op1, op2);
                     break;
                 case "*":
-                    wrk.mul(txt_op1.getText(), txt_op2.getText());
+                    wrk.mul(op1, op2);
                     break;
                 case "/":
-                    wrk.div(txt_op1.getText(), txt_op2.getText());
+                    wrk.div(op1, op2);
             }
 
             String data = wrk.read();
