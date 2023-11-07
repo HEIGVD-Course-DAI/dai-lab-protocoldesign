@@ -15,27 +15,23 @@ public class Server {
     }
 
     private void sendWelcomeMessage(BufferedWriter out) throws IOException {
-        String welcomeMessage = "Welcome";
+        String welcomeMessage = "Welcome\n";
 
-        out.write(welcomeMessage + "\n");
+        out.write(welcomeMessage);
         sendSupportedOps(out);
     }
 
     private void sendSupportedOps(BufferedWriter out) throws IOException {
-        String supportedOperations = """
-                Supported operations:
-                ADD <num1> <num2> -> this returns num1 + num2
-                MUL <num1> <num1> -> this returns num1 * num2
-                STOP -> this stops the connection""";
+        String supportedOperations = "Supported operations: ADD <num1> <num2> -> this returns num1 + num2 MUL <num1> <num1> -> this returns num1 * num2 STOP -> this stops the connection\n";
 
-        out.write(supportedOperations + "\n");
+        out.write(supportedOperations);
         out.flush();
     }
 
     private void sendByeMessage(BufferedWriter out) throws IOException {
-        String byeMessage = "Bye!";
+        String byeMessage = "Bye!\n";
 
-        out.write(byeMessage + "\n");
+        out.write(byeMessage);
         out.flush();
     }
 

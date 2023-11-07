@@ -53,7 +53,7 @@ public class Client {
 
     private boolean sendMessage(String message) {
         try {
-            this.out.write(message);
+            this.out.write(message + "\n");
             this.out.flush();
             return true;
         } catch (IOException e) {
@@ -63,8 +63,12 @@ public class Client {
     }
     private void initiateConversation() {
         try {
+            // Getting welcome message
+            String response = this.in.readLine() + "\n";
+            System.out.println(response);
+
             // Getting the list of available operations
-            String response = this.in.readLine();
+            response = this.in.readLine() + "\n";
             System.out.println(response);
 
         } catch (IOException e) {
@@ -81,9 +85,12 @@ public class Client {
                     System.out.println("Enter an operation: ");
                     operation = input.nextLine();
 
-                    this.sendMessage(operation);
-                    String response = this.in.readLine();
-                    System.out.println("Response: " + response);
+                    if (this.sendMessage(operation)) {
+                        String response = this.in.readLine() + "\n";
+                        System.out.println("Response: " + response);
+                    } else {
+                        throw(new RuntimeException("Message not sent"));
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
