@@ -15,21 +15,33 @@ public class Client {
     }
 
     private void run() {
-        try {
-            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             Scanner scanner = new Scanner(System.in);)
+        {
+            boolean connectionOpen = false;
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            String response;
 
-            Scanner scanner = new Scanner(System.in);
             while (true)
             {
-                System.out.print("Enter your request: ");
+                if(!connectionOpen)
+                {
+                    out.println("HELLO");
+                    if (!(response = in.readLine()).equals("ERROR: Invalid command"))
+                    {
+                        connectionOpen = true;
+                    }
+                    System.out.println(response);
+                    continue;
+                }
+                System.out.println("Enter your request: ");
                 String request = scanner.nextLine();
 
                 out.println(request);
 
-                String response = in.readLine();
+                response = in.readLine();
                 System.out.println("Server response: " + response);
 
                 if (request.equals("QUIT"))
@@ -37,15 +49,10 @@ public class Client {
                     break;
                 }
             }
-
-            out.flush();
-            in.close();
-            out.close();
-            socket.close();
-
         }
         catch (IOException e)
         {
+            System.out.println("catch");
             e.printStackTrace();
         }
     }

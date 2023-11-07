@@ -14,19 +14,32 @@ public class Server {
     }
 
     private void run() {
-        try
+        System.out.println("Server is running...");
+
+        try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
+             Socket clientSocket = serverSocket.accept();
+             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+        )
         {
-            ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
-            System.out.println("Server is running...");
+            String inputLine;
+            boolean connectionOpen = false;
 
             while (true)
             {
-                Socket clientSocket = serverSocket.accept();
+                if(!connectionOpen)
+                {
+                    inputLine = in.readLine();
 
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                    System.out.println(inputLine);
+                    String response = processRequest(inputLine);
+                    System.out.println(response);
+                    out.println(response);
 
-                String inputLine;
+                    if(inputLine.equals("HELLO")) connectionOpen = true;
+
+                    continue;
+                }
 
                 while ((inputLine = in.readLine()) != null)
                 {
