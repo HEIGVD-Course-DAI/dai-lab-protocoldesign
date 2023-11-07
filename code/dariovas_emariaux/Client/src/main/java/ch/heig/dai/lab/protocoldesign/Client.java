@@ -3,6 +3,7 @@ package ch.heig.dai.lab.protocoldesign;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 public class Client {
     final String SERVER_ADDRESS = "localhost";
@@ -18,30 +19,17 @@ public class Client {
                             StandardCharsets.UTF_8));
 
 
+            String input;
+            Scanner console = new Scanner(System.in);
 
-            System.out.println("Echo: " + in.readLine());
+            do {
+                System.out.println(in.readLine());
+                input = console.nextLine();
+                out.write(input + "\n");
+                out.flush();
+            }while(!input.contains("END"));
 
 
-
-            out.write("CALCULATION|" + "2+3" + "\n");
-            out.flush();
-            //out.write("END " + "\n");
-
-            System.out.println(in.readLine());
-            out.write("CALCULATION|2*3" + "\n");
-            out.flush();
-            System.out.println(in.readLine());
-            out.write("CALCULATION|10/2" + "\n");
-            out.flush();
-            System.out.println(in.readLine());
-            out.write("CALCULATION|10-2" + "\n");
-            out.flush();
-            System.out.println(in.readLine());
-
-            out.write("END|" + "\n");
-
-            out.flush();
-            clientSocket.close();
 
         }
         catch(IOException e){
