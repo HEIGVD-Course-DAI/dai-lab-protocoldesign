@@ -60,6 +60,7 @@ public class Server {
                         }
                     } else if (msgParts[0].equals("END")) {
                         out.flush();
+                        //Close socket
                         socket.close();
                         break;
                     } else {

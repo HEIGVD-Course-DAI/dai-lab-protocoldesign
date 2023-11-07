@@ -24,6 +24,7 @@ public class Client {
 
             do {
                 System.out.println(in.readLine());
+                //Read the client instructions
                 input = console.nextLine();
                 out.write(input + "\n");
                 out.flush();
