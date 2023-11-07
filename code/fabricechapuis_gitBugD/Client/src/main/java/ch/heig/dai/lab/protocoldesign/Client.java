@@ -61,24 +61,18 @@ public class Client {
             return false;
         }
     }
-    private List<String> initiateConversation() {
+    private void initiateConversation() {
         try {
             // Getting the list of available operations
             String response = this.in.readLine();
-            List<String> operations = Arrays.asList(response.split(" "));
-            System.out.print("Available operations: ");
-            for (String operation : operations) {
-                System.out.print(operation + " ");
-            }
-            System.out.println();
-            return operations;
+            System.out.println(response);
+
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
     }
     private void run() {
-            List<String> operations = initiateConversation();
+            initiateConversation();
 
             Scanner input = new Scanner(System.in);
             String operation = "";
@@ -86,10 +80,7 @@ public class Client {
                 while (!Objects.equals(operation, "STOP")) {
                     System.out.println("Enter an operation: ");
                     operation = input.nextLine();
-                    if (!operations.contains(operation.split(" ")[0]) && !operation.equals("STOP")) {
-                        System.out.println("Invalid operation: " + operation);
-                        continue;
-                    }
+
                     this.sendMessage(operation);
                     String response = this.in.readLine();
                     System.out.println("Response: " + response);
