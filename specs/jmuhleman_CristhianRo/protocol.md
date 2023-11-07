@@ -6,8 +6,6 @@ The purpose of this protocol is to process simple computations sent from a clien
     * Addition (+)
     * Substraction(-)
     * Modulus (%)
-    * Powe(pow<base>-<exposent>)
-
 
 The synthax will follow the pattern: <operand1> <operation> <operaand2>
 Spaces will be needed between the operands and operations.
@@ -16,7 +14,7 @@ Spaces will be needed between the operands and operations.
 
 # Section 2: Transport layer
 
-* The server listen on the port 1234 and waits for a connexion. The client initiates the connexion.
+* The server listen on the port 12345 and waits for a connexion. The client initiates the connexion.
 
 * The server sends a welcoming message showing the supported operations.
 
@@ -39,10 +37,10 @@ The following error messages will be used to handle errors:
         for an invalid expression such as "+/3
 
 The following message will be sent to close the connexion:
-    * BYE
+    * bye
         Since the server always waits new requests from the client it only closes the connexion when it receives such a message.
         
-In case of a timeout (120 sec) the server will close the connection.
+In case of a timeout (300 sec) the server will close the connection.
 
 # Section 4: Examples
 

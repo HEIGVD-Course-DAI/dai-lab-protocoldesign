@@ -14,9 +14,6 @@ class Server {
             
             System.out.println("Serveur en attente de connexions...");
 
-    //TODO: implement: * timeout
-    //                 * correct parsing
-    //                 * implement power fct in switch case
             while (true) {
 
                 try(Socket clientSocket = serverSocket.accept();
@@ -44,7 +41,6 @@ class Server {
                         continue;
                     }
 
-                    //Scanner sin = new Scanner(input);
                     int indexOperator = -1;
                     String[] charSet = new String[5];
                     charSet[0] = "*";
@@ -52,9 +48,11 @@ class Server {
                     charSet[2] = "/";
                     charSet[3] = "+";
                     charSet[4] = "%";
+                    //Aller chercher l'index de terminaison de la première opérande
                     for (int k = 0 ; k < 5 && indexOperator == -1 ; ++k){
                         indexOperator = input.indexOf(charSet[k]);
                     }
+                    //Parser chaque sous-string pour extraire les opérandes et opérateur
                     double operand1 = Double.parseDouble(input.substring(0, indexOperator));
                     String operator = input.substring(indexOperator, indexOperator+ 1);
                     double operand2 = Double.parseDouble(input.substring(indexOperator + 1));
