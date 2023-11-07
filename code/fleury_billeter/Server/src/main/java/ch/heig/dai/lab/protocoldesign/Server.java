@@ -34,7 +34,7 @@ public class Server {
 
         // Implement Server functionalities
         try(ServerSocket ss = new ServerSocket(SERVER_PORT)){
-            while(!closeConn){
+            while(true){
                 try (Socket s = ss.accept()){
                     var in = new BufferedReader(new InputStreamReader(s.getInputStream(), UTF_8));
                     var out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream(), UTF_8));
@@ -45,6 +45,7 @@ public class Server {
                     String line;
                     while((line = in.readLine()) != null){
                         commandSwitch(line, out);
+                        if(closeConn){ s.close(); }
                     }
                 } catch (IOException e) {
                     System.out.println("Server: socket ex.:" + e);
@@ -62,10 +63,16 @@ public class Server {
         write(out, sendChar);
         write(out, "Word of the day: " + wod);
         write(out, sendChar);
-        write(out, "Please select a program by its name or its number : ");
-        write(out, "1. Calculator");
-        write(out, "2. Ping");
-        write(out, "3. Change of the word of the day (admin)");
+        write(out, "Please select a program by its name: ");
+        write(out, "Opérateur arithmétique :");
+        write(out, "- NEG v1 / INV v1 / SQRT v1 / LOG v1 / ADD v1 v2 / SUB v1 v2 / MUL v1 v2 / DIV v1 v2");
+        write(out, "Commande :");
+        write(out, "- CloseConn / Quit / Exit : Termine la session");
+        write(out, "- Ping : Répond pong");
+        write(out, "- banner : Affiche ce message");
+        write(out, "- wod : affiche le message du jour");
+        write(out, "- pass <arg> : Passage en mode privilégié");
+        write(out, "- wod <arg> : Change of the word of the day (admin)");
         write(out,sendChar + endServer);
     }
     public void commandSwitch(String cmd, BufferedWriter out) throws IOException {
@@ -288,13 +295,9 @@ public class Server {
         adminRight = false;
         closeConn = true;
         write(out, "Connection closed");
+
     }
-    /*
-    public static void closeConn() {
-        adminRight = false;
-        closeConn = true;
-    }
-    */
+
     public void getParams(String[] params, Value a) {
         a.set(Double.parseDouble(params[1]));
     }

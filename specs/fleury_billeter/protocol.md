@@ -24,13 +24,15 @@ Les commandes suivantes sont supportées par le serveur :
 - ```root <base> <exposant>``` :
 - ```pow <base> <expostant>``` :
 - ```admin <mot de passe>``` : permet de basculer en mode administrateur
-- ```motd``` : affiche le message du jour
+- ```wod``` : affiche le message du jour
 
 #### Commandes privilégiées/administrateur
 
 En plus des commandes utilisateur, les commandes suivantes sont accessibles à l'administrateur une fois authentifié :
-- ```set_motd <arg1>``` : change le message du jour pour ```<arg1>```
+- ```wod <arg1>``` : change le message du jour pour ```<arg1>```
 - ```exit``` : quitte le mode privilégié et revient au mode invité
 - ```quit``` : alias de ```exit```
 
 ### Exemples de dialogues
+
+![Diagramme de flux](diagramme_flux.png)

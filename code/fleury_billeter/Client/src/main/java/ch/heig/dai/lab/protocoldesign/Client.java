@@ -31,6 +31,10 @@ public class Client {
                     out.flush();
                     while (!(line = in.readLine()).equals(endServer)) {
                         System.out.println(line);
+                        if(line.equals("Connection closed")){
+                            socket.close();
+                            break;
+                        }
                     }
                 }
             }
