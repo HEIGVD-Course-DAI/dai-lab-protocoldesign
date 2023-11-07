@@ -25,15 +25,15 @@ Spaces will be needed between the operands and operations.
 # Section 3: Messages and error handling
 
 All the messages will be encoded with UTF-8 and \n at the end
-The follings prefixes will be used for transmitting messages for calculations:
+The followings prefixes will be used for transmitting messages for calculations:
     * COMPUTE:<operand1><operation><operand2>
         To send regular computations to the server.
 
 The following error messages will be used to handle errors:
-    * ERROR:"div0" 
-        for an expression containing /0
+    * ERROR: "div0" 
+        for an expression containing /0.
 
-    * ERROR:"invalid expression"
+    * ERROR: "invalid expression"
         for an invalid expression such as "+/3
 
 The following message will be sent to close the connexion:
@@ -44,7 +44,7 @@ In case of a timeout (300 sec) the server will close the connection.
 
 # Section 4: Examples
 
-
+![Example of a standard scenario](spec_schema.png)
 
 
 
