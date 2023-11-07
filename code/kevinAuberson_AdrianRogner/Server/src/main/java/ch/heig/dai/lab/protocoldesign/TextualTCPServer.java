@@ -1,22 +1,32 @@
+/**
+ * @file TextualTCPServer.java
+ * @brief This file contains the implementation of the TextualTCPServer class.
+ */
 package code.kevinAuberson_AdrianRogner.Server.src.main.java.ch.heig.dai.lab.protocoldesign;
 
 import java.net.*;
 import java.io.*;
-
-import static java.lang.Character.isDigit;
 import static java.nio.charset.StandardCharsets.*;
 
+/**
+ * @class TextualTCPServer
+ * @brief Represents a server that handles textual communication with clients.
+ */
 public class TextualTCPServer {
     private BufferedReader in;
     private BufferedWriter out;
     private int port;
 
+    /**
+     * @brief Constructor for TextualTCPServer.
+     * @param port The port on which the server listens.
+     */
     TextualTCPServer(int port){
         this.port = port;
     }
 
     /**
-     * Connection entre le serveur et client et lancement du calcul
+     * @brief Waits for client connections and handles communication.
      */
     public void waitConnection() {
         try (ServerSocket serverSocket = new ServerSocket(port)){
@@ -35,9 +45,9 @@ public class TextualTCPServer {
     }
 
     /**
-     * Fonction qui permet de savoir si l'opération entrée par l'utilisateur est valable
-     * @param operation
-     * @return
+     * @brief Checks if the provided operation is valid.
+     * @param operation The operation to check.
+     * @return true if the operation is valid, false otherwise.
      */
     boolean isOperation(String operation){
         switch (operation.toUpperCase()){
@@ -55,8 +65,8 @@ public class TextualTCPServer {
     }
 
     /**
-     * Communication entre le serveur et le client
-     * @param clientSocket
+     * @brief Handles communication with the client.
+     * @param clientSocket The client's socket.
      */
     public void communicateClient(Socket clientSocket) {
         try {
@@ -134,11 +144,11 @@ public class TextualTCPServer {
     }
 
     /**
-     * Fonction pour effectuer le calcul
-     * @param op1 operand 1
-     * @param op2 operand 2
-     * @param op operation à effectuer
-     * @return un int
+     * @brief Performs a calculation based on the provided operation.
+     * @param op1 The first operand.
+     * @param op2 The second operand.
+     * @param op The operation to be performed.
+     * @return The result of the calculation as an integer.
      */
     public int calculate(int op1, int op2, String op){
 
