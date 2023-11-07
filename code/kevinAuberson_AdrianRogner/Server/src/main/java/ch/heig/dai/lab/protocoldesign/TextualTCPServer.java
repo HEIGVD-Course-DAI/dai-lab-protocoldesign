@@ -2,11 +2,11 @@ package code.kevinAuberson_AdrianRogner.Server.src.main.java.ch.heig.dai.lab.pro
 
 import java.net.*;
 import java.io.*;
+
+import static java.lang.Character.isDigit;
 import static java.nio.charset.StandardCharsets.*;
 
 public class TextualTCPServer {
-    private Socket clientSocket;
-    private ServerSocket serverSocket;
     private BufferedReader in;
     private BufferedWriter out;
     private int port;
@@ -23,14 +23,15 @@ public class TextualTCPServer {
             while (true) {
                 try (Socket clientSocket = serverSocket.accept()){
                     communicateClient(clientSocket);
-
                 } catch (IOException e) {
                     System.out.println("Server: client socket ex.: " + e);
+                    serverSocket.close();
                 }
             }
         } catch(IOException e){
             System.out.println("Server: server socket ex.: " + e);
         }
+
     }
 
     /**
@@ -62,18 +63,27 @@ public class TextualTCPServer {
             this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), UTF_8));
             this.out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), UTF_8));
             String line;
-            this.out.write("HELLO\n Bienvenue sur notre calculatrice, vous pouvez effectuer les opérations suivantes : ADD, SUB, MULT et DIV\n En utilisant ce format : OPERATION OPERAND1 OPERAND2\n Pour quitter entrez QUIT\nEND_WELCOME");
+            this.out.write("Bienvenue sur notre calculatrice, vous pouvez effectuer les opérations suivantes : ADD, SUB, MULT et DIV\nEn utilisant ce format : OPERATION OPERAND1 OPERAND2\nPour quitter entrez QUIT\nEND_WELCOME\n");
             this.out.flush();
+
             while ((line = in.readLine()) != null) {
                 if(line.equalsIgnoreCase("QUIT")){
-                    this.out.write("Merci et au revoir");
+                    this.out.write("Merci et au revoir" + "\n");
                     this.out.flush();
                     clientSocket.close();
+
                     in.close();
                     out.close();
                     break;
                 }
+
                 String[] command = line.split(" ");
+
+                if(command.length != 3){
+                    this.out.write("ERROR : BAD FORMAT \n");
+                    this.out.flush();
+                    continue;
+                }
 
                 int operand1;
                 int operand2;
@@ -82,20 +92,27 @@ public class TextualTCPServer {
                 try {
                     operation = command[0].toUpperCase();
                 } catch (Exception e){
-                    this.out.write("ERROR : BAD NOT SPECIFIED");
-                    continue;
-                }
-
-                if(!isOperation(operation)){
-                    this.out.write("ERROR : BAD OPERATION ");
+                    this.out.write("ERROR : BAD NOT SPECIFIED" + "\n");
                     this.out.flush();
                     continue;
                 }
 
+                if(!isOperation(operation)){
+                    this.out.write("ERROR : BAD OPERATION " + "\n");
+                    this.out.flush();
+                    continue;
+                }
+
+                if(!command[1].matches("\\d*") || !command[2].matches("\\d*")){
+                    out.write("ERROR : OPERAND 1 OR 2 NOT A INT" + "\n");
+                    out.flush();
+                    continue;
+                }
+
                 try{
-                    operand1 = Integer.parseInt(command[1]);
+                    operand1 = Integer.parseInt((command[1]));
                 } catch (Exception e) {
-                    this.out.write("ERROR : BAD OPERAND 1");
+                    this.out.write("ERROR : BAD OPERAND 1" + "\n");
                     this.out.flush();
                     continue;
                 }
@@ -103,7 +120,8 @@ public class TextualTCPServer {
                 try {
                     operand2 = Integer.parseInt(command[2]);
                 } catch (Exception e){
-                    this.out.write("ERROR : BAD OPERAND 2");
+                    this.out.write("ERROR : BAD OPERAND 2" + "\n");
+                    out.flush();
                     continue;
                 }
 

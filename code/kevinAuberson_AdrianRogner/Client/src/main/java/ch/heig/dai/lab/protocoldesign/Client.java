@@ -1,7 +1,7 @@
 package code.kevinAuberson_AdrianRogner.Client.src.main.java.ch.heig.dai.lab.protocoldesign;
 
 public class Client {
-    final String SERVER_ADDRESS = "1.2.3.4";
+    final String SERVER_ADDRESS = "localhost";
     final int SERVER_PORT = 1234;
 
     public static void main(String[] args) {
