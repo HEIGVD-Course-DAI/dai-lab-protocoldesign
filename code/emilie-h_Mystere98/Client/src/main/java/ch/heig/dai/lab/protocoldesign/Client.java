@@ -54,9 +54,10 @@ public class Client {
 
                 // Read the JSON response from the server
                 String jsonResponse = in.readLine();
+
                 Result response = gson.fromJson(jsonResponse, Result.class);
                 // Print the result
-                System.out.println("Result: " + response.getResult());
+                System.out.println(response.isSuccess() ? "Result: " + response.getResult() : "Error: " + response.getErrorMessage());
             }
 
         }  catch (IOException e){

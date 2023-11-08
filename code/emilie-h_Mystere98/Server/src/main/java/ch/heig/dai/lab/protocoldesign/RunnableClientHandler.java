@@ -32,9 +32,17 @@ public class RunnableClientHandler implements Runnable {
             while (!(line = in.readLine()).equals("exit")) {
                 try {
                     System.out.println("Received request: " + line);
-                    out.write(new Gson().toJson(worker.work(new Gson().fromJson(line, Request.class))));
-                    out.newLine();
-                    out.flush();
+                    try {
+                        out.write(new Gson().toJson(worker.work(new Gson().fromJson(line, Request.class))));
+                        out.newLine();
+                        out.flush();
+                    } catch (Exception e) {
+                        out.write(new Gson().toJson(new Result("0", 0, false, "Invalid JSON")));
+                        out.newLine();
+                        out.flush();
+                        continue;
+                    }
+
                 } catch (Exception e) {
                     out.write(new Gson().toJson(new Result("asd", 0, false, "Invalid operator")));
                 }
