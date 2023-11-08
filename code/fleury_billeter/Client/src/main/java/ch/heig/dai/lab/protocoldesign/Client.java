@@ -25,7 +25,7 @@ public class Client {
                 System.out.println(line);
             }
             try (Scanner scanner = new Scanner(System.in)) {
-                while (true) {
+                while (!(socket.isClosed())) {
                     System.out.print("> ");
                     out.write(scanner.nextLine() + sendChar);
                     out.flush();

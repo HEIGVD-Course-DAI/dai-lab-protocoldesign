@@ -34,7 +34,7 @@ public class Server {
 
         // Implement Server functionalities
         try(ServerSocket ss = new ServerSocket(SERVER_PORT)){
-            while(true){
+            while(!(ss.isClosed())){
                 try (Socket s = ss.accept()){
                     var in = new BufferedReader(new InputStreamReader(s.getInputStream(), UTF_8));
                     var out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream(), UTF_8));
