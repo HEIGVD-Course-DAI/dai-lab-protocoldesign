@@ -21,6 +21,8 @@ There are X types of messages:
 - `WELCOME` When the connection is established, the server sends the supported operations in a welcome message.
 - `ADD <operand 1> <operand 2>`
 The client sends an addition to be computed. The operands are real numbers.
+- `SUB <operand 1> <operand 2>`
+  The client sends a subtraction to be computed. The operands are real numbers.
 - `MULT <operand 1> <operand 2>`
   The client sends a multiplication to be computed. The operands are real numbers.
 - `UNKOWN <operationName>`
@@ -76,6 +78,9 @@ sequenceDiagram
     server->>client: INVALID x
     server->>client: Close TCP Connection
 ```
+
+## Ideas for improvement
+
 ### Timeout
 
 ```mermaid
