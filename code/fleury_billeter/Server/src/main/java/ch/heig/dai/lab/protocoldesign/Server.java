@@ -64,15 +64,19 @@ public class Server {
         write(out, "Word of the day: " + wod);
         write(out, sendChar);
         write(out, "Please select a program by its name: ");
-        write(out, "Opérateur arithmétique :");
-        write(out, "- NEG v1 / INV v1 / SQRT v1 / LOG v1 / ADD v1 v2 / SUB v1 v2 / MUL v1 v2 / DIV v1 v2");
-        write(out, "Commande :");
-        write(out, "- CloseConn / Quit / Exit : Termine la session");
-        write(out, "- Ping : Répond pong");
-        write(out, "- banner : Affiche ce message");
-        write(out, "- wod : affiche le message du jour");
-        write(out, "- pass <arg> : Passage en mode privilégié");
-        write(out, "- wod <arg> : Change of the word of the day (admin)");
+        write(out, "Opérateurs arithmétiques :");
+        write(out, "- Unaires  : NEG (opposé), INV (inverse), SQRT (racine carrée), LN (logarithme naturel), LOG10 (logarithme base 10), EXP (exponentielle), POW2 (carré)");
+        write(out, "- Binaires : ADD (addition), SUB (soustraction), MUL (multiplication), DIV (division), POW (puissance n-ième), LOG_B (logarithme base b)");
+        write(out, "Commandes :");
+        write(out, "- QUIT (ou EXIT) : Termine la session");
+        write(out, "- PING : Répond pong");
+        write(out, "- HELP (ou BANNER) : Affiche ce message");
+        write(out, "- WOD : affiche le message du jour");
+        write(out, "- TIME (ou NOW) : affiche la date et l'heure du serveur");
+        write(out, "- ROLE : affiche le role (utilisateur ou administrateur)");
+        write(out, "- LIST (ou COMMANDS) : affiche la liste des commandes disponibles");
+        write(out, "- AUTH <arg> (ou PASSWORD, PASS) : passage en mode privilégié");
+        write(out, "- WOD <arg> : changer le mot du jour (admin)");
         write(out,sendChar + endServer);
     }
     public void commandSwitch(String cmd, BufferedWriter out) throws IOException {
@@ -123,8 +127,11 @@ public class Server {
                     auth(out);
                     break;
                 case "BANNER"   :
+                case "HELP"     :
                 case "banner"   :
+                case "help"     :
                 case "Banner"   :
+                case "Help"     :
                     banner(out);
                     break;
                 case "WOD" :
