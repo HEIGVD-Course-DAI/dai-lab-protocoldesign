@@ -20,10 +20,21 @@ public class RunnableClientHandler implements Runnable {
         try (var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
              var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8))) {
             System.out.println("Client connected");
+
+            // sending operations
+            System.out.println("Sending operations");
+            Operation operation = new Operation();
+            out.write(new Gson().toJson(operation));
+            out.newLine();
+            out.flush();
+
             String line;
             while (!(line = in.readLine()).equals("exit")) {
                 try {
+                    System.out.println("Received request: " + line);
                     out.write(new Gson().toJson(worker.work(new Gson().fromJson(line, Request.class))));
+                    out.newLine();
+                    out.flush();
                 } catch (Exception e) {
                     out.write(new Gson().toJson(new Result("asd", 0, false, "Invalid operator")));
                 }
