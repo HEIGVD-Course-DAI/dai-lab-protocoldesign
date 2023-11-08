@@ -19,6 +19,14 @@ public class OperationResult {
     }
 
     public String getResult() {
-        return result;
+        if(error != null){
+            return "ERROR " + error.toString(); 
+        }
+        else if (result != null) {
+            return "RSLT " + result;
+        }
+        else {
+            return "BOTH NULL";
+        }
     }
 }

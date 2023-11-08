@@ -19,4 +19,16 @@ public enum Operator {
             default -> throw new IllegalArgumentException("Unknown operator: " + str);
         };
     }
+
+    public static Operator fromName(String str) {
+        return switch (str) {
+            case "ADD" -> ADD;
+            case "SUB" -> SUB;
+            case "MUL" -> MUL;
+            case "DIV" -> DIV;
+            case "MOD" -> MOD;
+            case "POW" -> POW;
+            default -> throw new IllegalArgumentException("Unknown operator: " + str);
+        };
+    }
 }

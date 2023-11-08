@@ -31,15 +31,15 @@ public class Server {
         Operator op;
         // Verify that the operator is valid
         try {
-            op = Operator.fromString(fields[1]);
+            op = Operator.fromName(fields[0]);
         } catch (IllegalArgumentException e) {
             return new OperationResult(OperationError.INVOP);
         }
 
         // If not first operation, check if one of the operand is ?
         if (!firstOperation) {
-            if (fields[0].equals("?")) {
-                fields[0] = Integer.toString(previousResult);
+            if (fields[1].equals("?")) {
+                fields[1] = Integer.toString(previousResult);
             }
             if (fields[2].equals("?")) {
                 fields[2] = Integer.toString(previousResult);
@@ -50,7 +50,7 @@ public class Server {
         // Verify that the operands are valid
         int op1, op2;
         try {
-            op1 = Integer.parseInt(fields[0]);
+            op1 = Integer.parseInt(fields[1]);
             op2 = Integer.parseInt(fields[2]);
         } catch (NumberFormatException e) {
             return new OperationResult(OperationError.INVARG);
