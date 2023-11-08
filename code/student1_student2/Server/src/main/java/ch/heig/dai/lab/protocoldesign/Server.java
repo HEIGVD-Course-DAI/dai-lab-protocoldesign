@@ -5,6 +5,8 @@ import ch.heig.dai.lab.protocoldesign.Calculator.Calculator;
 import java.io.*;
 import java.net.*;
 import static java.nio.charset.StandardCharsets.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Server {
@@ -29,13 +31,14 @@ public class Server {
                     out.write("Supported operation : ADD SUB MUL DIV\n");
                     out.flush();
 
+
+
                     String clientMessage;
                     while((clientMessage = in.readLine()) != null){
 
+
+
                         String[] tokens = clientMessage.split(" ");
-
-
-                        //todo meilleure gestion erreur + 30 sec innactivite ferme la connexion
 
                         if(tokens.length > 3 || tokens.length == 2){
                             out.write("ERROR SYNTAX\n");
@@ -48,9 +51,10 @@ public class Server {
                             }else{
                                 Calculator cal = new Calculator(clientMessage);
 
+                                int resultat = cal.resultat();
 
                                 if(cal.isValidOperator()){
-                                    out.write("ANSWER : " + cal.resultat() +"\n");
+                                    out.write("ANSWER : " + resultat  +"\n");
                                     out.flush();
                                 }
                                 else{

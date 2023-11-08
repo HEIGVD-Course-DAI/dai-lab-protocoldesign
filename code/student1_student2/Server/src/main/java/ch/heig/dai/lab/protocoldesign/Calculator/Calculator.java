@@ -32,8 +32,16 @@ public class Calculator {
         if(words.length == 3){
 
             op = toOperator(words[0]);
-            operand1 = Integer.parseInt(words[1]);
-            operand2 = Integer.parseInt(words[2]);
+
+            try{
+                operand1 = Integer.parseInt(words[1]);
+                operand2 = Integer.parseInt(words[2]);
+
+            }catch (NumberFormatException e){
+                op = operator.ERROR;
+            }
+
+
 
         }else{
             op = operator.ERROR;
@@ -47,13 +55,19 @@ public class Calculator {
 
 
     public int resultat(){
-        switch (op){
-            case ADD: return operand1 + operand2;
-            case SUB: return operand1 - operand2;
-            case DIV: return operand1 / operand2;
-            case MUL: return operand1 * operand2;
-            default: return 0;
+
+        try{
+            switch (op){
+                case ADD: return operand1 + operand2;
+                case SUB: return operand1 - operand2;
+                case DIV: return operand1 / operand2;
+                case MUL: return operand1 * operand2;
+                default: return 0;
+            }
+        }catch (ArithmeticException e){
+            op = operator.ERROR;
         }
+        return 0;
     }
 
     public boolean isValidOperator(){
