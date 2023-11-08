@@ -12,4 +12,7 @@ public class Request {
     public Type getOperator() {
         return operator;
     }
+    public double[] getOperands() {
+        return operands;
+    }
 }
