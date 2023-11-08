@@ -141,26 +141,29 @@ public class Server {
 
     private OptionalDouble calculate(String operation, double operand1, double operand2) {
         double result;
-        switch (Operations.getMatchingValue(operation)) { // We don't have a "null" case, as we only want to return the empty OptionalDouble in this case
-            case ADD:
-                result = operand1 + operand2;
+        Operations op = Operations.getMatchingValue(operation);
+        if (op != null) {
+            switch (op) {
+                case ADD:
+                    result = operand1 + operand2;
                     return OptionalDouble.of(result);
-            case SUB:
-                result = operand1 - operand2;
+                case SUB:
+                    result = operand1 - operand2;
                     return OptionalDouble.of(result);
-            case MUL:
-                result = operand1 * operand2;
+                case MUL:
+                    result = operand1 * operand2;
                     return OptionalDouble.of(result);
-            case DIV:
-                if (operand2 != 0) {
-                    return OptionalDouble.of(operand1 / operand2);
-                }
-                break;
-            case MOD:
-                if (operand2 != 0) {
-                    return OptionalDouble.of(operand1 % operand2);
-                }
-                break;
+                case DIV:
+                    if (operand2 != 0) {
+                        return OptionalDouble.of(operand1 / operand2);
+                    }
+                    break;
+                case MOD:
+                    if (operand2 != 0) {
+                        return OptionalDouble.of(operand1 % operand2);
+                    }
+                    break;
+            }
         }
         return OptionalDouble.empty();
     }
