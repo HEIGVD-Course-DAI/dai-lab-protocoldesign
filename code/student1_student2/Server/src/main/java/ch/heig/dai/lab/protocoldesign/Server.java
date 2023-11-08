@@ -5,12 +5,11 @@ import ch.heig.dai.lab.protocoldesign.Calculator.Calculator;
 import java.io.*;
 import java.net.*;
 import static java.nio.charset.StandardCharsets.*;
-import java.util.Timer;
-import java.util.TimerTask;
-
 
 public class Server {
     final int SERVER_PORT = 42020;
+
+    final int TIMEOUT = 30000;
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -30,7 +29,9 @@ public class Server {
                     out.write("Welcome in the cloud calculator !\n");
                     out.write("Supported operation : ADD SUB MUL DIV\n");
                     out.flush();
-                    
+
+                    socket.setSoTimeout(TIMEOUT);
+
                     String clientMessage;
                     while((clientMessage = in.readLine()) != null){
 
@@ -61,9 +62,13 @@ public class Server {
                         }
                     }
                     break;
-                }catch(IOException e){
+                }catch (SocketTimeoutException e) {
+                    System.out.println("Timeout : " + e);
+                }
+                catch(IOException e){
                     System.out.println("Server: socket ex : " + e);
                 }
+
             }
 
 

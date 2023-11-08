@@ -7,8 +7,9 @@ Section 2 : transport layer protocol
     
     Alcp uses TCP, The client establishes the connection. It has to know the IP address of the server
     The server listens on TCP port 42020.
-    
 
+    The server closes the connection after 30 sec of inactivity or if the client request it(CLOSE command).
+    
 Section 3 : Messages 
 
     Client side operation :
