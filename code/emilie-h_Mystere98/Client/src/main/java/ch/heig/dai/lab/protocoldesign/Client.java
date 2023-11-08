@@ -23,14 +23,6 @@ public class Client {
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT); var in = new BufferedReader( new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
         var out = new BufferedWriter( new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8))){
             // Read the Json operation from server
-            String jsonOperation = in.readLine();
-            //print in console the json operations received
-            System.out.println("Server: " + jsonOperation);
-
-            // Ask the server to calculate 1 + 2
-
-
-            // Create a JSON request using Gson
 
             Request request = new Request(Type.ADD, 1., 2.);
             Gson gson = new Gson();
