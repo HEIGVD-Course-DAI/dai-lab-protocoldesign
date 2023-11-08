@@ -8,7 +8,7 @@ public enum Operator {
     MOD,
     POW;
 
-    static Operator fromString(String str) {
+    public static Operator fromString(String str) {
         return switch (str) {
             case "+" -> ADD;
             case "-" -> SUB;
