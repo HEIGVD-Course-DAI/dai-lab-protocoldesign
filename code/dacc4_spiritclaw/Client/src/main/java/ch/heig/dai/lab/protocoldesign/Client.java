@@ -1,18 +1,16 @@
 package ch.heig.dai.lab.protocoldesign;
 
 import ch.heig.dai.lab.protocoldesign_common.Operation;
-import ch.heig.dai.lab.protocoldesign_common.OperationResult;
 
+import java.io.*;
 import java.net.Socket;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 public class Client {
-    private final String SERVER_ADDRESS = "1.2.3.4";
     private final int SERVER_PORT = 4242;
     private final Charset charset = StandardCharsets.UTF_8;
-    private final char lineSeparator = ';';
+    private final char LINE_DELIMITER = ';';
 
     public static void main(String[] args) {
         // Create a new client and run it
@@ -21,22 +19,65 @@ public class Client {
     }
 
     private void run() {
-    }
+        // Get server adress from user
+        String serverAddress = askServerAddress();
 
-    private ArrayList<Operation> convertFromString(String str){
-        ArrayList<Operation> operations = new ArrayList<>();
+        while (true) {
+            // Ask user for a calculation
+            String calculation = askCalculation();
 
-        // TODO : Logic
+            // Parse the calculation
+            Operation operation;
+            try {
+                operation = new Operation(calculation);
+            } catch (Exception e) {
+                System.out.println("Invalid calculation");
+                continue;
+            }
 
-        return operations;
-    }
+            // Open a connection to the server
+            try (Socket socket = new Socket(serverAddress, SERVER_PORT);
+                 var in = new BufferedReader(
+                         new InputStreamReader(socket.getInputStream(),
+                                 charset));
+                 var out = new BufferedWriter(
+                         new OutputStreamWriter(socket.getOutputStream(),
+                                 charset))) {
 
-    private OperationResult computeOperations(ArrayList<Operation> operations){
-        try (var socket = new Socket(SERVER_ADDRESS, SERVER_PORT)){
+                // Send the calculation to the server
+                out.write(operation.toString());
+                out.write(LINE_DELIMITER);
+                out.flush();
 
-        } catch (Exception e) {
-            return null;
+                // Read the result from the server
+                StringBuilder sb = new StringBuilder();
+                int c;
+                while ((c = in.read()) != LINE_DELIMITER) {
+                    sb.append((char)c);
+                }
+                String result = sb.toString();
+
+                // Convert string to operation result
+                if (result.startsWith("ERROR")) {
+                    System.out.println("Error: " + result.substring(6));
+                } else if (result.startsWith("RSLT")) {
+                    System.out.println("Result: " + result.substring(5));
+                } else {
+                    System.out.println("Invalid result");
+                }
+            } catch (Exception e) {
+                System.out.println("Error while connecting to the server");
+            }
         }
-        return null;
+    }
+
+    private String askServerAddress() {
+        System.out.println("Please enter the server address:");
+        return System.console().readLine();
+    }
+
+    private String askCalculation() {
+        System.out.println("Please enter a calculation:");
+        return System.console().readLine();
     }
 }

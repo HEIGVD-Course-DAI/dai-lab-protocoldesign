@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import ch.heig.dai.lab.protocoldesign_common.*;
 
+import static ch.heig.dai.lab.protocoldesign_common.Operator.fromName;
+
 public class Server {
 
     static int previousResult = 0;
@@ -31,7 +33,7 @@ public class Server {
         Operator op;
         // Verify that the operator is valid
         try {
-            op = Operator.fromName(fields[0]);
+            op = fromName(fields[0]);
         } catch (IllegalArgumentException e) {
             return new OperationResult(OperationError.INVOP);
         }
@@ -100,6 +102,9 @@ public class Server {
                         sb.append((char)c);
                     }
                     String line = sb.toString();
+
+                    System.out.println("Received: " + line);
+
                     OperationResult result = process(line);
 
                     var out = new BufferedWriter(
@@ -107,6 +112,7 @@ public class Server {
                     );
 
                     out.write(result.getResult());
+                    out.write(LINE_DELIMITER);
                     out.flush();
 
                 } catch (IOException e) {

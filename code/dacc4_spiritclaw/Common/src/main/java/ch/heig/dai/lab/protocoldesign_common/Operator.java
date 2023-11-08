@@ -8,6 +8,24 @@ public enum Operator {
     MOD,
     POW;
 
+    public static boolean isOperator(char c) {
+        return switch (c) {
+            case '+', '-', '*', '/', '%', '^' -> true;
+            default -> false;
+        };
+    }
+
+    public String toString() {
+        return switch (this) {
+            case ADD -> "ADD";
+            case SUB -> "SUB";
+            case MUL -> "MUL";
+            case DIV -> "DIV";
+            case MOD -> "MOD";
+            case POW -> "POW";
+        };
+    }
+
     public static Operator fromString(String str) {
         return switch (str) {
             case "+" -> ADD;
