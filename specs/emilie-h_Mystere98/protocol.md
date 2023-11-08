@@ -33,8 +33,7 @@ Operator can be :
 
 Operands can be :
 - any number
-- an old result ( with the UUID)
-- a result from another client ( with the UUID)
+
 
 Server:
 
@@ -62,25 +61,8 @@ Operator :
 ]
 ```
 
-```JSON
-[
-  {
-    "Symbol": "e"
-  },
-  {
-    "Symbol": "π"
-  }
-]
-```
-
 ## Error_message
 
 List of possible error message :
 
-- Unknown operator.
-- Too many operands.
-- Not enough operands.
-- Operand x is not a number.
-- Unknown error.
-- Out of bound result.
-- unknown GUID.
+- Invalid JSON
