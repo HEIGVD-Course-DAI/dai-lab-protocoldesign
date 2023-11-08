@@ -62,6 +62,7 @@ public class Client {
             // Loop between asking for input and displaying answer
             while (!line.startsWith(MSG_PREFIX + MSG_BYE)) {
                 write(userInput, out); // Get user input
+                read(in); // Get server response
                 line = read(in); // Get server response
             }
 
@@ -121,7 +122,7 @@ public class Client {
                 }
             }
             // Check that the last token is an allowed operator
-            if (!allowedOperators.contains(message.split(" ")[message.split(" ").length - 1])) {
+            if (message != null && !allowedOperators.contains(message.split(" ")[message.split(" ").length - 1])) {
                 message = null;
                 System.out.println(" incorrect request. Please try again.");
             }
@@ -133,9 +134,7 @@ public class Client {
     }
 
     private String read(BufferedReader in) throws IOException {
-        String response;
-        // Blockingly wait for a well-formatted message
-        while (!(response = in.readLine()).startsWith(MSG_PREFIX));
+        String response = in.readLine();
         System.out.println("Server: " + response.substring(MSG_PREFIX.length()));
         return response;
     }
