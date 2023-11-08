@@ -9,9 +9,11 @@ public class Worker {
         Double result = null;
         switch (op.getOperator()) {
             case ADD:
-                result = Add.make(1, 2);
+                result = Add.make(op.getOperands()[0], op.getOperands()[0]);
+                break;
             case MUL:
-                result = Mul.make(1, 2);
+                result = Mul.make(op.getOperands()[0], op.getOperands()[0]);
+                break;
             default:
                 break;
         }
