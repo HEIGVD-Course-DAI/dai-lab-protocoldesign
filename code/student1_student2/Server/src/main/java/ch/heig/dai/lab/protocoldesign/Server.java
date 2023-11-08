@@ -30,9 +30,7 @@ public class Server {
                     out.write("Welcome in the cloud calculator !\n");
                     out.write("Supported operation : ADD SUB MUL DIV\n");
                     out.flush();
-
-
-
+                    
                     String clientMessage;
                     while((clientMessage = in.readLine()) != null){
 
