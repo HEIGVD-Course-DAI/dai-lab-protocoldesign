@@ -94,6 +94,12 @@ public class CalcWrapper {
         System.out.println(message);
         writer.write(message);
         writer.flush();
+        String line;
+        while((line = reader.readLine()) != null){
+            System.out.println(line);
+        }
+
+        System.out.println(line);
         return 0;
     }
 
