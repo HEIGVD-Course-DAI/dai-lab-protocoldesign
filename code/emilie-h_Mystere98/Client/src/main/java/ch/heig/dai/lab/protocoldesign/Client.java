@@ -7,8 +7,6 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-
-import ch.heig.dai.lab.protocoldesign.*;
 import com.google.gson.Gson;
 
 import static java.lang.System.exit;
@@ -50,8 +48,7 @@ public class Client {
                 System.out.println("readLine: " + readLine);
                 System.out.println("Sending request");
                 // Send the JSON request to the server
-                String jsonRequest = gson.toJson(r);
-                out.write(jsonRequest);
+                out.write(readLine);
                 out.newLine();
                 out.flush();
 
