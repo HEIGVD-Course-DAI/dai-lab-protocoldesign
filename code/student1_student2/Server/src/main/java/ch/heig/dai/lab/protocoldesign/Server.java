@@ -36,8 +36,6 @@ public class Server {
                     String clientMessage;
                     while((clientMessage = in.readLine()) != null){
 
-
-
                         String[] tokens = clientMessage.split(" ");
 
                         if(tokens.length > 3 || tokens.length == 2){
