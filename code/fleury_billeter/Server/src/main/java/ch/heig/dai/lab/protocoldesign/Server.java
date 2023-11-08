@@ -45,7 +45,12 @@ public class Server {
                     String line;
                     while((line = in.readLine()) != null){
                         commandSwitch(line, out);
-                        if(closeConn){ s.close(); }
+                        if(closeConn){
+                            in.close();
+                            out.close();
+                            s.close();
+                            closeConn = false;
+                        }
                     }
                 } catch (IOException e) {
                     System.out.println("Server: socket ex.:" + e);
@@ -254,7 +259,7 @@ public class Server {
                 case "Wod":
                     wod(out, params);
                     break;
-        }
+            }
         }
         out.write(endServer + sendChar);
         out.flush();

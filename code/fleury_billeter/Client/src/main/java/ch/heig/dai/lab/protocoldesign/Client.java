@@ -32,14 +32,17 @@ public class Client {
                     while (!(line = in.readLine()).equals(endServer)) {
                         System.out.println(line);
                         if(line.equals("Connection closed")){
+                            in.close();
+                            out.close();
                             socket.close();
-                            break;
                         }
                     }
                 }
             }
         } catch (IOException e){
             System.out.println("Client: exception : " + e);
+        }finally {
+            System.out.println("Thank you !\nSee you soon.");
         }
     }
 }
