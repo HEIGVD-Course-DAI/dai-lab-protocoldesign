@@ -20,40 +20,41 @@ public class Client {
 
     private void run() {
 
-        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
-             var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-             var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
-             var scanner = new Scanner(System.in)) {
+            try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+                 var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+                 var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
+                 var scanner = new Scanner(System.in)) {
 
-            String serverMessage = in.readLine();
-            String userInput;
-            String result;
-            System.out.println("Server: " + serverMessage);
+                String serverMessage = in.readLine();
+                String userInput;
+                String result;
+                System.out.println("Server: " + serverMessage);
 
-            if (serverMessage.contains(WELCOME_MSG)) {
-                System.out.println("Enter your calculation: ");
-                userInput = scanner.nextLine();
+                if (serverMessage.contains(WELCOME_MSG)) {
+                    System.out.println(serverMessage);
+                    System.out.println("Enter your calculation: ");
+                    userInput = scanner.nextLine();
 
-                out.write(userInput + "\n");
-                out.flush();
+                    out.write(userInput + "\n");
+                    out.flush();
 
-                result = in.readLine();
-                System.out.println("Result: " + result);
+                    result = in.readLine();
 
-                if(result.equals(ERROR_INVALID)){
-                    throw new IOException("Client: One of the operand isn't a number");
+                    if (result.equals(ERROR_INVALID)) {
+                        throw new IOException("Client: One of the operand isn't a number \n");
+                    }
+
+                    if (result.equals(ERROR_UNKOWN)) {
+                        throw new IOException("Client: The operation you asked for does not exist \n");
+                    }
+
+                    System.out.println("Here is the result of the calculation: " + result);
                 }
 
-                if(result.equals(ERROR_UNKOWN)){
-                    throw new IOException("Client: The operation you asked for does not exist.");
-                }
 
-                System.out.println("Here is the result of the calculation: " + result);
+            } catch (IOException e) {
+                System.out.println("Client: exception while using client socket: " + e);
             }
-
-
-        } catch (IOException e) {
-            System.out.println("Client: exception while using client socket: " + e);
         }
-    }
+
 }

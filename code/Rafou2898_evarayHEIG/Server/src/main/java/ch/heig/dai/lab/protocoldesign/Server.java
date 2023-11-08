@@ -7,14 +7,11 @@ import static java.nio.charset.StandardCharsets.*;
 
 public class Server {
     final int SERVER_PORT = 2828;
-    final String WELCOME_MSG = "WELCOME: You can do the following operations: ADD, MULT";
+    final String WELCOME_MSG = "WELCOME: You can do the following operations:";
     final String ERROR_UNKOWN = "UNKOWN";
     final String ERROR_INVALID = "INVALID";
 
-    enum Operations {
-        ADD,
-        MULT
-    }
+    String[] operations = {"ADD", "SUB", "MULT"};
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -26,6 +23,12 @@ public class Server {
 
         try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)) {
 
+            StringBuilder welcomeMessage = new StringBuilder();
+            welcomeMessage.append(WELCOME_MSG);
+            for(String operation : operations){
+                welcomeMessage.append(" ").append(operation);
+            }
+
             while (true) {
 
                 try (Socket socket = serverSocket.accept();
@@ -33,7 +36,7 @@ public class Server {
                      var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8))) {
                     System.out.println("Server: client connected");
 
-                    out.write(WELCOME_MSG + "\n");
+                    out.write(welcomeMessage.toString() + "\n");
                     out.flush();
 
                     String userInput = in.readLine();
@@ -45,21 +48,22 @@ public class Server {
                         Double.parseDouble(parameters[1]);
                         Double.parseDouble(parameters[2]);
                     } catch (NumberFormatException e) {
-                        System.out.println("Server1: socket ex.: " + e);
                         out.write(ERROR_INVALID);
+                        out.flush();
                         socket.close();
-                        System.exit(1);
+                        continue;
                     }
 
-                    switch (parameters[0]) {
+                    switch (parameters[0].toUpperCase()) {
                         case "ADD":
                             System.out.println("Calculating: " + String.valueOf(Double.parseDouble(parameters[1]) + Double.parseDouble(parameters[2])));
                             out.write(String.valueOf(Double.parseDouble(parameters[1]) + Double.parseDouble(parameters[2])) + "\n");
-
                             break;
                         case "MULT":
                             out.write(String.valueOf(Double.parseDouble(parameters[1]) * Double.parseDouble(parameters[2])) + "\n");
-
+                            break;
+                        case "SUB":
+                            out.write(String.valueOf(Double.parseDouble(parameters[1]) - Double.parseDouble(parameters[2])) + "\n");
                             break;
                         default:
                             out.write(ERROR_UNKOWN + "\n");
@@ -67,17 +71,14 @@ public class Server {
                     }
                     out.flush();
 
-                    socket.close();
-
                 } catch (IOException e) {
-                    System.out.println("Server2: socket ex.: " + e);
-                    System.exit(1);
+                    System.out.println("Server: socket ex.: " + e);
 
                 }
+                System.out.println("Server: client disconnected");
             }
         } catch (IOException e) {
-            System.out.println("Server3: server socket ex.: " + e);
-            System.exit(1);
+            System.out.println("Server: server socket ex.: " + e);
 
         }
     }
