@@ -133,12 +133,9 @@ public class Client {
     }
 
     private String read(BufferedReader in) throws IOException {
-        // FIXME: il faut vérifier si la réponse est pas null, autrement il y a une
-        // erreur :/
         String response;
-        while (!(response = in.readLine()).startsWith(MSG_PREFIX)) {
-            // Blockingly wait for a well-formatted message
-        }
+        // Blockingly wait for a well-formatted message
+        while (!(response = in.readLine()).startsWith(MSG_PREFIX));
         System.out.println("Server: " + response.substring(MSG_PREFIX.length()));
         return response;
     }
