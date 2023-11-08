@@ -62,7 +62,8 @@ public class Server {
 							} else if (line.length() >= 8) {
 								try {
 									out.write(BASE_MESSAGE + " " + String.valueOf(calculation(line.substring(5))) + "\n");
-
+									out.flush();
+									break;
 								} catch (IllegalArgumentException e) {
 									out.write(ERROR_ONE);
 								}
@@ -72,6 +73,8 @@ public class Server {
 							out.flush();
 						}
 					}
+					out.write(BASE_MESSAGE + " " + END_MESSAGE);
+					out.flush();
 					socket.close();
 
 				} catch (SocketException e) {
