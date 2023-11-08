@@ -2,6 +2,7 @@ package ch.heig.dai.lab.protocoldesign;
 
 import java.io.*;
 import java.net.*;
+
 import static java.nio.charset.StandardCharsets.*;
 
 public class Server {
@@ -33,14 +34,30 @@ public class Server {
 					// wait for a client to be connected with the server
 					String line;
 					while ((line = in.readLine()) != null) {
-						out.write(line + "\n");
+
+						// Calculate the result and returns it.
+						// In case of error, return one of the 2 types of errors.
+						try {
+							Calculation calc = new Calculation(line);
+							Double result = calc.getResult();
+							out.write(String.format("%.2f", result) + "\n");
+						} catch (InvalidFormatException e) {
+							out.write("error: format" + "\n");
+						} catch (ArithmeticException e) {
+							out.write("error: calculation" + "\n");
+						} catch (Exception e) {
+							out.write("error: calculation" + "\n");
+						}
 						out.flush();
+						out.close();
 					}
 				} catch (IOException e) {
 					System.out.println("Server: server socket ex.: " + e);
 				}
 			}
-		} catch (IOException e) {
+		} catch (
+
+		IOException e) {
 			System.out.println("Server: server socket ex.: " + e);
 		}
 	}
@@ -52,7 +69,7 @@ public class Server {
 				"- Sum: <operand 1> + <operand 2>\n" +
 				"- Substraction: <operand 1> - <operand 2>\n" +
 				"- Multiplication: <operand 1> * <operand 2>\n" +
-				"- Division: <operand 1> / <operand 2>";
+				"- Division: <operand 1> / <operand 2>\n";
 	}
 
 }

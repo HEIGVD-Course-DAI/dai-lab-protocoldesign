@@ -13,13 +13,13 @@ public class Calculation {
 		this.calculation = calculation.trim();
 	}
 
-	public Double getResult() {
+	public Double getResult() throws Exception {
 		// validate
 		// parse 2 operands and operator
 		// do calculation and return result
 		// throws exception in case of format error or calculation error
 		if (!validate()) {
-			throw new RuntimeException("Invalid format !");
+			throw new InvalidFormatException();
 		}
 		parse();
 		return calculate();
@@ -48,10 +48,10 @@ public class Calculation {
 				return operand1 * operand2;
 			case "/":
 				if (operand2 == 0)
-					throw new RuntimeException();
+					throw new ArithmeticException();
 				return operand1 / operand2;
 			default:
-				throw new RuntimeException("Invalid operand !");
+				throw new ArithmeticException("Invalid operand !");
 		}
 	}
 }
