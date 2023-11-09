@@ -85,7 +85,6 @@ public class Server {
                 result = firstOperand / secondOperand;
                 break;        
             default:
-                result = 0;
                 break;
         }
 
