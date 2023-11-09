@@ -67,10 +67,11 @@ public class Client {
             String finalMessage = "";
             while (true) {
                 String msg = this.in.readLine().trim();
+                msg += "\n";
                 String[] words = msg.split(" ");
 
-                if (words[words.length - 1].equals("END")){
-                    words[words.length - 1] = "";
+                if (words[words.length - 1].equals("END\n")){
+                    words[words.length - 1] = "\n";
                     finalMessage += String.join(" ", words);
                     return finalMessage;
                 } else {
@@ -84,18 +85,10 @@ public class Client {
     }
 
     private void initiateConversation() {
-        try {
             // Getting welcome message
-            String response = this.in.readLine() + "\n";
-            System.out.println(response);
+            String response = getMessage();
+            System.out.print(response);
 
-            // Getting the list of available operations
-            response = this.in.readLine() + "\n";
-            System.out.println(response);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     private void run() {
             initiateConversation();
@@ -108,14 +101,12 @@ public class Client {
                     operation = input.nextLine();
 
                     if (this.sendMessage(operation)) {
-                        String response = this.in.readLine() + "\n";
-                        System.out.println("Response: " + response);
+                        String response = getMessage();
+                        System.out.print("Response: " + response);
                     } else {
                         throw(new RuntimeException("Message not sent"));
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             } finally {
                 input.close();
             }
