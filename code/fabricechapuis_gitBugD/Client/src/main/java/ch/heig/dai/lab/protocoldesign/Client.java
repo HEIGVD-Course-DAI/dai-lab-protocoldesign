@@ -5,8 +5,6 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.Arrays;
-import java.util.List;
 
 public class Client {
     final String SERVER_ADDRESS = "1.2.3.4";
