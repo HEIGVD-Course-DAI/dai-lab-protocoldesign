@@ -59,19 +59,34 @@ public class Client {
             return false;
         }
     }
-    private void initiateConversation() {
+
+    private String getMessage() {
         try {
-            // Getting welcome message
-            String response = this.in.readLine() + "\n";
-            System.out.println(response);
+            String finalMessage = "";
+            while (true) {
+                String msg = this.in.readLine().trim();
+                msg += "\n";
+                String[] words = msg.split(" ");
 
-            // Getting the list of available operations
-            response = this.in.readLine() + "\n";
-            System.out.println(response);
-
+                if (words[words.length - 1].equals("END\n")){
+                    words[words.length - 1] = "\n";
+                    finalMessage += String.join(" ", words);
+                    return finalMessage;
+                } else {
+                    finalMessage += msg;
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
+    }
+
+    private void initiateConversation() {
+            // Getting welcome message
+            String response = getMessage();
+            System.out.print(response);
+
     }
     private void run() {
             initiateConversation();
@@ -84,14 +99,12 @@ public class Client {
                     operation = input.nextLine();
 
                     if (this.sendMessage(operation)) {
-                        String response = this.in.readLine() + "\n";
-                        System.out.println("Response: " + response);
+                        String response = getMessage();
+                        System.out.print("Response: " + response);
                     } else {
                         throw(new RuntimeException("Message not sent"));
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             } finally {
                 input.close();
             }

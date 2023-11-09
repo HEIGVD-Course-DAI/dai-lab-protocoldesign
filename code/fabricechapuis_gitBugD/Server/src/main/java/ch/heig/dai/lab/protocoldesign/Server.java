@@ -22,14 +22,18 @@ public class Server {
     }
 
     private void sendSupportedOps(BufferedWriter out) throws IOException {
-        String supportedOperations = "Supported operations: ADD <num1> <num2> -> this returns num1 + num2 MUL <num1> <num1> -> this returns num1 * num2 STOP -> this stops the connection\n";
+        String supportedOperations = """
+            Supported operations:
+            ADD <num1> <num2> -> this returns num1 + num2
+            MUL <num1> <num1> -> this returns num1 * num2
+            STOP -> this stops the connection END\n""";
 
         out.write(supportedOperations);
         out.flush();
     }
 
     private void sendByeMessage(BufferedWriter out) throws IOException {
-        String byeMessage = "Bye!\n";
+        String byeMessage = "Bye! END\n";
 
         out.write(byeMessage);
         out.flush();
@@ -101,7 +105,7 @@ public class Server {
                             out.flush();
                             continue;
                         }
-                        out.write(res + "\n");
+                        out.write(res + " END\n");
                         out.flush();
                     }
 
