@@ -42,12 +42,9 @@ public class Server {
     private String parseQueryString(String query) {
         String[] queryElements = query.split(" ");
         Boolean operatorFound = false;
-
-        System.out.print(queryElements[0]);
         
-        for (String operator : supportedOperators) {
-            System.out.print(" " + operator);     
-            if (operator == queryElements[0].trim()) {
+        for (String operator : supportedOperators) { 
+            if (operator.equals(queryElements[0].trim())) {
                 operatorFound = true;
                 break;
             }
