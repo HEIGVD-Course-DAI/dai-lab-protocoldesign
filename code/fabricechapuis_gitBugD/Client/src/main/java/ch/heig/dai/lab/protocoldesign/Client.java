@@ -61,6 +61,28 @@ public class Client {
             return false;
         }
     }
+
+    private String getMessage() {
+        try {
+            String finalMessage = "";
+            while (true) {
+                String msg = this.in.readLine().trim();
+                String[] words = msg.split(" ");
+
+                if (words[words.length - 1].equals("END")){
+                    words[words.length - 1] = "";
+                    finalMessage += String.join(" ", words);
+                    return finalMessage;
+                } else {
+                    finalMessage += msg;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private void initiateConversation() {
         try {
             // Getting welcome message
