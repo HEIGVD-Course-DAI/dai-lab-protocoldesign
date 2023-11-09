@@ -39,6 +39,7 @@ You can do the following calculations.
    1. In case the calculation fails, the server responds with `error: calculation`
    1. In case the format is invalid (doesn't match the regex), the server responds with `error: format`
 
+**Note: actually timeouts are hard to implement so we gave up on this feature.**
 
 ## Sequence diagrams
 **A few diagrams to showcase the above features**
@@ -88,3 +89,69 @@ sequenceDiagram
 	server->>client: Give back the error: `error: calculation`
 	server->>client: Close the connection
 ```
+
+## Result
+Only the server has been implemented because we were busy the last week...
+
+The server seems to work pretty well:
+```
+$ telnet localhost 1234
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+Welcome to SuperCalculationServer !
+
+You can do the following calculations.
+- Sum: <operand 1> + <operand 2>
+- Substraction: <operand 1> - <operand 2>
+- Multiplication: <operand 1> * <operand 2>
+- Division: <operand 1> / <operand 2>
+
+10/3
+3.33
+Connection closed by foreign host.
+```
+
+```
+Welcome to SuperCalculationServer !
+
+You can do the following calculations.
+- Sum: <operand 1> + <operand 2>
+- Substraction: <operand 1> - <operand 2>
+- Multiplication: <operand 1> * <operand 2>
+- Division: <operand 1> / <operand 2>
+
+-10.32/-0.1
+103.20
+Connection closed by foreign host.
+```
+
+```
+Welcome to SuperCalculationServer !
+
+You can do the following calculations.
+- Sum: <operand 1> + <operand 2>
+- Substraction: <operand 1> - <operand 2>
+- Multiplication: <operand 1> * <operand 2>
+- Division: <operand 1> / <operand 2>
+
+asdfjklsda
+error: format
+Connection closed by foreign host.
+```
+
+```
+Welcome to SuperCalculationServer !
+
+You can do the following calculations.
+- Sum: <operand 1> + <operand 2>
+- Substraction: <operand 1> - <operand 2>
+- Multiplication: <operand 1> * <operand 2>
+- Division: <operand 1> / <operand 2>
+
+10 / 0
+error: calculation
+Connection closed by foreign host.
+```
+
+**We wrote some unit tests on the sent string to make sure it is correctly validated, parsed and calculated !**
