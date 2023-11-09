@@ -155,3 +155,5 @@ Connection closed by foreign host.
 ```
 
 **We wrote some unit tests on the sent string to make sure it is correctly validated, parsed and calculated !**
+
+![tests-passing.png](imgs/tests-passing.png)
