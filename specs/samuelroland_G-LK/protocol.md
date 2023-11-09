@@ -27,7 +27,7 @@ You can do the following calculations.
    1. A division: `10/3` and server answers `3.34` (the value is rounded to the nearest 2 decimals value -> `3.3333333` rounded to `3.34`)
 1. **Validation**
    1. The request format must match the following regular expression:  
-   `^([+-]?(\d+(\.\d{1,2})?)) *[+-/*] *([+-]?(\d+(\.\d{1,2})?))$`.  
+   `^([+-]?(\d+(\.\d{1,2})?))\s*[+-/*]\s*([+-]?(\d+(\.\d{1,2})?))$`.  
    1. Spaces around the operators are optional (valid examples: `5*    3`, `5*3`, `5  *  3`, `5*3`)
    1. The value can contains optionnaly spaces before and after, the line read is trimmed (`String.trim()`) before we try to validate it with our regex
 1. **Errors management:**
