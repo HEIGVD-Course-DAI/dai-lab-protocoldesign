@@ -19,9 +19,8 @@ public class Client {
     }
 
     private void run() throws IOException {
-        System.out.println("Lesgo");
         CalcWrapper calc = new CalcWrapper();
         calc.openConnection(SERVER_ADDRESS,SERVER_PORT);
-        calc.add(2,1);
+        calc.add(5,1);
     }
 }

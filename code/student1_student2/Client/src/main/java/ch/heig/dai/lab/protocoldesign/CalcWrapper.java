@@ -52,10 +52,10 @@ public class CalcWrapper {
         String[] token = string.split(" ");
         switch (token[0]) {
             case "ANSWER" -> {
-                return Integer.parseInt(token[1]);
+                return Integer.parseInt(token[2]);
             }
             case "ERROR" -> {
-                return -1;
+                throw new RuntimeException("Error " + token[1]);
             }
         }
         return 0;
@@ -67,8 +67,7 @@ public class CalcWrapper {
      * @param port
      */
     public void openConnection(String address, int port){
-        try{
-            this.socket = new Socket(address,port);
+        try(Socket socket = new Socket(address,port)){
             writer = new BufferedWriter(
                     new OutputStreamWriter(socket.getOutputStream(),
                                             StandardCharsets.UTF_8));
@@ -76,7 +75,12 @@ public class CalcWrapper {
                     new InputStreamReader(socket.getInputStream(),
                                             StandardCharsets.UTF_8)
             );
+
             String line;
+            while((line = reader.readLine()) != null){
+                System.out.println(line);
+            }
+            reader.readLine();
         }
         catch(Exception e){
             System.out.println("Error connecting to " + address + ":" + port);
@@ -95,12 +99,16 @@ public class CalcWrapper {
         writer.write(message);
         writer.flush();
         String line;
+        int result = 0;
         while((line = reader.readLine()) != null){
-            System.out.println(line);
+            try{
+                result = parseAnswer(line);
+            }
+            catch (RuntimeException exception){
+                System.err.println("Error in parsing answer from client " + exception.toString());
+            }
         }
-
-        System.out.println(line);
-        return 0;
+        return result;
     }
 
     /**
@@ -113,7 +121,17 @@ public class CalcWrapper {
         String message = createMessage(Operation.MULTIPLY, operand1, operand2);
         writer.write(message);
         writer.flush();
-        return 0;
+        int result = 0;
+        String line;
+        while((line = reader.readLine()) != null){
+            try{
+                result = parseAnswer(line);
+            }
+            catch (RuntimeException exception){
+                System.err.println("Error in parsing answer from client " + exception.toString());
+            }
+        }
+        return result;
     }
 
     /**
@@ -126,14 +144,35 @@ public class CalcWrapper {
         String message = createMessage(Operation.DIVIDE,operand1,operand2);
         writer.write(message);
         writer.flush();
-        return 0;
+        int result = 0;
+        String line;
+        while((line = reader.readLine()) != null){
+            try{
+                result = parseAnswer(line);
+            }
+            catch (RuntimeException exception){
+                System.err.println("Error in parsing answer from client " + exception.toString());
+            }
+        }
+        return result;
     }
 
     public int substract(int operand1, int operand2)throws IOException{
         String message =  createMessage(Operation.SUBSTRACT,operand1,operand2);
         writer.write(message);
         writer.flush();
-        return 0;
+        int result = 0;
+        String line;
+        while((line = reader.readLine()) != null){
+            try{
+                result = parseAnswer(line);
+            }
+            catch (RuntimeException exception){
+                System.err.println("Error in parsing answer from client " + exception.toString());
+                throw exception;
+            }
+        }
+        return result;
     }
 
     /**
