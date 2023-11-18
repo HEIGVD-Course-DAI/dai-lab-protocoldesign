@@ -31,27 +31,32 @@ public class Client {
                 System.out.println("Server: " + serverMessage);
 
                 if (serverMessage.contains(WELCOME_MSG)) {
-                    System.out.println(serverMessage);
-                    System.out.println("Enter your calculation: ");
-                    userInput = scanner.nextLine();
 
-                    out.write(userInput + "\n");
-                    out.flush();
+                    while (true) {
 
-                    result = in.readLine();
+                        System.out.println("Enter your calculation: ");
+                        userInput = scanner.nextLine();
 
-                    if (result.equals(ERROR_INVALID)) {
-                        throw new IOException("Client: One of the operand isn't a number \n");
+                        if(userInput.equalsIgnoreCase("quit")){
+                            break;
+                        }
+
+                        out.write(userInput + "\n");
+                        out.flush();
+
+                        result = in.readLine();
+
+                        if (result.equals(ERROR_INVALID)) {
+                            throw new IOException("Client: One of the operand isn't a number \n");
+                        }
+
+                        if (result.equals(ERROR_UNKOWN)) {
+                            throw new IOException("Client: The operation you asked for does not exist \n");
+                        }
+
+                        System.out.println("Here is the result of the calculation: " + result);
                     }
-
-                    if (result.equals(ERROR_UNKOWN)) {
-                        throw new IOException("Client: The operation you asked for does not exist \n");
-                    }
-
-                    System.out.println("Here is the result of the calculation: " + result);
                 }
-
-
             } catch (IOException e) {
                 System.out.println("Client: exception while using client socket: " + e);
             }

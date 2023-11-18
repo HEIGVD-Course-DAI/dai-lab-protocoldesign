@@ -23,6 +23,8 @@ public class Server {
 
         try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)) {
 
+            System.out.println("Server: I am listening baby");
+
             StringBuilder welcomeMessage = new StringBuilder();
             welcomeMessage.append(WELCOME_MSG);
             for(String operation : operations){
@@ -38,38 +40,42 @@ public class Server {
 
                     out.write(welcomeMessage.toString() + "\n");
                     out.flush();
+                    String userInput;
 
-                    String userInput = in.readLine();
-                    System.out.println("userInput: " + userInput);
-                    // Operation is at index 0, operand 1 at index 1, operand 2 at index 2
-                    String[] parameters = userInput.split(" ");
+                    while((userInput = in.readLine()) != null) {
+                        // String userInput = in.readLine();
 
-                    try {
-                        Double.parseDouble(parameters[1]);
-                        Double.parseDouble(parameters[2]);
-                    } catch (NumberFormatException e) {
-                        out.write(ERROR_INVALID);
+                        // Operation is at index 0, operand 1 at index 1, operand 2 at index 2
+                        String[] parameters = userInput.split(" ");
+
+                        try {
+                            Double.parseDouble(parameters[1]);
+                            Double.parseDouble(parameters[2]);
+                        } catch (NumberFormatException e) {
+                            out.write(ERROR_INVALID);
+                            out.flush();
+                            socket.close();
+                            continue;
+                        }
+
+                        switch (parameters[0].toUpperCase()) {
+                            case "ADD":
+                                System.out.println("Calculating... ");
+                                out.write(String.valueOf(Double.parseDouble(parameters[1]) + Double.parseDouble(parameters[2])) + "\n");
+                                break;
+                            case "MULT":
+                                out.write(String.valueOf(Double.parseDouble(parameters[1]) * Double.parseDouble(parameters[2])) + "\n");
+                                break;
+                            case "SUB":
+                                out.write(String.valueOf(Double.parseDouble(parameters[1]) - Double.parseDouble(parameters[2])) + "\n");
+                                break;
+                            default:
+                                out.write(ERROR_UNKOWN + "\n");
+                                break;
+                        }
+                        System.out.println("Done!");
                         out.flush();
-                        socket.close();
-                        continue;
                     }
-
-                    switch (parameters[0].toUpperCase()) {
-                        case "ADD":
-                            System.out.println("Calculating: " + String.valueOf(Double.parseDouble(parameters[1]) + Double.parseDouble(parameters[2])));
-                            out.write(String.valueOf(Double.parseDouble(parameters[1]) + Double.parseDouble(parameters[2])) + "\n");
-                            break;
-                        case "MULT":
-                            out.write(String.valueOf(Double.parseDouble(parameters[1]) * Double.parseDouble(parameters[2])) + "\n");
-                            break;
-                        case "SUB":
-                            out.write(String.valueOf(Double.parseDouble(parameters[1]) - Double.parseDouble(parameters[2])) + "\n");
-                            break;
-                        default:
-                            out.write(ERROR_UNKOWN + "\n");
-                            break;
-                    }
-                    out.flush();
 
                 } catch (IOException e) {
                     System.out.println("Server: socket ex.: " + e);
