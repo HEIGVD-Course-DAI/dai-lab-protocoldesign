@@ -2,107 +2,72 @@ package ch.heig.dai.lab.protocoldesign;
 
 import java.io.*;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
+
 import static java.nio.charset.StandardCharsets.*;
 
 public class Server{
     final int SERVER_PORT = 4269;
-    private String[] OP = {"ADD","SUB","DIV","MULT"};
-    String SRV_READY = "READY", ERROR = "ERROR:calculation impossible";
 
+    private static String calculation(String input){
+        String[] i = input.split(" ");
+        switch(i[0]){
+            case "INIT":
+                return "Operation: ADD SUB MULT DIV, format: OP a b";
+            case"ADD":
+                return Integer.toString(Integer.parseInt(i[1])+Integer.parseInt(i[2]));
+            case"SUB":
+                return Integer.toString(Integer.parseInt(i[1])-Integer.parseInt(i[2]));
+            case"DIV":
+                if(Integer.parseInt(i[2]) == 0){
+                    return "ERROR: cannot divid by 0";
+                }
+                else{
+                    return Integer.toString(Integer.parseInt(i[1])/Integer.parseInt(i[2]));
+                }
+            case"MULT":
+                return Integer.toString(Integer.parseInt(i[1])*Integer.parseInt(i[2]));
+            default:
+                return "Operation must be one of these: -ADD -SUB -MULT -DIV in this format: OP a b";
+        }
+    }
     public static void main(String[]args){
         //Create a new server and run it
-        Server server = new Server();
-        server.run();
+        System.out.println("Server ready");
+        while(true){
+            Server server = new Server();
+            server.run();
+        }
     }
 
     private void run(){
-        ServerSocket serverSocket = null;
-        try{
-            serverSocket = new ServerSocket(SERVER_PORT);
-            System.out.println("Serv On");
+        try(ServerSocket serverSocket = new ServerSocket(SERVER_PORT)){
 
-        }
-        catch(IOException e){
-            System.out.println("Client:exc.:"+e);
-        }
-
-
-        while(true){
-            try{
-                System.out.println("1");
-                Socket clientSocket = serverSocket.accept();//todo: problème ici
-                System.out.println("2");
-
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(),UTF_8));
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-                String line = in.readLine();
-
-                boolean keepRunning = true;
-
-                out.println("Welcome ! Here are the available operations :");
-                for(String op : OP){
-                    out.println(op);
-                }
-                out.println("enter QUIT to leave");
-                out.println(SRV_READY);
-
-                out.flush();
-
-                while(keepRunning){
-                    //if the command to quit is sent
-                    if(line.equalsIgnoreCase("QUIT")){
-                        keepRunning = false;
-                        out.flush();
-                        continue;
-                    }
-
-                    String[] operation = line.split("");
-                    if(operation.length != 3){
-                        out.println(ERROR);
-                    }
-                    else{
-                        String operator = operation[0];
-                        int val1 = Integer.parseInt(operation[1]);
-                        int val2 = Integer.parseInt(operation[2]);
-                        int result;
-
-                        switch(operator){
-                            case"ADD":
-                                result = val1 + val2;
-                                out.println(result);
-                                break;
-
-                            case"SUB":
-                                result = val1 - val2;
-                                out.println(result);
-                                break;
-                            case"DIV":
-                                if(val2 == 0){
-                                    out.println(ERROR);
-                                }
-                                else{
-                                    result = val1 / val2;
-                                    out.println(result);
-                                }
-                                break;
-                            case"MULT":
-                                result = val1 * val2;
-                                out.println(result);
-                                break;
-                            default:
-                                out.println(ERROR);
+            while(true){
+                try(Socket clientsocket = serverSocket.accept();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(clientsocket.getInputStream(), UTF_8));
+                    BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientsocket.getOutputStream(), UTF_8))){
+                    String i;
+                    while((i = in.readLine()) != null){
+                        if(i.equals("QUIT")){
+                            out.write("Program exited\n");
+                            out.flush();
+                            break;
                         }
+                        System.out.println(i);
+                        out.write(calculation(i)+ "\n");
+                        out.flush();
                     }
-                    out.flush();
+
                 }
-                clientSocket.close();
-                in.close();
-                out.close();
+                catch(IOException e){
+                    System.out.println("Server: socket ex.:" + e);
+                }
             }
-            catch(IOException e){
-                System.out.println("Server:socketex.:"+e);
-            }
+        }catch(IOException e){
+            System.out.println("Server: server socket ex.:" + e);
         }
+
 
     }
 }

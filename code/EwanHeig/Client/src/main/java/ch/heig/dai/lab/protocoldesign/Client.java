@@ -5,44 +5,51 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 
 public class Client {
-    final String SERVER_ADDRESS = "10.192.94.57";//todo: comment savoir bonne addresse ?
+    final String SERVER_ADDRESS = "localhost";
     final int SERVER_PORT = 4269;
+    static boolean quit = false;
+
 
     public static void main(String[] args) {
         // Create a new client and run it
-        Client client = new Client();
-        client.run();
+        while (!quit){
+            Client client = new Client();
+            client.run();
+        }
     }
 
     private void run() {
-        boolean quit = false,srvReady = false;
-        String usrIn = "";
-        String SRV_READY = "READY";
+        System.out.println("Client ready");
         try {
             Socket clientSocket = new Socket(SERVER_ADDRESS, SERVER_PORT);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.UTF_8));
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8));
-            BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
-            //si le serveur est connecté et a fini d'afficher le message de bienvenu
-            if( in.readLine().equals(SRV_READY)){
-                srvReady = true;
+            out.write("INIT" + "\n");
+            out.flush();
+
+            String[] init = in.readLine().split(" ");
+            System.out.println("Welcome ! Here are the available operations :");
+            for(String i : init){
+                System.out.println(i);
             }
 
-            if (srvReady){
-                while(!quit){
-                    usrIn = stdin.readLine();
-                    if(usrIn == "QUIT"){
-                        quit = true;
-                    }else{
-                        out.write(usrIn + "\n");
-                        out.flush();
-                    }
+            while(!quit){
+                System.out.println("Enter your calculation : ");
+                BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+                String userInputString = stdin.readLine();
+                out.write(userInputString + "\n");
+                out.flush();
+
+                String result = in.readLine();
+
+                System.out.println("Server response: " + result);
+                if(result.equals(" ")){
+                    quit = true;
+                    clientSocket.close();
+                    break;
                 }
             }
-
-
-
 
         }catch (IOException e) {
             System.out.println("Client: exc.: " + e);
