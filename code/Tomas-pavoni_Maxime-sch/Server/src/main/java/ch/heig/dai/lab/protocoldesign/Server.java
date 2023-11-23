@@ -5,6 +5,8 @@ import static java.nio.charset.StandardCharsets.*;
 
 public class Server {
     final int SERVER_PORT = 1234;
+    final String ERROR_MESSAGE = "INVALIDINPUT Please use one of the following commands: " +
+            "HEY / CALC [ADD/SUB/MUL] intLHS intRHS";
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -25,20 +27,22 @@ public class Server {
                     String[] instrWords = null;
 
                     while ((line = in.readLine()) != null) {
-                        //TODO
                         line = line.trim();
                         instrWords = splitStringIntoWords(line);
                         String header = instrWords[0];
 
                         switch(header){
                             case "HEY":
-                                answer = "Heyy (◣‿◢)";
+                                answer = "Hey (◣‿◢)";
                                 break;
                             case "CALC":
+                                if(instrWords.length < 3){
+                                    break;
+                                }
                                 answer = computeCalc(instrWords);
                                 break;
                             default:
-                                answer = "INVALIDINPUT Please use one of the following commands: HEY / CALC [ADD/SUB/MUL] intLHS intRHS";
+                                answer = ERROR_MESSAGE;
                         }
 
                         out.write(answer + "\n");
@@ -84,7 +88,7 @@ public class Server {
                result = lhs*rhs;
                break;
            default:
-               return "WTF";
+               return ERROR_MESSAGE;
        }
 
        return Integer.toString(result);
